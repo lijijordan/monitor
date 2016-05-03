@@ -1,3 +1,1 @@
-# monitor
-
 # Fish tank monitor.
