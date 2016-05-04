@@ -8,7 +8,7 @@
 	<name>fish tank</name>
 	<description>monitor</description>
 	<properties>
-		<org.springframework-version>4.0.4.RELEASE</org.springframework-version>
+		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -192,7 +192,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.0.2.RELEASE</version>
+			<version>${org.springframework-version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -207,10 +207,19 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		
+		<!-- mybatis -->
+		<dependency>
+		  <groupId>org.mybatis</groupId>
+		  <artifactId>mybatis</artifactId>
+		  <version>3.4.0</version>
+		</dependency>
 	</dependencies>
+	
 	<modules>
 		<module>monitor-server</module>
 		<module>monitor-device</module>
 		<module>monitor-admin</module>
+		<module>monitor-common</module>
 	</modules>
 </project>
