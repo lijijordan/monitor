@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.monitor.device.web.dao.TemperatureInfoMapper;
+import com.monitor.device.web.dao.TemperatureInfoDao;
 import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.ITemperatureService;
 
@@ -14,7 +14,7 @@ import com.monitor.device.web.service.ITemperatureService;
 public class TemperatureServiceImpl implements ITemperatureService {
 
 	@Resource
-	private TemperatureInfoMapper dao;
+	private TemperatureInfoDao dao;
 
 	@Override
 	public void Add(TemperatureInfo obj) {

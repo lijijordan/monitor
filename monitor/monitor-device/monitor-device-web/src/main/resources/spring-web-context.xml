@@ -21,9 +21,12 @@
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 	<!-- 启动对@Aspectj的支持 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-
-	<context:component-scan base-package="com.monitor.device.web" />
-	<mvc:annotation-driven />
+	<!-- enable autowire -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.monitor.**.dao" />
+	<context:component-scan base-package="com.monitor.**.service" />
+	<context:component-scan base-package="com.monitor.**.controller" />
+	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<bean
