@@ -28,7 +28,7 @@
 	<context:component-scan base-package="com.monitor.**.controller" />
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-
+	<mvc:annotation-driven /> 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!--请求转发的目录 -->

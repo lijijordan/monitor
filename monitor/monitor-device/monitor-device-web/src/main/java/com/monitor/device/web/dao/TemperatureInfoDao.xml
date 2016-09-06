@@ -17,6 +17,12 @@
     from temperature_info
     where temperature_id = #{temperatureId,jdbcType=INTEGER}
 	</select>
+	<select id="selectCurrent" resultMap="baseResultMapper">
+    select 
+		<include refid="Base_Column_List" />
+    from temperature_info
+    order by temperature_id limit 1
+	</select>
 	<insert id="insert" parameterType="com.monitor.device.web.model.TemperatureInfo" >
     insert into temperature_info ( temperature_value, 
       temperature_time, user_id, fish_equ_id

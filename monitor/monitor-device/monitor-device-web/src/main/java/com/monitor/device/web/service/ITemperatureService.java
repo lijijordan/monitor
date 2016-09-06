@@ -5,7 +5,5 @@ import org.springframework.stereotype.Service;
 import com.monitor.device.web.model.TemperatureInfo;
 
 @Service
-public interface ITemperatureService {
-	void Add(TemperatureInfo obj);
-	TemperatureInfo Get(int id);
+public interface ITemperatureService extends IDataProcessService<TemperatureInfo> {
 }

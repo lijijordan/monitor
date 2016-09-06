@@ -26,5 +26,11 @@ public class TemperatureServiceImpl implements ITemperatureService {
 	public TemperatureInfo Get(int id) {
 		return dao.selectByPrimaryKey(id);
 	}
+	
+	@Override
+	public TemperatureInfo GetCurrent()
+	{
+		return dao.selectCurrent();
+	}
 
 }

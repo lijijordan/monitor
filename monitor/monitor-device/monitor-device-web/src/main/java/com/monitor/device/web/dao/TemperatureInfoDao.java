@@ -9,5 +9,5 @@ public interface TemperatureInfoDao {
 	int insert(TemperatureInfo record);
 
 	TemperatureInfo selectByPrimaryKey(Integer temperatureId);
-
+	TemperatureInfo selectCurrent();
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.monitor.device.web.common.ServiceFactory;
+import com.monitor.device.web.define.DataTypeEnum;
 import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.ITemperatureService;
 
@@ -44,6 +46,7 @@ public class TemperatureController {
 		obj.setFishEquId(Integer.parseInt(request.getParameter("eid")
 				.toString()));
 		try {
+			
 			service.Add(obj);
 			return "succ";
 		} catch (Exception ex) {
