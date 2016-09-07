@@ -37,8 +37,7 @@
 	<!-- myBatis-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"  />
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.monitor.device.**.dao" p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
-	<bean id="beanFactoryAware" class="com.monitor.device.web.common.BeanUtil"/>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.monitor.device.**.dao" p:sqlSessionFactoryBeanName="sqlSessionFactory"/>	
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

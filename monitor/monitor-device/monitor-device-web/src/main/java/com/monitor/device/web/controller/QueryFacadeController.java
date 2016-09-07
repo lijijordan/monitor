@@ -4,21 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.codehaus.jackson.annotate.JsonUnwrapped;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.monitor.device.web.common.ResponseVo;
+import com.monitor.device.web.define.DataTypeEnum;
 import com.monitor.device.web.define.ResponseEnum;
 import com.monitor.device.web.model.TemperatureInfo;
+import com.monitor.device.web.service.IDataQueryService;
+import com.monitor.device.web.service.ITemperatureService;
 
 @Controller
 @RequestMapping("/datafacade")
 public class QueryFacadeController {
+	@Resource
+	private ITemperatureService service;
+	@Resource
+	private IDataQueryService<Object> queryService;
 
 	public QueryFacadeController() {
 		// TODO Auto-generated constructor stub
@@ -74,10 +81,11 @@ public class QueryFacadeController {
 			response.setMessage(ResponseEnum.PARAMERROR.getMessage());
 			return response;
 		}
-		String retJson = "10000";
 
+		TemperatureInfo tCurrent = (TemperatureInfo) queryService
+				.queryCurrentData(DataTypeEnum.fromString(dataType));
 		try {
-			response.setContent(retJson);
+			response.setContent(tCurrent);
 			response.setMessage(ResponseEnum.SUCCESS.getMessage());
 			response.setStatus(ResponseEnum.SUCCESS.getStatus());
 			return response;

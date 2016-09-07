@@ -10,7 +10,7 @@ import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.ITemperatureService;
 
 @Transactional
-@Service
+@Service()
 public class TemperatureServiceImpl implements ITemperatureService {
 
 	@Resource
