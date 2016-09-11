@@ -1,6 +1,7 @@
 package com.monitor.server.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class SensorController {
 	 *            传感器类型
 	 * @return
 	 */
-	@RequestMapping(value = "/getsensorcurval/{equID}/{sensorType}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getsensorcurval/{equID}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<DataPointsInfo> getSensorCurVal(@PathVariable("equID") String equID,
 			@PathVariable("sensorType") String sensorType) {
@@ -61,7 +62,7 @@ public class SensorController {
 	 *            查询数据周期
 	 * @return
 	 */
-	@RequestMapping(value = "/getsensorvals/{equID}/{sensorType}/{timePeriod}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getsensorvals/{equID}/{sensorType}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<DataPointsInfo> getSensorVals(@PathVariable("equID") String equID,
 			@PathVariable("sensorType") String sensorType, @PathVariable("timePeriod") String timePeriod) {
