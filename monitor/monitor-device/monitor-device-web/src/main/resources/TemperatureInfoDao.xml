@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.device.web.dao.TemperatureInfoDao">
+	<resultMap id="baseResultMapper" type="com.monitor.device.web.model.TemperatureInfo">
+		<id column="temperature_id" property="temperatureId" jdbcType="INTEGER" />
+		<result column="temperature_value" property="temperatureValue"
+			jdbcType="VARCHAR" />
+		<result column="temperature_time" property="temperatureTime"
+			jdbcType="TIMESTAMP" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="fish_equ_id" property="fishEquId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		temperature_id, temperature_value, temperature_time, user_id, fish_equ_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="baseResultMapper"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from temperature_info
+		where temperature_id = #{temperatureId,jdbcType=INTEGER}
+	</select>
+	<insert id="insert" parameterType="com.monitor.device.web.model.TemperatureInfo">
+		insert into temperature_info ( temperature_value,
+		temperature_time, user_id, fish_equ_id
+		)
+		values (#{temperatureValue,jdbcType=VARCHAR},
+		#{temperatureTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER},
+		#{fishEquId,jdbcType=INTEGER}
+		)
+	</insert>
+</mapper>
