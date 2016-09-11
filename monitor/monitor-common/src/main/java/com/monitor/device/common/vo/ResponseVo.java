@@ -1,4 +1,4 @@
-package com.monitor.device.web.common;
+package com.monitor.device.common.vo;
 
 public class ResponseVo<T> {
 	private String status;

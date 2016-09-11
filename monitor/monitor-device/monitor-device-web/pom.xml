@@ -28,4 +28,11 @@
 			</resource>
 		</resources>
 	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.fish.tank.monitor.common</groupId>
+			<artifactId>monitor-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

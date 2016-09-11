@@ -11,7 +11,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:spring-ioc-config.xml</param-value>
 	</context-param>
-	
+
 
 	<!-- Processes application requests -->
 	<servlet>
@@ -24,34 +24,19 @@
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
-	
-	
-	<!-- Spring Security -->
-	<!-- <filter>
-				<filter-name>springSecurityFilterChain</filter-name>
-				<filter-class>org.springframework.web.filter.DelegatingFilterProxy
-				</filter-class>
-			</filter>
 
-			<filter-mapping>
-				<filter-name>springSecurityFilterChain</filter-name>
-				<url-pattern>/*</url-pattern>
-			</filter-mapping>
-		 -->
+
+	<!-- Spring Security -->
+	<!-- <filter> <filter-name>springSecurityFilterChain</filter-name> <filter-class>org.springframework.web.filter.DelegatingFilterProxy 
+		</filter-class> </filter> <filter-mapping> <filter-name>springSecurityFilterChain</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
 
 	<!-- Captcha start -->
-	<!-- 
-			<servlet>   
-				<description></description>    
-				<display-name>CustomCaptchaServlet</display-name>    
-				<servlet-name>CustomCaptchaServlet</servlet-name>    
-				<servlet-class>com.ss.admin.captch.CustomCaptchaServlet</servlet-class>    
-			 </servlet>    
-		  <servlet-mapping>    
-			<servlet-name>CustomCaptchaServlet</servlet-name>    
-			<url-pattern>/stickyImg</url-pattern>    
-		  </servlet-mapping> -->
-  
+	<!-- <servlet> <description></description> <display-name>CustomCaptchaServlet</display-name> 
+		<servlet-name>CustomCaptchaServlet</servlet-name> <servlet-class>com.ss.admin.captch.CustomCaptchaServlet</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>CustomCaptchaServlet</servlet-name> 
+		<url-pattern>/stickyImg</url-pattern> </servlet-mapping> -->
+
 	<!-- Captcha end -->
 
 	<servlet-mapping>
@@ -81,7 +66,7 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/error.jsp</location>

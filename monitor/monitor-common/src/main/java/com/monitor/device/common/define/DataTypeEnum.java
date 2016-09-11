@@ -1,4 +1,4 @@
-package com.monitor.device.web.define;
+package com.monitor.device.common.define;
 
 import java.util.HashMap;
 import java.util.Map;
