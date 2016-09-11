@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BaseInfoMapper">
+
+	<resultMap id="UserInfoMap" type="UserInfo">
+		<id property="id" column="user_id" />
+		<result property="name" column="user_name" />
+		<result property="sex" column="user_sex" />
+		<result property="email" column="user_email" />
+		<result property="telNum" column="user_tel" />
+		<result property="age" column="user_age" />
+		<result property="pwd" column="user_pwd" />
+		<result property="webChat" column="user_wechat" />
+		<result property="aquariumsLength" column="aquariums_length" />
+		<result property="aquariumsWidth" column="aquariums_width" />
+		<result property="aquariumsHeigth" column="aquariums_height" />
+		<result property="aquariumsType" column="aquariums_type" />
+		<result property="aquariumsAge" column="aquariums_age" />
+	</resultMap>
+
+	<resultMap id="EquInfoMap" type="EquInfo">
+		<id property="id" column="fish_equ_id" />
+		<result property="sn" column="fish_equ_sn" />
+		<result property="ssid" column="fish_equ_ssid" />
+		<result property="pwd" column="fish_equ_pwd" />
+		<association property="userInfo" resultMap="UserInfoMap" />
+	</resultMap>
+
+	<resultMap id="AlarmInfoMap" type="AlarmInfo">
+		<id property="id" column="alarm_id" />
+		<result property="sensorType" column="alarm_devtype" />
+		<result property="currentVal" column="alarm_devcurrentval" />
+		<result property="threshold" column="alarm_devthreshold" />
+		<result property="advice" column="alarm_advice" />
+		<result property="createTime" column="alarm_time" />
+		<association property="userInfo" resultMap="UserInfoMap" />
+		<association property="equInfo" resultMap="EquInfoMap" />
+	</resultMap>
+
+	<resultMap id="OptInfoMap" type="OptInfo">
+		<id property="id" column="opt_info_id" />
+		<result property="optType" column="opt_info_type" />
+		<result property="optObject" column="opt_info_obj" />
+		<result property="result" column="opt_info_result" />
+		<result property="createTime" column="opt_info_time" />
+		<association property="userInfo" resultMap="UserInfoMap" />
+		<association property="equInfo" resultMap="EquInfoMap" />
+	</resultMap>
+
+	<resultMap id="PowerSwitchInfoMap" type="PowerSwitchInfo">
+		<id property="id" column="power_switch_id" />
+		<result property="sn" column="power_switch_sn" />
+		<result property="perStatus" column="power_switch_perstatus" />
+		<association property="userInfo" resultMap="UserInfoMap" />
+		<association property="equInfo" resultMap="EquInfoMap" />
+	</resultMap>
+
+	<select id="getUserById" parameterType="int" resultMap="UserInfoMap">
+		SELECT *
+		FROM user_info u
+		WHERE u.user_id = #{id}
+	</select>
+
+	<select id="countAllUserNum" resultType="Integer">
+		SELECT count(u.user_id)
+		FROM user_info u
+	</select>
+
+	<select id="selectAllUser" resultMap="UserInfoMap">
+		SELECT *
+		FROM user_info
+	</select>
+
+	<insert id="createUser" parameterType="UserInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user_info
+		(user_name,user_sex,user_email,user_tel,user_age,user_pwd,user_wechat,aquariums_length,aquariums_width,aquariums_height,aquariums_type,aquariums_age)
+		VALUES
+		(#{name},#{sex},#{email},#{telNum},#{age},#{pwd},#{webChat},#{aquariumsLength},#{aquariumsWidth},#{aquariumsHeigth},#{aquariumsType},#{aquariumsAge})
+	</insert>
+
+	<update id="updateUser" parameterType="UserInfo">
+		UPDATE user_info SET
+		user_name = #{name},
+		user_sex = #{sex},
+		user_email = #{email},
+		user_tel =
+		#{telNum},
+		user_age = #{age},
+		user_pwd = #{pwd},
+		user_wechat =
+		#{webChat},
+		aquariums_length = #{aquariumsLength},
+		aquariums_width =
+		#{aquariumsWidth},
+		aquariums_height = #{aquariumsHeigth},
+		aquariums_type = #{aquariumsType},
+		aquariums_age = #{aquariumsAge}
+		WHERE user_id = #{id}
+	</update>
+
+	<delete id="deleteUser" parameterType="int">
+		DELETE from user_info
+		WHERE
+		user_id = #{id}
+	</delete>
+
+	<select id="getEquById" parameterType="int" resultMap="EquInfoMap">
+		SELECT *
+		FROM fish_equ_info f, user_info u
+		WHERE f.user_id = u.user_id AND
+		f.fish_equ_id = #{id}
+	</select>
+
+	<select id="countAllEquNum" resultType="Integer">
+		SELECT
+		count(f.fish_equ_id)
+		FROM fish_equ_info f
+	</select>
+
+	<select id="selectAllEqus" resultMap="EquInfoMap">
+		SELECT *
+		FROM fish_equ_info
+		f, user_info u
+		WHERE f.user_id = u.user_id
+	</select>
+
+	<insert id="createEqu" parameterType="EquInfo" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO fish_equ_info
+		(fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)
+		VALUES
+		(#{sn},#{ssid},#{pwd},#{userInfo.id})
+	</insert>
+
+	<update id="updateEqu" parameterType="EquInfo">
+		UPDATE fish_equ_info SET
+		fish_equ_sn = #{sn},
+		fish_equ_ssid = #{ssid},
+		fish_equ_pwd = #{pwd},
+		user_id = #{userInfo.id}
+		WHERE fish_equ_id = #{id}
+	</update>
+
+	<delete id="deleteEqu" parameterType="int">
+		DELETE FROM fish_equ_info
+		WHERE
+		fish_equ_id = #{id}
+	</delete>
+
+	<select id="getAlarmById" parameterType="int" resultMap="AlarmInfoMap">
+		SELECT *
+		FROM alarm_info a
+		WHERE a.alarm_id = #{id}
+	</select>
+
+	<select id="getAlarmsByUserID" parameterType="int" resultMap="AlarmInfoMap">
+		SELECT *
+		FROM alarm_info a
+		WHERE a.user_id = #{id}
+	</select>
+
+	<insert id="createAlarm" parameterType="AlarmInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO alarm_info
+		(alarm_time,alarm_devtype,alarm_devcurrentval,alarm_devthreshold,alarm_advice,user_id,fish_equ_id)
+		VALUES
+		(#{createTime},#{sensorType},#{currentVal},#{threshold},#{advice},#{userInfo.id},#{equInfo.id})
+	</insert>
+
+	<update id="updateAlarm" parameterType="AlarmInfo">
+		UPDATE alarm_info SET
+		alarm_time = #{createTime},
+		alarm_devtype = #{sensorType},
+		alarm_devcurrentval = #{currentVal},
+		alarm_devthreshold = #{threshold},
+		alarm_advice = #{advice},
+		user_id = #{userInfo.id},
+		fish_equ_id =
+		#{equInfo.id}
+		WHERE alarm_id = #{id}
+	</update>
+
+	<delete id="deleteAlarm" parameterType="int">
+		DELETE FROM alarm_info
+		WHERE
+		alarm_id = #{id}
+	</delete>
+
+	<select id="getOptInfoById" parameterType="int" resultMap="OptInfoMap">
+		SELECT *
+		FROM opt_info o
+		WHERE o.opt_info_id = #{id}
+	</select>
+
+	<select id="selectOptInfosByUserID" parameterType="int"
+		resultMap="OptInfoMap">
+		SELECT *
+		FROM opt_info o
+		WHERE o.user_id = #{id}
+	</select>
+
+	<insert id="createOptInfo" parameterType="OptInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO opt_info
+		(opt_info_time,opt_info_type,opt_info_obj,opt_info_result,user_id,fish_equ_id)
+		VALUES
+		(#{createTime},#{optType},#{optObject},#{result},#{userInfo.id})
+	</insert>
+
+</mapper>  
+

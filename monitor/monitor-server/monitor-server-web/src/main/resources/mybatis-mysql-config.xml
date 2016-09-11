@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="UserInfo" type="com.monitor.server.entity.UserInfo" />
+		<typeAlias alias="PhInfo" type="com.monitor.server.entity.PhInfo" />
+		<typeAlias alias="AlarmInfo" type="com.monitor.server.entity.AlarmInfo" />
+		<typeAlias alias="ConductivityInfo"
+			type="com.monitor.server.entity.ConductivityInfo" />
+		<typeAlias alias="EquInfo" type="com.monitor.server.entity.EquInfo" />
+		<typeAlias alias="OptInfo" type="com.monitor.server.entity.OptInfo" />
+		<typeAlias alias="PowerSwitchInfo" type="com.monitor.server.entity.PowerSwitchInfo" />
+		<typeAlias alias="TempInfo" type="com.monitor.server.entity.TempInfo" />
+		<typeAlias alias="WaterLineInfo" type="com.monitor.server.entity.WaterLineInfo" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/monitor/server/mapper/BaseInfoMapper.xml" />
+		<mapper resource="com/monitor/server/mapper/SensorInfoMapper.xml" />
+	</mappers>
+</configuration>

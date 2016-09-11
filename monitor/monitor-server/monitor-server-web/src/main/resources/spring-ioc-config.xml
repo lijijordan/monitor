@@ -11,25 +11,22 @@
       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
       http://www.springframework.org/schema/tx
       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
-		
-	<context:component-scan base-package="com.monitor.server.web" />
 
+	<context:component-scan base-package="com.monitor.server" />
 	<context:annotation-config />
-	<!-- Aspect -->
-	<!-- <bean id="logAspect" class="com.soleil.laundry.aspect.LoggerAspect" />
-	<bean id="storeAspect" class="com.soleil.laundry.aspect.StoreAspect" />
- -->
 	<aop:aspectj-autoproxy />
-	<!-- 读取mysql jdbc的配置 -->
+
+	<!-- 数据源以及事物配置 -->
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	<!-- 配置数据源，从上面配置文件读取 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+
+	<bean id="dataSource_base" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${database.driverClassName}" />
-		<property name="jdbcUrl" value="${database.url}" />
+		<property name="jdbcUrl" value="${database.url_base}" />
 		<property name="user" value="${database.username}" />
 		<property name="password" value="${database.password}" />
 		<property name="initialPoolSize" value="${pool.initialPoolSize}" />
@@ -38,46 +35,89 @@
 		<property name="maxIdleTime" value="${pool.maxIdleTime}" />
 		<property name="acquireIncrement" value="${pool.acquireIncrement}" />
 	</bean>
-	
-	
-	<!-- myBatis-->
+
+	<bean id="dataSource_dev" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${database.driverClassName}" />
+		<property name="jdbcUrl" value="${database.url_dev}" />
+		<property name="user" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+		<property name="initialPoolSize" value="${pool.initialPoolSize}" />
+		<property name="minPoolSize" value="${pool.minPoolSize}" />
+		<property name="maxPoolSize" value="${pool.maxPoolSize}" />
+		<property name="maxIdleTime" value="${pool.maxIdleTime}" />
+		<property name="acquireIncrement" value="${pool.acquireIncrement}" />
+	</bean>
+
+	<bean id="dataSource" class="com.monitor.framework.mybatis.support.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry value-ref="dataSource_base" key="dataSource_base"></entry>
+				<entry value-ref="dataSource_dev" key="dataSource_dev"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSource_base"></property>
+	</bean>
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:mybatis-mysql-config.xml"></property>
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.monitor.server.web.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
-	
-	<!-- 配置事务管理器 -->
+
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- 配置事务异常封装 -->
-	<bean id="persistenceExceptionTranslationPostProcessor"
-		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<tx:annotation-driven transaction-manager="txManager" />
 
-	<!-- 声明式容器事务管理 -->
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="create*" propagation="REQUIRED" />
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="merge*" propagation="REQUIRED" />
-			<tx:method name="del*" propagation="REQUIRED" />
-			<tx:method name="*" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
-	<aop:config expose-proxy="true">
-		<!-- 只对业务逻辑层实施事务 -->
-		<aop:pointcut id="txPointcut"
-			expression="execution(* com.monitor.server.web.service..*.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
-	</aop:config>
-	
+	<!-- 异常处理 -->
+	<bean id="exceptionHandler" class="com.monitor.server.comm.ExceptionAdvisor"></bean>
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Dao</value>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>exceptionHandler</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--方式一、使用jdk的实现 -->
+	<bean id="ky.requestFactory"
+		class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+		<property name="readTimeout" value="10000" />
+		<property name="connectTimeout" value="5000" />
+	</bean>
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<constructor-arg ref="ky.requestFactory" />
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.FormHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+
 </beans>
