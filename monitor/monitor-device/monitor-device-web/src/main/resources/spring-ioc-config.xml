@@ -33,20 +33,21 @@
 		<property name="maxPoolSize" value="${pool.maxPoolSize}" />
 		<property name="maxIdleTime" value="${pool.maxIdleTime}" />
 		<property name="acquireIncrement" value="${pool.acquireIncrement}" />
-	</bean>	
-	<!-- myBatis-->
+	</bean>
+	<!-- myBatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-		p:dataSource-ref="dataSource"  />
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.monitor.device.**.dao" p:sqlSessionFactoryBeanName="sqlSessionFactory"/>	
+		p:dataSource-ref="dataSource" />
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		p:basePackage="com.monitor.device.**.dao" p:sqlSessionFactoryBeanName="sqlSessionFactory" />
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<!-- 配置事务异常封装 -->
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<!-- enables scanning for @Transactional annotations -->
-	<tx:annotation-driven />	
+	<tx:annotation-driven />
 </beans>
