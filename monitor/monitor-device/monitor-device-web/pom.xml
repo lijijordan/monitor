@@ -17,7 +17,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.0</version>
 				<configuration>
-					<port>9009</port>
+					<port>9099</port>
 				</configuration>
 			</plugin>
 		</plugins>
