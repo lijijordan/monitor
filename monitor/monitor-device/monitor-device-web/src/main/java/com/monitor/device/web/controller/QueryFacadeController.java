@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,9 @@ import com.monitor.device.common.model.DataPointsInfo;
 import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.IDataQueryService;
 import com.monitor.device.web.service.ITemperatureService;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
 
 @Controller
 @RequestMapping("/datafacade")
@@ -36,11 +41,13 @@ public class QueryFacadeController {
 
 	private ResponseVo<Object> response = new ResponseVo<Object>();
 
-	@RequestMapping(value = "/getList/{uniqid}/{dataType}/{queryScope}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getList/{uniqid}/{dataType}/{queryScope}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(value = "根据设备ID，数据类型，查询范围获取历史数据", httpMethod = "GET", response = ResponseVo.class, notes = "根据设备ID，数据类型，查询范围获取历史数据")
 	@ResponseBody
-	public ResponseVo<Object> getList(@PathVariable("uniqid") String uniqid,
-			@PathVariable("dataType") String dataType,
-			@PathVariable("queryScope") String queryScope) {
+	public ResponseVo<Object> getList(
+			@ApiParam(required = true, name = "uniqid", value = "设备ID") @PathVariable("uniqid") String uniqid,
+			@ApiParam(required = true, name = "dataType", value = "数据类型，枚举：Temperature, PH, WaterLine, Conductivity") @PathVariable("dataType") String dataType,
+			@ApiParam(required = true, name = "queryScope", value = "查询范围，枚举：Last60Minute, Last24Hour, Last30Day, Last3Months, LastOneYear, All") @PathVariable("queryScope") String queryScope) {
 
 		System.out.println(uniqid);
 		System.out.println(dataType);
