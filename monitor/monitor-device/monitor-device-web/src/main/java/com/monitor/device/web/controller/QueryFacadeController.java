@@ -23,6 +23,7 @@ import com.monitor.device.common.model.DataPointsInfo;
 import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.IDataQueryService;
 import com.monitor.device.web.service.ITemperatureService;
+import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;

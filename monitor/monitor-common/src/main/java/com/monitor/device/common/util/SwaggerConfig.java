@@ -34,10 +34,10 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		ApiInfo apiInfo = new ApiInfo("My Apps API Title",
-				"My Apps API Description", "My Apps API terms of service",
-				"My Apps API Contact Email", "My Apps API Licence Type",
-				"My Apps API License URL");
+		ApiInfo apiInfo = new ApiInfo("FISHMAN RESTFUL接口文档",
+				"FISHMAN API Description", "FISHMAN API terms of service",
+				"FISHMAN API Contact Email", "FISHMAN API Licence Type",
+				"FISHMAN API License URL");
 		return apiInfo;
 	}
 }
