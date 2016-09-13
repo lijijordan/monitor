@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.monitor.device.common.model.DataPointsInfo;
-import com.monitor.device.common.vo.ResponseVo;
+import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.StaticFinalStr;
 import com.monitor.server.web.service.SensorService;
 

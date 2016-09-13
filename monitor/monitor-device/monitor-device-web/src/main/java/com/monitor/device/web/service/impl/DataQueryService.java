@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.monitor.common.define.DataTypeEnum;
+import com.monitor.common.define.QueryScopeEnum;
 import com.monitor.device.web.dao.TemperatureInfoDao;
-import com.monitor.device.common.define.DataTypeEnum;
-import com.monitor.device.common.define.QueryScopeEnum;
 import com.monitor.device.web.service.IDataQueryService;
 
 @Transactional

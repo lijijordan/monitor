@@ -1,4 +1,4 @@
-package com.monitor.device.common.define;
+package com.monitor.common.define;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.monitor.device.common.model;
+package com.monitor.common.model;
 
 import java.util.Date;
 

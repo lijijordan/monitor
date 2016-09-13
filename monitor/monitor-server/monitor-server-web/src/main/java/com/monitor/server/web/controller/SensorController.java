@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.monitor.device.common.model.DataPointsInfo;
-import com.monitor.device.common.vo.ResponseVo;
+import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.web.service.SensorService;
 
 /**

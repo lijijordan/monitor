@@ -3,8 +3,8 @@
  */
 package com.monitor.server.web.service;
 
-import com.monitor.device.common.model.DataPointsInfo;
-import com.monitor.device.common.vo.ResponseVo;
+import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.vo.ResponseVo;
 
 /**
  * @author yinhong
