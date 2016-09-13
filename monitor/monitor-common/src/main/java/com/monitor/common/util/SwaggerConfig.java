@@ -1,4 +1,4 @@
-package com.monitor.device.common.util;
+package com.monitor.common.util;
 
 import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
 import com.mangofactory.swagger.models.dto.ApiInfo;

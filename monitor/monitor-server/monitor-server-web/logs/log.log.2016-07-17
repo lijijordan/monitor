@@ -1,0 +1,105 @@
+2016-07-17 16:47:21[org.springframework.context.support.ClassPathXmlApplicationContext-578][main][12  ] - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4361bd48: startup date [Sun Jul 17 16:47:21 CST 2016]; root of context hierarchy
+2016-07-17 16:47:21[org.springframework.beans.factory.xml.XmlBeanDefinitionReader-317][main][79  ] - Loading XML bean definitions from class path resource [spring-ioc-config.xml]
+2016-07-17 16:47:21[org.springframework.context.support.PropertySourcesPlaceholderConfigurer-172][main][593 ] - Loading properties file from class path resource [jdbc.properties]
+2016-07-17 16:47:22[com.mchange.v2.log.MLog-80][main][962 ] - MLog clients using log4j logging.
+2016-07-17 16:47:22[com.mchange.v2.c3p0.C3P0Registry-204][main][1197] - Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+2016-07-17 16:47:23[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource-462][main][1939] - Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge7479h1wtl4ig16nsrnq|707194ba, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge7479h1wtl4ig16nsrnq|707194ba, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://127.0.0.1:3306/ef_baseinfo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 120, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 0, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+2016-07-17 16:47:23[org.springframework.beans.factory.xml.XmlBeanDefinitionReader-317][main][2532] - Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+2016-07-17 16:47:23[org.springframework.jdbc.support.SQLErrorCodesFactory-126][main][2597] - SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase, Hana]
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-23][main][2607] - **************************************************************
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-24][main][2607] - Error happened in class: com.monitor.server.dao.EquInfoDao
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-25][main][2607] - Error happened in method: createEqu
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-27][main][2608] - arg[0]: com.monitor.server.entity.EquInfo@20f5281c
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-29][main][2608] - Exception class: org.springframework.dao.DataIntegrityViolationException
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-30][main][2608] - ex.getMessage():
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+### The error may involve BaseInfoMapper.createEqu-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO fish_equ_info   (fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)   VALUES   (?,?,?,?)
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+; SQL []; Column 'fish_equ_ssid' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+2016-07-17 16:47:23[com.monitor.server.dao.EquInfoDao-31][main][2608] - **************************************************************
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-23][main][2691] - **************************************************************
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-24][main][2691] - Error happened in class: com.sun.proxy.$Proxy15
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-25][main][2692] - Error happened in method: regUserEqu
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-27][main][2692] - arg[0]: com.monitor.server.entity.UserInfo@59cba5a
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-27][main][2692] - arg[1]: com.monitor.server.entity.EquInfo@20f5281c
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-29][main][2692] - Exception class: com.monitor.server.comm.BusinessException
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-30][main][2692] - ex.getMessage():Sorry,other error.
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+### The error may involve BaseInfoMapper.createEqu-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO fish_equ_info   (fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)   VALUES   (?,?,?,?)
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+; SQL []; Column 'fish_equ_ssid' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null please contact with administrator later!
+2016-07-17 16:47:24[com.sun.proxy.$Proxy15-31][main][2692] - **************************************************************
+2016-07-17 16:50:27[org.springframework.context.support.ClassPathXmlApplicationContext-578][main][10  ] - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4361bd48: startup date [Sun Jul 17 16:50:27 CST 2016]; root of context hierarchy
+2016-07-17 16:50:27[org.springframework.beans.factory.xml.XmlBeanDefinitionReader-317][main][76  ] - Loading XML bean definitions from class path resource [spring-ioc-config.xml]
+2016-07-17 16:50:28[org.springframework.context.support.PropertySourcesPlaceholderConfigurer-172][main][589 ] - Loading properties file from class path resource [jdbc.properties]
+2016-07-17 16:50:28[com.mchange.v2.log.MLog-80][main][973 ] - MLog clients using log4j logging.
+2016-07-17 16:50:28[com.mchange.v2.c3p0.C3P0Registry-204][main][1202] - Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+2016-07-17 16:50:29[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource-462][main][1927] - Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge7479h1wtp44ea59dci|33c911a1, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge7479h1wtp44ea59dci|33c911a1, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://127.0.0.1:3306/ef_baseinfo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 120, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 0, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+2016-07-17 16:50:30[org.springframework.beans.factory.xml.XmlBeanDefinitionReader-317][main][2538] - Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+2016-07-17 16:50:30[org.springframework.jdbc.support.SQLErrorCodesFactory-126][main][2599] - SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase, Hana]
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-23][main][2614] - **************************************************************
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-24][main][2614] - Error happened in class: com.monitor.server.dao.EquInfoDao
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-25][main][2615] - Error happened in method: createEqu
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-27][main][2615] - arg[0]: com.monitor.server.entity.EquInfo@59cba5a
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-29][main][2615] - Exception class: org.springframework.dao.DataIntegrityViolationException
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-30][main][2615] - ex.getMessage():
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+### The error may involve BaseInfoMapper.createEqu-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO fish_equ_info   (fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)   VALUES   (?,?,?,?)
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+; SQL []; Column 'fish_equ_ssid' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+2016-07-17 16:50:30[com.monitor.server.dao.EquInfoDao-31][main][2615] - **************************************************************
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-23][main][2711] - **************************************************************
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-24][main][2711] - Error happened in class: com.sun.proxy.$Proxy15
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-25][main][2711] - Error happened in method: regUserEqu
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-27][main][2711] - arg[0]: com.monitor.server.entity.UserInfo@5454d35e
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-27][main][2712] - arg[1]: com.monitor.server.entity.EquInfo@59cba5a
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-29][main][2712] - Exception class: com.monitor.server.comm.BusinessException
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-30][main][2712] - ex.getMessage():Sorry,other error.
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+### The error may involve BaseInfoMapper.createEqu-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO fish_equ_info   (fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)   VALUES   (?,?,?,?)
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+; SQL []; Column 'fish_equ_ssid' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null please contact with administrator later!
+2016-07-17 16:50:30[com.sun.proxy.$Proxy15-31][main][2712] - **************************************************************
+2016-07-17 16:50:49[org.springframework.context.support.ClassPathXmlApplicationContext-578][main][13  ] - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@53bd815b: startup date [Sun Jul 17 16:50:49 CST 2016]; root of context hierarchy
+2016-07-17 16:50:49[org.springframework.beans.factory.xml.XmlBeanDefinitionReader-317][main][72  ] - Loading XML bean definitions from class path resource [spring-ioc-config.xml]
+2016-07-17 16:50:50[org.springframework.context.support.PropertySourcesPlaceholderConfigurer-172][main][580 ] - Loading properties file from class path resource [jdbc.properties]
+2016-07-17 16:50:50[com.mchange.v2.log.MLog-80][main][930 ] - MLog clients using log4j logging.
+2016-07-17 16:50:50[com.mchange.v2.c3p0.C3P0Registry-204][main][1154] - Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+2016-07-17 16:50:51[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource-462][main][1872] - Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge7479h1wtpl9k15r5m3s|33c911a1, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge7479h1wtpl9k15r5m3s|33c911a1, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://127.0.0.1:3306/ef_baseinfo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 120, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 0, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+2016-07-17 16:50:52[org.springframework.beans.factory.xml.XmlBeanDefinitionReader-317][main][2494] - Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+2016-07-17 16:50:52[org.springframework.jdbc.support.SQLErrorCodesFactory-126][main][2565] - SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase, Hana]
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-23][main][2575] - **************************************************************
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-24][main][2576] - Error happened in class: com.monitor.server.dao.EquInfoDao
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-25][main][2576] - Error happened in method: createEqu
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-27][main][2576] - arg[0]: com.monitor.server.entity.EquInfo@59cba5a
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-29][main][2576] - Exception class: org.springframework.dao.DataIntegrityViolationException
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-30][main][2576] - ex.getMessage():
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+### The error may involve BaseInfoMapper.createEqu-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO fish_equ_info   (fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)   VALUES   (?,?,?,?)
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+; SQL []; Column 'fish_equ_ssid' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+2016-07-17 16:50:52[com.monitor.server.dao.EquInfoDao-31][main][2577] - **************************************************************
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-23][main][2694] - **************************************************************
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-24][main][2694] - Error happened in class: com.sun.proxy.$Proxy15
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-25][main][2694] - Error happened in method: regUserEqu
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-27][main][2694] - arg[0]: com.monitor.server.entity.UserInfo@5454d35e
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-27][main][2695] - arg[1]: com.monitor.server.entity.EquInfo@59cba5a
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-29][main][2695] - Exception class: com.monitor.server.comm.BusinessException
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-30][main][2695] - ex.getMessage():Sorry,other error.
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+### The error may involve BaseInfoMapper.createEqu-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO fish_equ_info   (fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)   VALUES   (?,?,?,?)
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null
+; SQL []; Column 'fish_equ_ssid' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'fish_equ_ssid' cannot be null please contact with administrator later!
+2016-07-17 16:50:52[com.sun.proxy.$Proxy15-31][main][2695] - **************************************************************

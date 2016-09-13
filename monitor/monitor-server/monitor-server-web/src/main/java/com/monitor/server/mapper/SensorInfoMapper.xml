@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sensorinfomapper">
+
+	<resultMap id="PhInfoMap" type="PhInfo">
+		<id property="id" column="ph_id" />
+		<result property="value" column="ph_value" />
+		<result property="crateTime" column="ph_time" />
+		<result property="userId" column="user_id" />
+		<result property="equId" column="fish_equ_id" />
+	</resultMap>
+
+	<resultMap id="ConductivityInfoMap" type="ConductivityInfo">
+		<id property="id" column="conductivity_id" />
+		<result property="value" column="conductivity_value" />
+		<result property="crateTime" column="conductivity_time" />
+		<result property="userId" column="user_id" />
+		<result property="equId" column="fish_equ_id" />
+	</resultMap>
+
+	<resultMap id="TempInfoMap" type="TempInfo">
+		<id property="id" column="temperature_id" />
+		<result property="value" column="temperature_value" />
+		<result property="crateTime" column="temperature_time" />
+		<result property="userId" column="user_id" />
+		<result property="equId" column="fish_equ_id" />
+	</resultMap>
+
+	<resultMap id="WaterLineInfoMap" type="WaterLineInfo">
+		<id property="id" column="water_line_id" />
+		<result property="value" column="water_line_value" />
+		<result property="crateTime" column="water_line_time" />
+		<result property="userId" column="user_id" />
+		<result property="equId" column="fish_equ_id" />
+	</resultMap>
+
+	<insert id="createPH" parameterType="PhInfo" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO ph_info
+		(ph_value,ph_time,user_id,fish_equ_id)
+		VALUES
+		(#{value},#{createTime},#{userId},#{equId})
+	</insert>
+
+	<insert id="createConductivity" parameterType="ConductivityInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO conductivity_info
+		(conductivity_value,conductivity_time,user_id,fish_equ_id)
+		VALUES
+		(#{value},#{createTime},#{userId},#{equId})
+	</insert>
+
+	<insert id="createTemp" parameterType="TempInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO temperature_info
+		(temperature_value,temperature_time,user_id,fish_equ_id)
+		VALUES
+		(#{value},#{createTime},#{userId},#{equId})
+	</insert>
+
+	<insert id="createWaterLine" parameterType="WaterLineInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO water_line_info
+		(water_line_value,water_line_time,user_id,fish_equ_id)
+		VALUES
+		(#{value},#{createTime},#{userId},#{equId})
+	</insert>
+
+	<select id="selectPHHistoryByTime" parameterType="hashmap"
+		resultMap="PhInfoMap">
+		SELECT *
+		FROM ph_info
+		WHERE user_id = #{userID} AND
+		fish_equ_id =
+		#{equID} AND ph_time >= #{historyTime}
+	</select>
+
+	<select id="selectConductivityHistoryByTime" parameterType="hashmap"
+		resultMap="ConductivityInfoMap">
+		SELECT *
+		FROM conductivity_info
+		WHERE user_id = #{userID}
+		AND
+		fish_equ_id = #{equID} AND conductivity_time >= #{historyTime}
+	</select>
+
+	<select id="selectTempHistoryByTime" parameterType="hashmap"
+		resultMap="TempInfoMap">
+		SELECT *
+		FROM temperature_info
+		WHERE user_id = #{userID}
+		AND
+		fish_equ_id = #{equID} AND temperature_time >= #{historyTime}
+	</select>
+
+	<select id="selectWaterLineHistoryByTime" parameterType="hashmap"
+		resultMap="WaterLineInfoMap">
+		SELECT *
+		FROM water_line_info
+		WHERE user_id = #{userID}
+		AND
+		fish_equ_id = #{equID} AND water_line_time >= #{historyTime}
+	</select>
+
+</mapper>  
+

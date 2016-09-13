@@ -1,4 +1,4 @@
-package com.monitor.device.common.vo;
+package com.monitor.common.vo;
 
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.monitor.device.common.vo.ResponseVo;
-import com.monitor.device.common.define.DataTypeEnum;
-import com.monitor.device.common.define.ResponseEnum;
-import com.monitor.device.common.model.DataPointsInfo;
+import com.monitor.common.define.DataTypeEnum;
+import com.monitor.common.define.ResponseEnum;
+import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.vo.ResponseVo;
 import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.IDataQueryService;
 import com.monitor.device.web.service.ITemperatureService;

@@ -19,6 +19,7 @@
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
 	<!-- 启动对@Aspectj的支持 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
@@ -36,4 +37,5 @@
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+
 </beans>
