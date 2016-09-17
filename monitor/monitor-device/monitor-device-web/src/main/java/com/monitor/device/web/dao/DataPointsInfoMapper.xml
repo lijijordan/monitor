@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.device.web.dao.DataPointsInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.monitor.common.model.DataPointsInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sensorid" property="sensorid" jdbcType="BIGINT" />
+    <result column="collecttime" property="collecttime" jdbcType="TIMESTAMP" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sensorid, collecttime, value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from datapoints
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from datapoints
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.monitor.common.model.DataPointsInfo" >
+    insert into datapoints (id, sensorid, collecttime, 
+      value)
+    values (#{id,jdbcType=BIGINT}, #{sensorid,jdbcType=BIGINT}, #{collecttime,jdbcType=TIMESTAMP}, 
+      #{value,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monitor.common.model.DataPointsInfo" >
+    insert into datapoints
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sensorid != null" >
+        sensorid,
+      </if>
+      <if test="collecttime != null" >
+        collecttime,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sensorid != null" >
+        #{sensorid,jdbcType=BIGINT},
+      </if>
+      <if test="collecttime != null" >
+        #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.monitor.common.model.DataPointsInfo" >
+    update datapoints
+    <set >
+      <if test="sensorid != null" >
+        sensorid = #{sensorid,jdbcType=BIGINT},
+      </if>
+      <if test="collecttime != null" >
+        collecttime = #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.monitor.common.model.DataPointsInfo" >
+    update datapoints
+    set sensorid = #{sensorid,jdbcType=BIGINT},
+      collecttime = #{collecttime,jdbcType=TIMESTAMP},
+      value = #{value,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
