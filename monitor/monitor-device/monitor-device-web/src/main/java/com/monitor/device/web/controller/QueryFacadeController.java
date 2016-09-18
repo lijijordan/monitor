@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.monitor.common.define.DataTypeEnum;
 import com.monitor.common.define.ResponseEnum;
 import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.IDataQueryService;
@@ -110,23 +111,31 @@ public class QueryFacadeController {
 
 		// TemperatureInfo tCurrent = (TemperatureInfo) queryService
 		// .queryCurrentData(DataTypeEnum.fromString(dataType));
-		DataPointsInfo data = new DataPointsInfo();
+		DataPointsStatisticsInfo data = new DataPointsStatisticsInfo();
 		switch (DataTypeEnum.fromString(dataType)) {
 		case Temperature:
 			data.setCollecttime(new Date());
 			data.setValue("28");
+			data.setMaxvalue("35");
+			data.setMinvalue("15");
 			break;
 		case PH:
 			data.setCollecttime(new Date());
 			data.setValue("7.1");
+			data.setMaxvalue("9");
+			data.setMinvalue("5");
 			break;
 		case WaterLine:
 			data.setCollecttime(new Date());
 			data.setValue("43");
+			data.setMaxvalue("50");
+			data.setMinvalue("25");
 			break;
 		case Conductivity:
 			data.setCollecttime(new Date());
 			data.setValue("140");
+			data.setMaxvalue("330");
+			data.setMinvalue("100");
 			break;
 		default:
 			break;
