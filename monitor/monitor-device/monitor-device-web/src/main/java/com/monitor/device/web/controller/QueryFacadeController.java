@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.monitor.common.define.DataTypeEnum;
 import com.monitor.common.define.ResponseEnum;
+import com.monitor.common.model.DataPointsActiveInfo;
 import com.monitor.common.model.DataPointsInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
@@ -60,25 +61,33 @@ public class QueryFacadeController {
 			response.setMessage(ResponseEnum.PARAMERROR.getMessage());
 			return response;
 		}
-		List<DataPointsInfo> datas = new ArrayList<DataPointsInfo>();
+		List<DataPointsStatisticsInfo> datas = new ArrayList<DataPointsStatisticsInfo>();
 		for (int i = 0; i < 100; i++) {
-			DataPointsInfo data = new DataPointsInfo();
+			DataPointsStatisticsInfo data = new DataPointsStatisticsInfo();
 			switch (DataTypeEnum.fromString(dataType)) {
 			case Temperature:
 				data.setCollecttime(new Date());
 				data.setValue("28");
+				data.setMaxvalue("35");
+				data.setMinvalue("15");
 				break;
 			case PH:
 				data.setCollecttime(new Date());
 				data.setValue("7.1");
+				data.setMaxvalue("9");
+				data.setMinvalue("5");
 				break;
 			case WaterLine:
 				data.setCollecttime(new Date());
 				data.setValue("43");
+				data.setMaxvalue("50");
+				data.setMinvalue("25");
 				break;
 			case Conductivity:
 				data.setCollecttime(new Date());
 				data.setValue("140");
+				data.setMaxvalue("330");
+				data.setMinvalue("100");
 				break;
 			default:
 				break;
@@ -99,8 +108,10 @@ public class QueryFacadeController {
 
 	@RequestMapping(value = "/getCurrent/{uniqid}/{dataType}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseVo<Object> getCurrent(@PathVariable("uniqid") String uniqid,
-			@PathVariable("dataType") String dataType) {
+	@ApiOperation(value = "根据设备ID，数据类型，查询当前数据", httpMethod = "GET", response = ResponseVo.class, notes = "根据设备ID，数据类型，查询当前数据")
+	public ResponseVo<Object> getCurrent(
+			@ApiParam(required = true, name = "uniqid", value = "设备ID") @PathVariable("uniqid") String uniqid,
+			@ApiParam(required = true, name = "dataType", value = "数据类型，枚举：Temperature, PH, WaterLine, Conductivity") @PathVariable("dataType") String dataType) {
 		System.out.println(uniqid);
 		System.out.println(dataType);
 		if (StringUtils.isEmpty(uniqid) || StringUtils.isEmpty(dataType)) {
@@ -111,31 +122,23 @@ public class QueryFacadeController {
 
 		// TemperatureInfo tCurrent = (TemperatureInfo) queryService
 		// .queryCurrentData(DataTypeEnum.fromString(dataType));
-		DataPointsStatisticsInfo data = new DataPointsStatisticsInfo();
+		DataPointsActiveInfo data = new DataPointsActiveInfo();
 		switch (DataTypeEnum.fromString(dataType)) {
 		case Temperature:
 			data.setCollecttime(new Date());
 			data.setValue("28");
-			data.setMaxvalue("35");
-			data.setMinvalue("15");
 			break;
 		case PH:
 			data.setCollecttime(new Date());
 			data.setValue("7.1");
-			data.setMaxvalue("9");
-			data.setMinvalue("5");
 			break;
 		case WaterLine:
 			data.setCollecttime(new Date());
 			data.setValue("43");
-			data.setMaxvalue("50");
-			data.setMinvalue("25");
 			break;
 		case Conductivity:
 			data.setCollecttime(new Date());
 			data.setValue("140");
-			data.setMaxvalue("330");
-			data.setMinvalue("100");
 			break;
 		default:
 			break;
