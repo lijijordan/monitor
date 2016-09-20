@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.monitor.server.comm.OptObject;
 import com.monitor.server.comm.OptResult;
-import com.monitor.server.comm.OptType;
+import com.monitor.server.comm.OptTypeEum;
 import com.monitor.server.comm.Util;
 import com.monitor.server.dao.EquInfoDao;
 import com.monitor.server.dao.OptInfoDao;
@@ -69,7 +69,7 @@ public class UserEquServiceImpl implements UserEquService {
 		createEqu(equInfo);
 
 		// 记录用户操作记录
-		OptInfo optInfo = Util.createOptInfo(OptType.CREATE.getValue(), OptObject.USEREQU.getValue(),
+		OptInfo optInfo = Util.createOptInfo(OptTypeEum.CREATE.getValue(), OptObject.USEREQU.getValue(),
 				OptResult.SUCCESS.getValue(), userInfo, equInfo);
 		createOptInfo(optInfo);
 

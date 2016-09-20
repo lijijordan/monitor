@@ -91,7 +91,7 @@
 		</property>
 	</bean>
 
-	<!--方式一、使用jdk的实现 -->
+	<!--使用jdk的实现 -->
 	<bean id="ky.requestFactory"
 		class="org.springframework.http.client.SimpleClientHttpRequestFactory">
 		<property name="readTimeout" value="10000" />
@@ -118,6 +118,5 @@
 			</list>
 		</property>
 	</bean>
-
 
 </beans>
