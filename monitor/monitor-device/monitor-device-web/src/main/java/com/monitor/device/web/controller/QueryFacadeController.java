@@ -7,10 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.http.MediaType;
-import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
-import org.springframework.integration.mqtt.support.MqttHeaders;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +31,7 @@ public class QueryFacadeController {
 	private ITemperatureService service;
 	@Resource
 	private IDataQueryService queryService;
-//	@Resource
-//	private MqttPahoMessageHandler mqtt;
+
 
 	public QueryFacadeController() {
 		// TODO Auto-generated constructor stub
@@ -166,12 +161,4 @@ public class QueryFacadeController {
 		}
 	}
 
-	// @RequestMapping(value = "/send")
-	// public void sendMessage() {
-	// Message<String> message = MessageBuilder
-	// .withPayload("==========1111111111111111111111111=========")
-	// .setHeader(MqttHeaders.TOPIC, "robot_server").build();
-	// mqtt.handleMessage(message);
-	// System.out.println("成功");
-	// }
 }
