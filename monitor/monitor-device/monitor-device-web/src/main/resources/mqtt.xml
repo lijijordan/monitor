@@ -22,7 +22,7 @@
 	</bean>  
       
 	<bean id="mqtt" class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler">  
-		<constructor-arg name="clientId" value="fisherserver01"></constructor-arg>  
+		<constructor-arg name="clientId" value="fisherserver02"></constructor-arg>  
 		<constructor-arg name="clientFactory" ref="serverFactory"></constructor-arg>  
 	</bean> 
 	
@@ -35,7 +35,7 @@
   
 	<!-- 消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInbound" client-id="clientfisher01" url="tcp://106.185.35.79:1883"  
+		id="mqttInbound" client-id="clientfisher02" url="tcp://106.185.35.79:1883"  
 		topics="PH,temperature"  
 		qos="1"  
 		client-factory="clientFactory"   
