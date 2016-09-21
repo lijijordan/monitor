@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.device.web.dao.SensorInfoMapper" >
+	<resultMap id="BaseResultMap" type="com.monitor.device.web.model.SensorInfo" >
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="sn" property="sn" jdbcType="VARCHAR" />
+		<result column="devicesn" property="devicesn" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+    id, sn, devicesn, type, alias, remark, status
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+		<include refid="Base_Column_List" />
+    from sensor
+    where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByDeviceSn" resultMap="BaseResultMap" parameterType="com.monitor.common.vo.DataQueryVo" >
+    select 
+		<include refid="Base_Column_List" />
+    from sensor
+    where devicesn = #{deviceSn,jdbcType=VARCHAR} and type=#{dataType,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sensor
+    where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.monitor.device.web.model.SensorInfo" >
+    insert into sensor (id, sn, devicesn, 
+      type, alias, remark, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{devicesn,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{alias,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.monitor.device.web.model.SensorInfo" >
+    insert into sensor
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+        id,
+			</if>
+			<if test="sn != null" >
+        sn,
+			</if>
+			<if test="devicesn != null" >
+        devicesn,
+			</if>
+			<if test="type != null" >
+        type,
+			</if>
+			<if test="alias != null" >
+        alias,
+			</if>
+			<if test="remark != null" >
+        remark,
+			</if>
+			<if test="status != null" >
+        status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+        #{id,jdbcType=BIGINT},
+			</if>
+			<if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="devicesn != null" >
+        #{devicesn,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+        #{type,jdbcType=INTEGER},
+			</if>
+			<if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+        #{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.monitor.device.web.model.SensorInfo" >
+    update sensor
+		<set >
+			<if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="devicesn != null" >
+        devicesn = #{devicesn,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+    where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.monitor.device.web.model.SensorInfo" >
+    update sensor
+    set sn = #{sn,jdbcType=VARCHAR},
+      devicesn = #{devicesn,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      alias = #{alias,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

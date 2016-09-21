@@ -4,7 +4,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum QueryScopeEnum {
-	Last60Minute, Last24Hour, Last30Day, Last3Months, LastOneYear, All;
+	Day(1, "Day"), Week(2, "Week"), Month(3, "Month");
+
+	private int key;
+	private String val;
+
+	public int getKey() {
+		return key;
+	}
+
+	public void setKey(int key) {
+		this.key = key;
+	}
+
+	public String getVal() {
+		return val;
+	}
+
+	public void setVal(String val) {
+		this.val = val;
+	}
+
+	QueryScopeEnum(int key, String val) {
+		this.key = key;
+		this.val = val;
+	}
+
 	// Implementing a fromString method on an enum type
 	private static final Map<String, QueryScopeEnum> stringToEnum = new HashMap<String, QueryScopeEnum>();
 	static {

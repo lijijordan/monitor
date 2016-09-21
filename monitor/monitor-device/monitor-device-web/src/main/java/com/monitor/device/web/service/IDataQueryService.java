@@ -2,11 +2,10 @@ package com.monitor.device.web.service;
 
 import java.util.List;
 
-import com.monitor.common.define.DataTypeEnum;
-import com.monitor.common.define.QueryScopeEnum;
+import com.monitor.common.vo.DataQueryVo;
 
-public interface IDataQueryService<T> {
-	T queryCurrentData(DataTypeEnum type);
+public interface IDataQueryService {
+	List<Object> queryHistoryData(DataQueryVo vo);
 
-	List<T> queryHistoryData(DataTypeEnum type, QueryScopeEnum scope);
+	Object queryCurrentData(DataQueryVo vo);
 }

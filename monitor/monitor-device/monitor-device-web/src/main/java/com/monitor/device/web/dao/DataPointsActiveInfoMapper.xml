@@ -16,6 +16,13 @@
     from datapointsactive
     where id = #{id,jdbcType=BIGINT}
 	</select>
+	<select id="selectByDeviceSn" resultMap="BaseResultMap" parameterType="com.monitor.common.vo.DataQueryVo" >
+	    select dp.id,dp.sensorid,dp.collecttime,dp.`value`
+		 from datapointsActive dp 
+			join sensor ss 
+			on dp.sensorid=ss.id
+		where ss.devicesn=#{deviceSn,jdbcType=VARCHAR} and ss.`type`=#{dataType,jdbcType=INTEGER}
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from datapointsactive
     where id = #{id,jdbcType=BIGINT}

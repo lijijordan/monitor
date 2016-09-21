@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.print.attribute.standard.Media;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.MediaType;
+import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
+import org.springframework.integration.mqtt.support.MqttHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,16 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.monitor.common.define.DataTypeEnum;
 import com.monitor.common.define.ResponseEnum;
 import com.monitor.common.model.DataPointsActiveInfo;
-import com.monitor.common.model.DataPointsInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
-import com.monitor.device.web.model.TemperatureInfo;
 import com.monitor.device.web.service.IDataQueryService;
 import com.monitor.device.web.service.ITemperatureService;
-import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import com.wordnik.swagger.annotations.ApiResponse;
 
 @Controller
 @RequestMapping("/datafacade")
@@ -36,7 +34,9 @@ public class QueryFacadeController {
 	@Resource
 	private ITemperatureService service;
 	@Resource
-	private IDataQueryService<Object> queryService;
+	private IDataQueryService queryService;
+//	@Resource
+//	private MqttPahoMessageHandler mqtt;
 
 	public QueryFacadeController() {
 		// TODO Auto-generated constructor stub
@@ -77,18 +77,25 @@ public class QueryFacadeController {
 				data.setMaxvalue("9");
 				data.setMinvalue("5");
 				break;
-			case WaterLine:
+			case Salinity:
 				data.setCollecttime(new Date());
-				data.setValue("43");
-				data.setMaxvalue("50");
-				data.setMinvalue("25");
+				data.setValue("1.025");
+				data.setMaxvalue("1.5");
+				data.setMinvalue("0.9");
 				break;
-			case Conductivity:
+			case TDS:
 				data.setCollecttime(new Date());
 				data.setValue("140");
 				data.setMaxvalue("330");
 				data.setMinvalue("100");
 				break;
+			case Light:
+				data.setCollecttime(new Date());
+				data.setValue("80");
+				data.setMaxvalue("100");
+				data.setMinvalue("50");
+				break;
+
 			default:
 				break;
 			}
@@ -132,13 +139,17 @@ public class QueryFacadeController {
 			data.setCollecttime(new Date());
 			data.setValue("7.1");
 			break;
-		case WaterLine:
+		case Salinity:
 			data.setCollecttime(new Date());
-			data.setValue("43");
+			data.setValue("1.026");
 			break;
-		case Conductivity:
+		case TDS:
 			data.setCollecttime(new Date());
 			data.setValue("140");
+			break;
+		case Light:
+			data.setCollecttime(new Date());
+			data.setValue("85");
 			break;
 		default:
 			break;
@@ -154,4 +165,13 @@ public class QueryFacadeController {
 			return response;
 		}
 	}
+
+	// @RequestMapping(value = "/send")
+	// public void sendMessage() {
+	// Message<String> message = MessageBuilder
+	// .withPayload("==========1111111111111111111111111=========")
+	// .setHeader(MqttHeaders.TOPIC, "robot_server").build();
+	// mqtt.handleMessage(message);
+	// System.out.println("成功");
+	// }
 }
