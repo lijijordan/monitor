@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.monitor.common.model.DataPointsInfo;
 import com.monitor.common.vo.ResponseVo;
-import com.monitor.server.comm.StaticFinalStr;
+import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.web.service.SensorService;
 
 /**
@@ -24,10 +24,10 @@ public class SensorServiceImpl implements SensorService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public ResponseVo<DataPointsInfo> getSensorCurVal(String equID, String sensorType) {
+	public ResponseVo<DataPointsInfo> getCurSensorValByType(String equID, String sensorType) {
 
 		StringBuffer url = new StringBuffer();
-		url.append(StaticFinalStr.DEVICERESTURL);
+		url.append(ConstantObject.DEVICER_EST_URL);
 		url.append("getCurrent/");
 		url.append(equID);
 		url.append("/");
@@ -40,10 +40,9 @@ public class SensorServiceImpl implements SensorService {
 	}
 
 	@Override
-	public ResponseVo<DataPointsInfo> getSensorVals(String equID, String sensorType,
-			String timePeriod) {
+	public ResponseVo<DataPointsInfo> getSensorValsByPeriod(String equID, String sensorType, String timePeriod) {
 		StringBuffer url = new StringBuffer();
-		url.append(StaticFinalStr.DEVICERESTURL);
+		url.append(ConstantObject.DEVICER_EST_URL);
 		url.append("getList/");
 		url.append(equID);
 		url.append("/");

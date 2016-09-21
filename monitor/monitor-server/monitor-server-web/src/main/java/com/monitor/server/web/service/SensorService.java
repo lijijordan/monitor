@@ -19,7 +19,7 @@ public interface SensorService {
 	 * @param sensorType
 	 * @return
 	 */
-	public ResponseVo<DataPointsInfo> getSensorCurVal(String equID, String sensorType);
+	public ResponseVo<DataPointsInfo> getCurSensorValByType(String equID, String sensorType);
 
 	/**
 	 * 获取传感器一段时间的数据
@@ -29,6 +29,6 @@ public interface SensorService {
 	 * @param timePeriod
 	 * @return
 	 */
-	public ResponseVo<DataPointsInfo> getSensorVals(String equID, String sensorType, String timePeriod);
+	public ResponseVo<DataPointsInfo> getSensorValsByPeriod(String equID, String sensorType, String timePeriod);
 
 }
