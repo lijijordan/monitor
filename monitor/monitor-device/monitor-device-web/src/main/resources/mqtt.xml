@@ -22,7 +22,7 @@
 	</bean>  
       
 	<bean id="mqtt" class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler">  
-		<constructor-arg name="clientId" value="fisherserver02"></constructor-arg>  
+		<constructor-arg name="clientId" value="fisherserver01"></constructor-arg>  
 		<constructor-arg name="clientFactory" ref="serverFactory"></constructor-arg>  
 	</bean> 
 	
@@ -33,22 +33,39 @@
 		<property name="password" value="fisher" />  
 	</bean>  
   
-	<!-- 消息适配器 -->  
+	<bean id="mqttConverter" class="com.monitor.device.web.common.MqttUtf8MessageConverter" />
+	<!-- PH消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInbound" client-id="clientfisher02" url="tcp://106.185.35.79:1883"  
-		topics="PH,temperature"  
+		id="mqttInboundPH" client-id="clientfisherPH" url="tcp://106.185.35.79:1883"  
+		topics="PH"  
 		qos="1"  
 		client-factory="clientFactory"   
 		auto-startup="true"  
 		send-timeout="12"
 		converter="mqttConverter"
-		channel="startCase" />  
+		channel="phChannel" />  
 
-	<int:channel id="startCase" />     
+	<int:channel id="phChannel" />     
 	<!-- 消息处理类-->   
-	<int:service-activator id="startCaseService"  
-		input-channel="startCase" ref="mqttCaseService" method="startCase" />
-	<bean id="mqttCaseService" class="com.monitor.device.web.service.MessageReceiverService" />  
-	<bean id="mqttConverter" class="com.monitor.device.web.common.MqttUtf8MessageConverter" />
-		      
+	<int:service-activator id="phChannelService"  
+		input-channel="phChannel" ref="mqttPHService" method="process" />
+	<bean id="mqttPHService" class="com.monitor.device.web.service.PHMessageReceiverService" />  
+	<!-- PH消息适配器结束 -->  
+	<!-- 温度消息适配器 -->  
+	<int-mqtt:message-driven-channel-adapter  
+		id="mqttInboundTemperature" client-id="clientfisherTemperature" url="tcp://106.185.35.79:1883"  
+		topics="temperature"  
+		qos="1"  
+		client-factory="clientFactory"   
+		auto-startup="true"  
+		send-timeout="12"
+		converter="mqttConverter"
+		channel="temperatureChannel" />  
+
+	<int:channel id="temperatureChannel" />     
+	<!-- 消息处理类-->   
+	<int:service-activator id="temperatureChannelService"  
+		input-channel="temperatureChannel" ref="mqttTemperatureService" method="process" />
+	<bean id="mqttTemperatureService" class="com.monitor.device.web.service.TemperatureMessageReceiverService" />  
+	<!-- 温度消息适配器结束 -->  
 </beans>  

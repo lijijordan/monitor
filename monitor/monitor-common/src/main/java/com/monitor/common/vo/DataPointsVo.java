@@ -12,6 +12,16 @@ public class DataPointsVo {
 
 	private String deviceSn;
 	private int dataType;
+	private String dataTypeText;
+
+	public String getDataTypeText() {
+		return dataTypeText;
+	}
+
+	public void setDataTypeText(String dataTypeText) {
+		this.dataTypeText = dataTypeText;
+	}
+
 	private String value;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date collectTime;
