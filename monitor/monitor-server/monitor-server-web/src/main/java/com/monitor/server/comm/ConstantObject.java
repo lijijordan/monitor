@@ -14,10 +14,14 @@ public final class ConstantObject {
 
 	public static final String SENSOR_TYPE_TEMPERATURE = "temperature";
 
-	public static final String SENSOR_TYPE_SALINITY = "salinity";
-
-	public static final String SENSOR_TYPE_TDS = "tds";
+	public static final String SENSOR_TYPE_EC = "ec";
 
 	public static final String SENSOR_TYPE_LIGHT = "light";
+
+	public static final String TIMEPERIOD_DAY = "day";
+
+	public static final String TIMEPERIOD_WEEK = "week";
+
+	public static final String TIMEPERIOD_MONTH = "month";
 
 }

@@ -3,27 +3,18 @@ package com.monitor.server.comm;
 import java.io.Serializable;
 
 /**
- * 各种健康度值汇总值
+ * 各种传感器值汇总值
  * 
  * @author yinhong
  *
  */
-public class HealthInfo implements Serializable {
+public class CurSensorInfo implements Serializable {
 
-	private static final long serialVersionUID = -3012865911439119568L;
+	private static final long serialVersionUID = 6834622589607657812L;
 	private String ph;
 	private String temperature;
-	private String ec;
 	private String light;
-	private String average;
-
-	public String getAverage() {
-		return average;
-	}
-
-	public void setAverage(String average) {
-		this.average = average;
-	}
+	private String ec;
 
 	public String getPh() {
 		return ph;
