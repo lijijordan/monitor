@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.monitor.common.model.DataPointsActiveInfo;
 import com.monitor.common.model.DataPointsInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
@@ -44,116 +45,136 @@ public class SensorController {
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID) {
 
 		// 获取相关显示数据
-		ResponseVo<CurSensorInfo> curSensorInfo = getAllSensorCurVal(userID,
-				equID);
-		ResponseVo<AllPastSensorInfo> allPastSensorInfo = getAllSensorPastVal(
-				userID, equID);
-		ResponseVo<HealthInfo> healthInfo = getSensorEntiretyHealth(userID,
-				equID);
+		ResponseVo<CurSensorInfo> curSensorInfo = getAllSensorCurVal(userID, equID);
+		ResponseVo<AllPastSensorInfo> allPastSensorInfo = getAllSensorPastVal(userID, equID);
+		ResponseVo<HealthInfo> healthInfo = getSensorEntiretyHealth(userID, equID);
 
 		HomePageInfo homePageInfo = new HomePageInfo();
 
 		// 获取当前传感器值
-		homePageInfo.setEcCurValue(curSensorInfo.getContent().getEc());
-		homePageInfo
-				.setTempCurValue(curSensorInfo.getContent().getTemperature());
+		homePageInfo.setSalinityCurValue(curSensorInfo.getContent().getSalinity());
+		homePageInfo.setTdsCurValue(curSensorInfo.getContent().getTds());
+		homePageInfo.setTempCurValue(curSensorInfo.getContent().getTemperature());
 		homePageInfo.setLightCurValue(curSensorInfo.getContent().getLight());
 		homePageInfo.setPhCurValue(curSensorInfo.getContent().getPh());
 
 		// 获取当前健康度
 		homePageInfo.setAverageHealth(healthInfo.getContent().getAverage());
-		homePageInfo.setEcHealth(healthInfo.getContent().getEc());
+		homePageInfo.setSalinityHealth(healthInfo.getContent().getSalinity());
+		homePageInfo.setTdsHealth(healthInfo.getContent().getTds());
 		homePageInfo.setPhHealth(healthInfo.getContent().getPh());
 		homePageInfo.setLightHealth(healthInfo.getContent().getLight());
 		homePageInfo.setTempHealth(healthInfo.getContent().getTemperature());
 
-		// EC历史值
-		homePageInfo.setEcAverageValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getEcValue().getValue());
-		homePageInfo.setEcMaxValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getEcValue().getMaxvalue());
-		homePageInfo.setEcMinValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getEcValue().getMinvalue());
+		// TDS历史值
+		homePageInfo.setTdsAverageValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getDtsValue().getValue());
+		homePageInfo
+				.setTdsMaxValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getDtsValue().getMaxvalue());
+		homePageInfo
+				.setTdsMinValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getDtsValue().getMinvalue());
 
-		homePageInfo.setEcAverageValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getEcValue().getValue());
-		homePageInfo.setEcMaxValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getEcValue().getMaxvalue());
-		homePageInfo.setEcMinValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getEcValue().getMinvalue());
+		homePageInfo.setTdsAverageValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getDtsValue().getValue());
+		homePageInfo.setTdsMaxValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getDtsValue().getMaxvalue());
+		homePageInfo.setTdsMinValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getDtsValue().getMinvalue());
 
-		homePageInfo.setEcAverageValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getEcValue().getValue());
-		homePageInfo.setEcMaxValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getEcValue().getMaxvalue());
-		homePageInfo.setEcMinValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getEcValue().getMinvalue());
+		homePageInfo.setTdsAverageValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getDtsValue().getValue());
+		homePageInfo.setTdsMaxValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getDtsValue().getMaxvalue());
+		homePageInfo.setTdsMinValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getDtsValue().getMinvalue());
+
+		// Salinity历史值
+		homePageInfo.setSalinityAverageValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getSalinityValue().getValue());
+		homePageInfo.setSalinityMaxValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getSalinityValue().getMaxvalue());
+		homePageInfo.setSalinityMinValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getSalinityValue().getMinvalue());
+
+		homePageInfo.setSalinityAverageValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getSalinityValue().getValue());
+		homePageInfo.setSalinityMaxValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getSalinityValue().getMaxvalue());
+		homePageInfo.setSalinityMinValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getSalinityValue().getMinvalue());
+
+		homePageInfo.setSalinityAverageValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getSalinityValue().getValue());
+		homePageInfo.setSalinityMaxValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getSalinityValue().getMaxvalue());
+		homePageInfo.setSalinityMinValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getSalinityValue().getMinvalue());
 
 		// 灯光历史值
-		homePageInfo.setLightAverageValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getLightValue().getValue());
-		homePageInfo.setLightMaxValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getLightValue().getMaxvalue());
-		homePageInfo.setLightMinValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getLightValue().getMinvalue());
+		homePageInfo.setLightAverageValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getLightValue().getValue());
+		homePageInfo.setLightMaxValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getLightValue().getMaxvalue());
+		homePageInfo.setLightMinValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getLightValue().getMinvalue());
 
-		homePageInfo.setLightAverageValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getLightValue().getValue());
-		homePageInfo.setLightMaxValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getLightValue().getMaxvalue());
-		homePageInfo.setLightMinValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getLightValue().getMinvalue());
+		homePageInfo.setLightAverageValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getLightValue().getValue());
+		homePageInfo.setLightMaxValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getLightValue().getMaxvalue());
+		homePageInfo.setLightMinValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getLightValue().getMinvalue());
 
-		homePageInfo.setLightAverageValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getLightValue().getValue());
-		homePageInfo.setLightMaxValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getLightValue().getMaxvalue());
-		homePageInfo.setLightMinValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getLightValue().getMinvalue());
+		homePageInfo.setLightAverageValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getLightValue().getValue());
+		homePageInfo.setLightMaxValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getLightValue().getMaxvalue());
+		homePageInfo.setLightMinValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getLightValue().getMinvalue());
 
 		// PH历史值
-		homePageInfo.setPhAverageValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getPhValue().getValue());
-		homePageInfo.setPhMaxValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getPhValue().getMaxvalue());
-		homePageInfo.setPhMinValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getPhValue().getMinvalue());
+		homePageInfo
+				.setPhAverageValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getPhValue().getValue());
+		homePageInfo
+				.setPhMaxValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getPhValue().getMaxvalue());
+		homePageInfo
+				.setPhMinValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getPhValue().getMinvalue());
 
-		homePageInfo.setPhAverageValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getPhValue().getValue());
-		homePageInfo.setPhMaxValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getPhValue().getMaxvalue());
-		homePageInfo.setPhMinValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getPhValue().getMinvalue());
+		homePageInfo.setPhAverageValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getPhValue().getValue());
+		homePageInfo
+				.setPhMaxValueByWeek(allPastSensorInfo.getContent().getWeekPastSensorInfo().getPhValue().getMaxvalue());
+		homePageInfo
+				.setPhMinValueByWeek(allPastSensorInfo.getContent().getWeekPastSensorInfo().getPhValue().getMinvalue());
 
-		homePageInfo.setPhAverageValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getPhValue().getValue());
-		homePageInfo.setPhMaxValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getPhValue().getMaxvalue());
-		homePageInfo.setPhMinValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getPhValue().getMinvalue());
+		homePageInfo.setPhAverageValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getPhValue().getValue());
+		homePageInfo.setPhMaxValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getPhValue().getMaxvalue());
+		homePageInfo.setPhMinValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getPhValue().getMinvalue());
 
 		// 温度历史值
-		homePageInfo.setTempAverageValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getTempValue().getValue());
-		homePageInfo.setTempMaxValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getTempValue().getMaxvalue());
-		homePageInfo.setTempMinValueByDay(allPastSensorInfo.getContent()
-				.getDayPastSensorInfo().getTempValue().getMinvalue());
+		homePageInfo.setTempAverageValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getTempValue().getValue());
+		homePageInfo.setTempMaxValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getTempValue().getMaxvalue());
+		homePageInfo.setTempMinValueByDay(
+				allPastSensorInfo.getContent().getDayPastSensorInfo().getTempValue().getMinvalue());
 
-		homePageInfo.setTempAverageValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getTempValue().getValue());
-		homePageInfo.setTempMaxValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getTempValue().getMaxvalue());
-		homePageInfo.setTempMinValueByWeek(allPastSensorInfo.getContent()
-				.getWeekPastSensorInfo().getTempValue().getMinvalue());
+		homePageInfo.setTempAverageValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getTempValue().getValue());
+		homePageInfo.setTempMaxValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getTempValue().getMaxvalue());
+		homePageInfo.setTempMinValueByWeek(
+				allPastSensorInfo.getContent().getWeekPastSensorInfo().getTempValue().getMinvalue());
 
-		homePageInfo.setTempAverageValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getTempValue().getValue());
-		homePageInfo.setTempMaxValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getTempValue().getMaxvalue());
-		homePageInfo.setTempMinValueByMonth(allPastSensorInfo.getContent()
-				.getMonthPastSensorInfo().getTempValue().getMinvalue());
+		homePageInfo.setTempAverageValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getTempValue().getValue());
+		homePageInfo.setTempMaxValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getTempValue().getMaxvalue());
+		homePageInfo.setTempMinValueByMonth(
+				allPastSensorInfo.getContent().getMonthPastSensorInfo().getTempValue().getMinvalue());
 
 		return homePageInfo;
 	}
@@ -168,20 +189,23 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取各个传感器的值
-		ResponseVo<DataPointsInfo> phCurrentValue = getSensorCurValByType(
-				userID, equID, ConstantObject.SENSOR_TYPE_PH);
-		ResponseVo<DataPointsInfo> tempCurrentValue = getSensorCurValByType(
-				userID, equID, ConstantObject.SENSOR_TYPE_TEMPERATURE);
-		ResponseVo<DataPointsInfo> ecCurrentValue = getSensorCurValByType(
-				userID, equID, ConstantObject.SENSOR_TYPE_EC);
-		ResponseVo<DataPointsInfo> lightCurrentValue = getSensorCurValByType(
-				userID, equID, ConstantObject.SENSOR_TYPE_LIGHT);
+		ResponseVo<DataPointsActiveInfo> phCurrentValue = getSensorCurValByType(userID, equID,
+				ConstantObject.SENSOR_TYPE_PH);
+		ResponseVo<DataPointsActiveInfo> tempCurrentValue = getSensorCurValByType(userID, equID,
+				ConstantObject.SENSOR_TYPE_TEMPERATURE);
+		ResponseVo<DataPointsActiveInfo> salinityCurrentValue = getSensorCurValByType(userID, equID,
+				ConstantObject.SENSOR_TYPE_SALINITY);
+		ResponseVo<DataPointsActiveInfo> lightCurrentValue = getSensorCurValByType(userID, equID,
+				ConstantObject.SENSOR_TYPE_LIGHT);
+		ResponseVo<DataPointsActiveInfo> tdsCurrentValue = getSensorCurValByType(userID, equID,
+				ConstantObject.SENSOR_TYPE_TDS);
 
 		// 将各个传感器的值都封装到一个对象
 		CurSensorInfo curSensorInfo = new CurSensorInfo();
 		curSensorInfo.setPh(phCurrentValue.getContent().getValue());
 		curSensorInfo.setLight(lightCurrentValue.getContent().getValue());
-		curSensorInfo.setEc(ecCurrentValue.getContent().getValue());
+		curSensorInfo.setTds(tdsCurrentValue.getContent().getValue());
+		curSensorInfo.setSalinity(salinityCurrentValue.getContent().getValue());
 		curSensorInfo.setTemperature(tempCurrentValue.getContent().getValue());
 
 		ResponseVo<CurSensorInfo> responseVo = new ResponseVo<CurSensorInfo>();
@@ -202,19 +226,17 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取所有传感器历史值（天、周、月）
-		ResponseVo<PastSensorInfo> dayPastSensorInfo = getSensorValsByPeriod(
-				userID, equID, ConstantObject.TIMEPERIOD_DAY);
-		ResponseVo<PastSensorInfo> weekPastSensorInfo = getSensorValsByPeriod(
-				userID, equID, ConstantObject.TIMEPERIOD_WEEK);
-		ResponseVo<PastSensorInfo> monthPastSensorInfo = getSensorValsByPeriod(
-				userID, equID, ConstantObject.TIMEPERIOD_MONTH);
+		ResponseVo<PastSensorInfo> dayPastSensorInfo = getSensorValsByPeriod(userID, equID,
+				ConstantObject.TIMEPERIOD_DAY);
+		ResponseVo<PastSensorInfo> weekPastSensorInfo = getSensorValsByPeriod(userID, equID,
+				ConstantObject.TIMEPERIOD_WEEK);
+		ResponseVo<PastSensorInfo> monthPastSensorInfo = getSensorValsByPeriod(userID, equID,
+				ConstantObject.TIMEPERIOD_MONTH);
 
 		AllPastSensorInfo allPastSensorInfo = new AllPastSensorInfo();
 		allPastSensorInfo.setDayPastSensorInfo(dayPastSensorInfo.getContent());
-		allPastSensorInfo
-				.setMonthPastSensorInfo(monthPastSensorInfo.getContent());
-		allPastSensorInfo
-				.setWeekPastSensorInfo(weekPastSensorInfo.getContent());
+		allPastSensorInfo.setMonthPastSensorInfo(monthPastSensorInfo.getContent());
+		allPastSensorInfo.setWeekPastSensorInfo(weekPastSensorInfo.getContent());
 
 		ResponseVo<AllPastSensorInfo> responseVo = new ResponseVo<AllPastSensorInfo>();
 		responseVo.setStatus(dayPastSensorInfo.getStatus());
@@ -236,7 +258,8 @@ public class SensorController {
 		healthInfo.setAverage("91");
 		healthInfo.setPh("80");
 		healthInfo.setLight("89");
-		healthInfo.setEc("89");
+		healthInfo.setSalinity("89");
+		healthInfo.setTds("90");
 		healthInfo.setTemperature("95");
 
 		ResponseVo<HealthInfo> responseVo = new ResponseVo<HealthInfo>();
@@ -250,16 +273,15 @@ public class SensorController {
 	@ApiOperation(value = "获取某类型传感器当前值", httpMethod = "GET", notes = "获取用户某个设备某类型传感器当前值")
 	@RequestMapping(value = "/getSensorCurValByType/{userID}/{equID}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseVo<DataPointsInfo> getSensorCurValByType(
+	public ResponseVo<DataPointsActiveInfo> getSensorCurValByType(
 			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
-			@ApiParam(required = true, name = "sensorType", value = "传感器类型（ph,temperature,ec,light）") @PathVariable("sensorType") String sensorType) {
+			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType) {
 
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 从设备获取传感器的值
-		ResponseVo<DataPointsInfo> responseVo = sensorService
-				.getCurSensorValByType(equID, sensorType);
+		ResponseVo<DataPointsActiveInfo> responseVo = sensorService.getCurSensorValByType(equID, sensorType);
 
 		return responseVo;
 	}
@@ -270,14 +292,14 @@ public class SensorController {
 	public ResponseVo<DataPointsStatisticsInfo> getSensorValByPeriod(
 			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
-			@ApiParam(required = true, name = "sensorType", value = "传感器类型（ph,temperature,ec,light）") @PathVariable("sensorType") String sensorType,
-			@ApiParam(required = true, name = "timePeriod", value = "时间周期（day,week,month）") @PathVariable("timePeriod") String timePeriod) {
+			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType,
+			@ApiParam(required = true, name = "timePeriod", value = "时间周期（Day,Week,Month）") @PathVariable("timePeriod") String timePeriod) {
 
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 从设备获取传感器的值
-		ResponseVo<DataPointsStatisticsInfo> responseVo = sensorService
-				.getSensorValsByPeriod(equID, sensorType, timePeriod);
+		ResponseVo<DataPointsStatisticsInfo> responseVo = sensorService.getSensorValsByPeriod(equID, sensorType,
+				timePeriod);
 
 		return responseVo;
 	}
@@ -288,26 +310,28 @@ public class SensorController {
 	public ResponseVo<PastSensorInfo> getSensorValsByPeriod(
 			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
-			@ApiParam(required = true, name = "timePeriod", value = "时间周期（day,week,month）") @PathVariable("timePeriod") String timePeriod) {
+			@ApiParam(required = true, name = "timePeriod", value = "时间周期（Day,Week,Month）") @PathVariable("timePeriod") String timePeriod) {
 
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取各个传感器某个周期的值
-		ResponseVo<DataPointsStatisticsInfo> phValue = getSensorValByPeriod(
-				userID, equID, ConstantObject.SENSOR_TYPE_PH, timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> tempValue = getSensorValByPeriod(
-				userID, equID, ConstantObject.SENSOR_TYPE_TEMPERATURE,
-				timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> ecValue = getSensorValByPeriod(
-				userID, equID, ConstantObject.SENSOR_TYPE_EC, timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> lightValue = getSensorValByPeriod(
-				userID, equID, ConstantObject.SENSOR_TYPE_LIGHT, timePeriod);
+		ResponseVo<DataPointsStatisticsInfo> phValue = getSensorValByPeriod(userID, equID,
+				ConstantObject.SENSOR_TYPE_PH, timePeriod);
+		ResponseVo<DataPointsStatisticsInfo> tempValue = getSensorValByPeriod(userID, equID,
+				ConstantObject.SENSOR_TYPE_TEMPERATURE, timePeriod);
+		ResponseVo<DataPointsStatisticsInfo> salinityValue = getSensorValByPeriod(userID, equID,
+				ConstantObject.SENSOR_TYPE_SALINITY, timePeriod);
+		ResponseVo<DataPointsStatisticsInfo> lightValue = getSensorValByPeriod(userID, equID,
+				ConstantObject.SENSOR_TYPE_LIGHT, timePeriod);
+		ResponseVo<DataPointsStatisticsInfo> dtsValue = getSensorValByPeriod(userID, equID,
+				ConstantObject.SENSOR_TYPE_TDS, timePeriod);
 
 		PastSensorInfo pastSensorInfo = new PastSensorInfo();
-		pastSensorInfo.setEcValue(ecValue.getContent());
+		pastSensorInfo.setSalinityValue(salinityValue.getContent());
 		pastSensorInfo.setLightValue(lightValue.getContent());
 		pastSensorInfo.setPhValue(phValue.getContent());
 		pastSensorInfo.setTempValue(tempValue.getContent());
+		pastSensorInfo.setDtsValue(dtsValue.getContent());
 
 		ResponseVo<PastSensorInfo> responseVo = new ResponseVo<PastSensorInfo>();
 		responseVo.setStatus(phValue.getStatus());

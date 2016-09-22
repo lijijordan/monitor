@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.model.DataPointsActiveInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.ConstantObject;
@@ -25,7 +25,7 @@ public class SensorServiceImpl implements SensorService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public ResponseVo<DataPointsInfo> getCurSensorValByType(String equID, String sensorType) {
+	public ResponseVo<DataPointsActiveInfo> getCurSensorValByType(String equID, String sensorType) {
 
 		StringBuffer url = new StringBuffer();
 		url.append(ConstantObject.DEVICER_EST_URL);
@@ -35,7 +35,7 @@ public class SensorServiceImpl implements SensorService {
 		url.append(sensorType);
 
 		@SuppressWarnings("unchecked")
-		ResponseVo<DataPointsInfo> responseVo = restTemplate.getForObject(url.toString(), ResponseVo.class);
+		ResponseVo<DataPointsActiveInfo> responseVo = restTemplate.getForObject(url.toString(), ResponseVo.class);
 
 		return responseVo;
 	}

@@ -3,7 +3,7 @@
  */
 package com.monitor.server.web.service;
 
-import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.model.DataPointsActiveInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 
@@ -20,7 +20,7 @@ public interface SensorService {
 	 * @param sensorType
 	 * @return
 	 */
-	public ResponseVo<DataPointsInfo> getCurSensorValByType(String equID, String sensorType);
+	public ResponseVo<DataPointsActiveInfo> getCurSensorValByType(String equID, String sensorType);
 
 	/**
 	 * 获取传感器一段时间的数据

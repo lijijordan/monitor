@@ -13,8 +13,9 @@ public class HealthInfo implements Serializable {
 	private static final long serialVersionUID = -3012865911439119568L;
 	private String ph;
 	private String temperature;
-	private String ec;
 	private String light;
+	private String salinity;
+	private String tds;
 	private String average;
 
 	public String getAverage() {
@@ -41,20 +42,28 @@ public class HealthInfo implements Serializable {
 		this.temperature = temperature;
 	}
 
-	public String getEc() {
-		return ec;
-	}
-
-	public void setEc(String ec) {
-		this.ec = ec;
-	}
-
 	public String getLight() {
 		return light;
 	}
 
 	public void setLight(String light) {
 		this.light = light;
+	}
+
+	public String getSalinity() {
+		return salinity;
+	}
+
+	public void setSalinity(String salinity) {
+		this.salinity = salinity;
+	}
+
+	public String getTds() {
+		return tds;
+	}
+
+	public void setTds(String tds) {
+		this.tds = tds;
 	}
 
 }

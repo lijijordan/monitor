@@ -13,68 +13,71 @@ public class HomePageInfo implements Serializable {
 	private static final long serialVersionUID = 4048394528299011947L;
 
 	private String phCurValue;
-	private String ecCurValue;
+	private String salinityCurValue;
+	private String tdsCurValue;
 	private String tempCurValue;
 	private String lightCurValue;
 
 	private String averageHealth;
 	private String phHealth;
-	private String ecHealth;
+	private String salinityHealth;
+	private String tdsHealth;
 	private String tempHealth;
 	private String lightHealth;
 
 	private String phAverageValueByDay;
-	private String ecAverageValueByDay;
+	private String salinityAverageValueByDay;
+	private String tdsAverageValueByDay;
 	private String tempAverageValueByDay;
 	private String lightAverageValueByDay;
 
 	private String phAverageValueByWeek;
-	private String ecAverageValueByWeek;
+	private String salinityAverageValueByWeek;
+	private String tdsAverageValueByWeek;
 	private String tempAverageValueByWeek;
 	private String lightAverageValueByWeek;
 
 	private String phAverageValueByMonth;
-	private String ecAverageValueByMonth;
+	private String salinityAverageValueByMonth;
+	private String tdsAverageValueByMonth;
 	private String tempAverageValueByMonth;
 	private String lightAverageValueByMonth;
 
 	private String phMaxValueByDay;
-	private String ecMaxValueByDay;
+	private String salinityMaxValueByDay;
+	private String tdsMaxValueByDay;
 	private String tempMaxValueByDay;
 	private String lightMaxValueByDay;
 
 	private String phMaxValueByWeek;
-	private String ecMaxValueByWeek;
+	private String salinityMaxValueByWeek;
+	private String tdsMaxValueByWeek;
 	private String tempMaxValueByWeek;
 	private String lightMaxValueByWeek;
 
 	private String phMaxValueByMonth;
-	private String ecMaxValueByMonth;
+	private String salinityMaxValueByMonth;
+	private String tdsMaxValueByMonth;
 	private String tempMaxValueByMonth;
 	private String lightMaxValueByMonth;
 
 	private String phMinValueByDay;
-	private String ecMinValueByDay;
+	private String salinityMinValueByDay;
+	private String tdsMinValueByDay;
 	private String tempMinValueByDay;
 	private String lightMinValueByDay;
 
 	private String phMinValueByWeek;
-	private String ecMinValueByWeek;
+	private String salinityMinValueByWeek;
+	private String tdsMinValueByWeek;
 	private String tempMinValueByWeek;
 	private String lightMinValueByWeek;
 
 	private String phMinValueByMonth;
-	private String ecMinValueByMonth;
+	private String salinityMinValueByMonth;
+	private String tdsMinValueByMonth;
 	private String tempMinValueByMonth;
 	private String lightMinValueByMonth;
-
-	public String getAverageHealth() {
-		return averageHealth;
-	}
-
-	public void setAverageHealth(String averageHealth) {
-		this.averageHealth = averageHealth;
-	}
 
 	public String getPhCurValue() {
 		return phCurValue;
@@ -84,12 +87,20 @@ public class HomePageInfo implements Serializable {
 		this.phCurValue = phCurValue;
 	}
 
-	public String getEcCurValue() {
-		return ecCurValue;
+	public String getSalinityCurValue() {
+		return salinityCurValue;
 	}
 
-	public void setEcCurValue(String ecCurValue) {
-		this.ecCurValue = ecCurValue;
+	public void setSalinityCurValue(String salinityCurValue) {
+		this.salinityCurValue = salinityCurValue;
+	}
+
+	public String getTdsCurValue() {
+		return tdsCurValue;
+	}
+
+	public void setTdsCurValue(String tdsCurValue) {
+		this.tdsCurValue = tdsCurValue;
 	}
 
 	public String getTempCurValue() {
@@ -108,6 +119,14 @@ public class HomePageInfo implements Serializable {
 		this.lightCurValue = lightCurValue;
 	}
 
+	public String getAverageHealth() {
+		return averageHealth;
+	}
+
+	public void setAverageHealth(String averageHealth) {
+		this.averageHealth = averageHealth;
+	}
+
 	public String getPhHealth() {
 		return phHealth;
 	}
@@ -116,12 +135,20 @@ public class HomePageInfo implements Serializable {
 		this.phHealth = phHealth;
 	}
 
-	public String getEcHealth() {
-		return ecHealth;
+	public String getSalinityHealth() {
+		return salinityHealth;
 	}
 
-	public void setEcHealth(String ecHealth) {
-		this.ecHealth = ecHealth;
+	public void setSalinityHealth(String salinityHealth) {
+		this.salinityHealth = salinityHealth;
+	}
+
+	public String getTdsHealth() {
+		return tdsHealth;
+	}
+
+	public void setTdsHealth(String tdsHealth) {
+		this.tdsHealth = tdsHealth;
 	}
 
 	public String getTempHealth() {
@@ -148,12 +175,20 @@ public class HomePageInfo implements Serializable {
 		this.phAverageValueByDay = phAverageValueByDay;
 	}
 
-	public String getEcAverageValueByDay() {
-		return ecAverageValueByDay;
+	public String getSalinityAverageValueByDay() {
+		return salinityAverageValueByDay;
 	}
 
-	public void setEcAverageValueByDay(String ecAverageValueByDay) {
-		this.ecAverageValueByDay = ecAverageValueByDay;
+	public void setSalinityAverageValueByDay(String salinityAverageValueByDay) {
+		this.salinityAverageValueByDay = salinityAverageValueByDay;
+	}
+
+	public String getTdsAverageValueByDay() {
+		return tdsAverageValueByDay;
+	}
+
+	public void setTdsAverageValueByDay(String tdsAverageValueByDay) {
+		this.tdsAverageValueByDay = tdsAverageValueByDay;
 	}
 
 	public String getTempAverageValueByDay() {
@@ -180,12 +215,20 @@ public class HomePageInfo implements Serializable {
 		this.phAverageValueByWeek = phAverageValueByWeek;
 	}
 
-	public String getEcAverageValueByWeek() {
-		return ecAverageValueByWeek;
+	public String getSalinityAverageValueByWeek() {
+		return salinityAverageValueByWeek;
 	}
 
-	public void setEcAverageValueByWeek(String ecAverageValueByWeek) {
-		this.ecAverageValueByWeek = ecAverageValueByWeek;
+	public void setSalinityAverageValueByWeek(String salinityAverageValueByWeek) {
+		this.salinityAverageValueByWeek = salinityAverageValueByWeek;
+	}
+
+	public String getTdsAverageValueByWeek() {
+		return tdsAverageValueByWeek;
+	}
+
+	public void setTdsAverageValueByWeek(String tdsAverageValueByWeek) {
+		this.tdsAverageValueByWeek = tdsAverageValueByWeek;
 	}
 
 	public String getTempAverageValueByWeek() {
@@ -212,12 +255,20 @@ public class HomePageInfo implements Serializable {
 		this.phAverageValueByMonth = phAverageValueByMonth;
 	}
 
-	public String getEcAverageValueByMonth() {
-		return ecAverageValueByMonth;
+	public String getSalinityAverageValueByMonth() {
+		return salinityAverageValueByMonth;
 	}
 
-	public void setEcAverageValueByMonth(String ecAverageValueByMonth) {
-		this.ecAverageValueByMonth = ecAverageValueByMonth;
+	public void setSalinityAverageValueByMonth(String salinityAverageValueByMonth) {
+		this.salinityAverageValueByMonth = salinityAverageValueByMonth;
+	}
+
+	public String getTdsAverageValueByMonth() {
+		return tdsAverageValueByMonth;
+	}
+
+	public void setTdsAverageValueByMonth(String tdsAverageValueByMonth) {
+		this.tdsAverageValueByMonth = tdsAverageValueByMonth;
 	}
 
 	public String getTempAverageValueByMonth() {
@@ -244,12 +295,20 @@ public class HomePageInfo implements Serializable {
 		this.phMaxValueByDay = phMaxValueByDay;
 	}
 
-	public String getEcMaxValueByDay() {
-		return ecMaxValueByDay;
+	public String getSalinityMaxValueByDay() {
+		return salinityMaxValueByDay;
 	}
 
-	public void setEcMaxValueByDay(String ecMaxValueByDay) {
-		this.ecMaxValueByDay = ecMaxValueByDay;
+	public void setSalinityMaxValueByDay(String salinityMaxValueByDay) {
+		this.salinityMaxValueByDay = salinityMaxValueByDay;
+	}
+
+	public String getTdsMaxValueByDay() {
+		return tdsMaxValueByDay;
+	}
+
+	public void setTdsMaxValueByDay(String tdsMaxValueByDay) {
+		this.tdsMaxValueByDay = tdsMaxValueByDay;
 	}
 
 	public String getTempMaxValueByDay() {
@@ -276,12 +335,20 @@ public class HomePageInfo implements Serializable {
 		this.phMaxValueByWeek = phMaxValueByWeek;
 	}
 
-	public String getEcMaxValueByWeek() {
-		return ecMaxValueByWeek;
+	public String getSalinityMaxValueByWeek() {
+		return salinityMaxValueByWeek;
 	}
 
-	public void setEcMaxValueByWeek(String ecMaxValueByWeek) {
-		this.ecMaxValueByWeek = ecMaxValueByWeek;
+	public void setSalinityMaxValueByWeek(String salinityMaxValueByWeek) {
+		this.salinityMaxValueByWeek = salinityMaxValueByWeek;
+	}
+
+	public String getTdsMaxValueByWeek() {
+		return tdsMaxValueByWeek;
+	}
+
+	public void setTdsMaxValueByWeek(String tdsMaxValueByWeek) {
+		this.tdsMaxValueByWeek = tdsMaxValueByWeek;
 	}
 
 	public String getTempMaxValueByWeek() {
@@ -308,12 +375,20 @@ public class HomePageInfo implements Serializable {
 		this.phMaxValueByMonth = phMaxValueByMonth;
 	}
 
-	public String getEcMaxValueByMonth() {
-		return ecMaxValueByMonth;
+	public String getSalinityMaxValueByMonth() {
+		return salinityMaxValueByMonth;
 	}
 
-	public void setEcMaxValueByMonth(String ecMaxValueByMonth) {
-		this.ecMaxValueByMonth = ecMaxValueByMonth;
+	public void setSalinityMaxValueByMonth(String salinityMaxValueByMonth) {
+		this.salinityMaxValueByMonth = salinityMaxValueByMonth;
+	}
+
+	public String getTdsMaxValueByMonth() {
+		return tdsMaxValueByMonth;
+	}
+
+	public void setTdsMaxValueByMonth(String tdsMaxValueByMonth) {
+		this.tdsMaxValueByMonth = tdsMaxValueByMonth;
 	}
 
 	public String getTempMaxValueByMonth() {
@@ -340,12 +415,20 @@ public class HomePageInfo implements Serializable {
 		this.phMinValueByDay = phMinValueByDay;
 	}
 
-	public String getEcMinValueByDay() {
-		return ecMinValueByDay;
+	public String getSalinityMinValueByDay() {
+		return salinityMinValueByDay;
 	}
 
-	public void setEcMinValueByDay(String ecMinValueByDay) {
-		this.ecMinValueByDay = ecMinValueByDay;
+	public void setSalinityMinValueByDay(String salinityMinValueByDay) {
+		this.salinityMinValueByDay = salinityMinValueByDay;
+	}
+
+	public String getTdsMinValueByDay() {
+		return tdsMinValueByDay;
+	}
+
+	public void setTdsMinValueByDay(String tdsMinValueByDay) {
+		this.tdsMinValueByDay = tdsMinValueByDay;
 	}
 
 	public String getTempMinValueByDay() {
@@ -372,12 +455,20 @@ public class HomePageInfo implements Serializable {
 		this.phMinValueByWeek = phMinValueByWeek;
 	}
 
-	public String getEcMinValueByWeek() {
-		return ecMinValueByWeek;
+	public String getSalinityMinValueByWeek() {
+		return salinityMinValueByWeek;
 	}
 
-	public void setEcMinValueByWeek(String ecMinValueByWeek) {
-		this.ecMinValueByWeek = ecMinValueByWeek;
+	public void setSalinityMinValueByWeek(String salinityMinValueByWeek) {
+		this.salinityMinValueByWeek = salinityMinValueByWeek;
+	}
+
+	public String getTdsMinValueByWeek() {
+		return tdsMinValueByWeek;
+	}
+
+	public void setTdsMinValueByWeek(String tdsMinValueByWeek) {
+		this.tdsMinValueByWeek = tdsMinValueByWeek;
 	}
 
 	public String getTempMinValueByWeek() {
@@ -404,12 +495,20 @@ public class HomePageInfo implements Serializable {
 		this.phMinValueByMonth = phMinValueByMonth;
 	}
 
-	public String getEcMinValueByMonth() {
-		return ecMinValueByMonth;
+	public String getSalinityMinValueByMonth() {
+		return salinityMinValueByMonth;
 	}
 
-	public void setEcMinValueByMonth(String ecMinValueByMonth) {
-		this.ecMinValueByMonth = ecMinValueByMonth;
+	public void setSalinityMinValueByMonth(String salinityMinValueByMonth) {
+		this.salinityMinValueByMonth = salinityMinValueByMonth;
+	}
+
+	public String getTdsMinValueByMonth() {
+		return tdsMinValueByMonth;
+	}
+
+	public void setTdsMinValueByMonth(String tdsMinValueByMonth) {
+		this.tdsMinValueByMonth = tdsMinValueByMonth;
 	}
 
 	public String getTempMinValueByMonth() {

@@ -15,9 +15,18 @@ public class PastSensorInfo implements Serializable {
 	private static final long serialVersionUID = 1262332799116848133L;
 
 	private DataPointsStatisticsInfo phValue;
-	private DataPointsStatisticsInfo ecValue;
+	private DataPointsStatisticsInfo salinityValue;
 	private DataPointsStatisticsInfo tempValue;
 	private DataPointsStatisticsInfo lightValue;
+	private DataPointsStatisticsInfo dtsValue;
+
+	public DataPointsStatisticsInfo getDtsValue() {
+		return dtsValue;
+	}
+
+	public void setDtsValue(DataPointsStatisticsInfo dtsValue) {
+		this.dtsValue = dtsValue;
+	}
 
 	public DataPointsStatisticsInfo getPhValue() {
 		return phValue;
@@ -27,12 +36,12 @@ public class PastSensorInfo implements Serializable {
 		this.phValue = phValue;
 	}
 
-	public DataPointsStatisticsInfo getEcValue() {
-		return ecValue;
+	public DataPointsStatisticsInfo getSalinityValue() {
+		return salinityValue;
 	}
 
-	public void setEcValue(DataPointsStatisticsInfo ecValue) {
-		this.ecValue = ecValue;
+	public void setSalinityValue(DataPointsStatisticsInfo salinityValue) {
+		this.salinityValue = salinityValue;
 	}
 
 	public DataPointsStatisticsInfo getTempValue() {

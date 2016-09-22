@@ -14,7 +14,8 @@ public class CurSensorInfo implements Serializable {
 	private String ph;
 	private String temperature;
 	private String light;
-	private String ec;
+	private String salinity;
+	private String tds;
 
 	public String getPh() {
 		return ph;
@@ -32,20 +33,28 @@ public class CurSensorInfo implements Serializable {
 		this.temperature = temperature;
 	}
 
-	public String getEc() {
-		return ec;
-	}
-
-	public void setEc(String ec) {
-		this.ec = ec;
-	}
-
 	public String getLight() {
 		return light;
 	}
 
 	public void setLight(String light) {
 		this.light = light;
+	}
+
+	public String getSalinity() {
+		return salinity;
+	}
+
+	public void setSalinity(String salinity) {
+		this.salinity = salinity;
+	}
+
+	public String getTds() {
+		return tds;
+	}
+
+	public void setTds(String tds) {
+		this.tds = tds;
 	}
 
 }
