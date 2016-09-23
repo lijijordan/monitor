@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.monitor.common.model.DataPointsInfo;
+import com.monitor.common.model.DataPointsActiveInfo;
+import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.web.service.SensorService;
@@ -24,7 +25,7 @@ public class SensorServiceImpl implements SensorService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public ResponseVo<DataPointsInfo> getCurSensorValByType(String equID, String sensorType) {
+	public ResponseVo<DataPointsActiveInfo> getCurSensorValByType(String equID, String sensorType) {
 
 		StringBuffer url = new StringBuffer();
 		url.append(ConstantObject.DEVICER_EST_URL);
@@ -34,13 +35,15 @@ public class SensorServiceImpl implements SensorService {
 		url.append(sensorType);
 
 		@SuppressWarnings("unchecked")
-		ResponseVo<DataPointsInfo> responseVo = restTemplate.getForObject(url.toString(), ResponseVo.class);
+		ResponseVo<DataPointsActiveInfo> responseVo = restTemplate.getForObject(url.toString(), ResponseVo.class);
 
 		return responseVo;
 	}
 
 	@Override
-	public ResponseVo<DataPointsInfo> getSensorValsByPeriod(String equID, String sensorType, String timePeriod) {
+	public ResponseVo<DataPointsStatisticsInfo> getSensorValsByPeriod(String equID, String sensorType,
+			String timePeriod) {
+
 		StringBuffer url = new StringBuffer();
 		url.append(ConstantObject.DEVICER_EST_URL);
 		url.append("getList/");
@@ -51,7 +54,7 @@ public class SensorServiceImpl implements SensorService {
 		url.append(timePeriod);
 
 		@SuppressWarnings("unchecked")
-		ResponseVo<DataPointsInfo> responseVo = restTemplate.getForObject(url.toString(), ResponseVo.class);
+		ResponseVo<DataPointsStatisticsInfo> responseVo = restTemplate.getForObject(url.toString(), ResponseVo.class);
 
 		return responseVo;
 	}
