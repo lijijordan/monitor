@@ -1,6 +1,7 @@
 package com.monitor.server.comm;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 首页各种数据
@@ -25,59 +26,59 @@ public class HomePageInfo implements Serializable {
 	private String tempHealth;
 	private String lightHealth;
 
-	private String phAverageValueByDay;
-	private String salinityAverageValueByDay;
-	private String tdsAverageValueByDay;
-	private String tempAverageValueByDay;
-	private String lightAverageValueByDay;
+	private List<DataPointInfo> phAverageValueByDay;
+	private List<DataPointInfo> salinityAverageValueByDay;
+	private List<DataPointInfo> tdsAverageValueByDay;
+	private List<DataPointInfo> tempAverageValueByDay;
+	private List<DataPointInfo> lightAverageValueByDay;
 
-	private String phAverageValueByWeek;
-	private String salinityAverageValueByWeek;
-	private String tdsAverageValueByWeek;
-	private String tempAverageValueByWeek;
-	private String lightAverageValueByWeek;
+	private List<DataPointInfo> phAverageValueByWeek;
+	private List<DataPointInfo> salinityAverageValueByWeek;
+	private List<DataPointInfo> tdsAverageValueByWeek;
+	private List<DataPointInfo> tempAverageValueByWeek;
+	private List<DataPointInfo> lightAverageValueByWeek;
 
-	private String phAverageValueByMonth;
-	private String salinityAverageValueByMonth;
-	private String tdsAverageValueByMonth;
-	private String tempAverageValueByMonth;
-	private String lightAverageValueByMonth;
+	private List<DataPointInfo> phAverageValueByMonth;
+	private List<DataPointInfo> salinityAverageValueByMonth;
+	private List<DataPointInfo> tdsAverageValueByMonth;
+	private List<DataPointInfo> tempAverageValueByMonth;
+	private List<DataPointInfo> lightAverageValueByMonth;
 
-	private String phMaxValueByDay;
-	private String salinityMaxValueByDay;
-	private String tdsMaxValueByDay;
-	private String tempMaxValueByDay;
-	private String lightMaxValueByDay;
+	private List<DataPointInfo> phMaxValueByDay;
+	private List<DataPointInfo> salinityMaxValueByDay;
+	private List<DataPointInfo> tdsMaxValueByDay;
+	private List<DataPointInfo> tempMaxValueByDay;
+	private List<DataPointInfo> lightMaxValueByDay;
 
-	private String phMaxValueByWeek;
-	private String salinityMaxValueByWeek;
-	private String tdsMaxValueByWeek;
-	private String tempMaxValueByWeek;
-	private String lightMaxValueByWeek;
+	private List<DataPointInfo> phMaxValueByWeek;
+	private List<DataPointInfo> salinityMaxValueByWeek;
+	private List<DataPointInfo> tdsMaxValueByWeek;
+	private List<DataPointInfo> tempMaxValueByWeek;
+	private List<DataPointInfo> lightMaxValueByWeek;
 
-	private String phMaxValueByMonth;
-	private String salinityMaxValueByMonth;
-	private String tdsMaxValueByMonth;
-	private String tempMaxValueByMonth;
-	private String lightMaxValueByMonth;
+	private List<DataPointInfo> phMaxValueByMonth;
+	private List<DataPointInfo> salinityMaxValueByMonth;
+	private List<DataPointInfo> tdsMaxValueByMonth;
+	private List<DataPointInfo> tempMaxValueByMonth;
+	private List<DataPointInfo> lightMaxValueByMonth;
 
-	private String phMinValueByDay;
-	private String salinityMinValueByDay;
-	private String tdsMinValueByDay;
-	private String tempMinValueByDay;
-	private String lightMinValueByDay;
+	private List<DataPointInfo> phMinValueByDay;
+	private List<DataPointInfo> salinityMinValueByDay;
+	private List<DataPointInfo> tdsMinValueByDay;
+	private List<DataPointInfo> tempMinValueByDay;
+	private List<DataPointInfo> lightMinValueByDay;
 
-	private String phMinValueByWeek;
-	private String salinityMinValueByWeek;
-	private String tdsMinValueByWeek;
-	private String tempMinValueByWeek;
-	private String lightMinValueByWeek;
+	private List<DataPointInfo> phMinValueByWeek;
+	private List<DataPointInfo> salinityMinValueByWeek;
+	private List<DataPointInfo> tdsMinValueByWeek;
+	private List<DataPointInfo> tempMinValueByWeek;
+	private List<DataPointInfo> lightMinValueByWeek;
 
-	private String phMinValueByMonth;
-	private String salinityMinValueByMonth;
-	private String tdsMinValueByMonth;
-	private String tempMinValueByMonth;
-	private String lightMinValueByMonth;
+	private List<DataPointInfo> phMinValueByMonth;
+	private List<DataPointInfo> salinityMinValueByMonth;
+	private List<DataPointInfo> tdsMinValueByMonth;
+	private List<DataPointInfo> tempMinValueByMonth;
+	private List<DataPointInfo> lightMinValueByMonth;
 
 	public String getPhCurValue() {
 		return phCurValue;
@@ -167,363 +168,363 @@ public class HomePageInfo implements Serializable {
 		this.lightHealth = lightHealth;
 	}
 
-	public String getPhAverageValueByDay() {
+	public List<DataPointInfo> getPhAverageValueByDay() {
 		return phAverageValueByDay;
 	}
 
-	public void setPhAverageValueByDay(String phAverageValueByDay) {
+	public void setPhAverageValueByDay(List<DataPointInfo> phAverageValueByDay) {
 		this.phAverageValueByDay = phAverageValueByDay;
 	}
 
-	public String getSalinityAverageValueByDay() {
+	public List<DataPointInfo> getSalinityAverageValueByDay() {
 		return salinityAverageValueByDay;
 	}
 
-	public void setSalinityAverageValueByDay(String salinityAverageValueByDay) {
+	public void setSalinityAverageValueByDay(List<DataPointInfo> salinityAverageValueByDay) {
 		this.salinityAverageValueByDay = salinityAverageValueByDay;
 	}
 
-	public String getTdsAverageValueByDay() {
+	public List<DataPointInfo> getTdsAverageValueByDay() {
 		return tdsAverageValueByDay;
 	}
 
-	public void setTdsAverageValueByDay(String tdsAverageValueByDay) {
+	public void setTdsAverageValueByDay(List<DataPointInfo> tdsAverageValueByDay) {
 		this.tdsAverageValueByDay = tdsAverageValueByDay;
 	}
 
-	public String getTempAverageValueByDay() {
+	public List<DataPointInfo> getTempAverageValueByDay() {
 		return tempAverageValueByDay;
 	}
 
-	public void setTempAverageValueByDay(String tempAverageValueByDay) {
+	public void setTempAverageValueByDay(List<DataPointInfo> tempAverageValueByDay) {
 		this.tempAverageValueByDay = tempAverageValueByDay;
 	}
 
-	public String getLightAverageValueByDay() {
+	public List<DataPointInfo> getLightAverageValueByDay() {
 		return lightAverageValueByDay;
 	}
 
-	public void setLightAverageValueByDay(String lightAverageValueByDay) {
+	public void setLightAverageValueByDay(List<DataPointInfo> lightAverageValueByDay) {
 		this.lightAverageValueByDay = lightAverageValueByDay;
 	}
 
-	public String getPhAverageValueByWeek() {
+	public List<DataPointInfo> getPhAverageValueByWeek() {
 		return phAverageValueByWeek;
 	}
 
-	public void setPhAverageValueByWeek(String phAverageValueByWeek) {
+	public void setPhAverageValueByWeek(List<DataPointInfo> phAverageValueByWeek) {
 		this.phAverageValueByWeek = phAverageValueByWeek;
 	}
 
-	public String getSalinityAverageValueByWeek() {
+	public List<DataPointInfo> getSalinityAverageValueByWeek() {
 		return salinityAverageValueByWeek;
 	}
 
-	public void setSalinityAverageValueByWeek(String salinityAverageValueByWeek) {
+	public void setSalinityAverageValueByWeek(List<DataPointInfo> salinityAverageValueByWeek) {
 		this.salinityAverageValueByWeek = salinityAverageValueByWeek;
 	}
 
-	public String getTdsAverageValueByWeek() {
+	public List<DataPointInfo> getTdsAverageValueByWeek() {
 		return tdsAverageValueByWeek;
 	}
 
-	public void setTdsAverageValueByWeek(String tdsAverageValueByWeek) {
+	public void setTdsAverageValueByWeek(List<DataPointInfo> tdsAverageValueByWeek) {
 		this.tdsAverageValueByWeek = tdsAverageValueByWeek;
 	}
 
-	public String getTempAverageValueByWeek() {
+	public List<DataPointInfo> getTempAverageValueByWeek() {
 		return tempAverageValueByWeek;
 	}
 
-	public void setTempAverageValueByWeek(String tempAverageValueByWeek) {
+	public void setTempAverageValueByWeek(List<DataPointInfo> tempAverageValueByWeek) {
 		this.tempAverageValueByWeek = tempAverageValueByWeek;
 	}
 
-	public String getLightAverageValueByWeek() {
+	public List<DataPointInfo> getLightAverageValueByWeek() {
 		return lightAverageValueByWeek;
 	}
 
-	public void setLightAverageValueByWeek(String lightAverageValueByWeek) {
+	public void setLightAverageValueByWeek(List<DataPointInfo> lightAverageValueByWeek) {
 		this.lightAverageValueByWeek = lightAverageValueByWeek;
 	}
 
-	public String getPhAverageValueByMonth() {
+	public List<DataPointInfo> getPhAverageValueByMonth() {
 		return phAverageValueByMonth;
 	}
 
-	public void setPhAverageValueByMonth(String phAverageValueByMonth) {
+	public void setPhAverageValueByMonth(List<DataPointInfo> phAverageValueByMonth) {
 		this.phAverageValueByMonth = phAverageValueByMonth;
 	}
 
-	public String getSalinityAverageValueByMonth() {
+	public List<DataPointInfo> getSalinityAverageValueByMonth() {
 		return salinityAverageValueByMonth;
 	}
 
-	public void setSalinityAverageValueByMonth(String salinityAverageValueByMonth) {
+	public void setSalinityAverageValueByMonth(List<DataPointInfo> salinityAverageValueByMonth) {
 		this.salinityAverageValueByMonth = salinityAverageValueByMonth;
 	}
 
-	public String getTdsAverageValueByMonth() {
+	public List<DataPointInfo> getTdsAverageValueByMonth() {
 		return tdsAverageValueByMonth;
 	}
 
-	public void setTdsAverageValueByMonth(String tdsAverageValueByMonth) {
+	public void setTdsAverageValueByMonth(List<DataPointInfo> tdsAverageValueByMonth) {
 		this.tdsAverageValueByMonth = tdsAverageValueByMonth;
 	}
 
-	public String getTempAverageValueByMonth() {
+	public List<DataPointInfo> getTempAverageValueByMonth() {
 		return tempAverageValueByMonth;
 	}
 
-	public void setTempAverageValueByMonth(String tempAverageValueByMonth) {
+	public void setTempAverageValueByMonth(List<DataPointInfo> tempAverageValueByMonth) {
 		this.tempAverageValueByMonth = tempAverageValueByMonth;
 	}
 
-	public String getLightAverageValueByMonth() {
+	public List<DataPointInfo> getLightAverageValueByMonth() {
 		return lightAverageValueByMonth;
 	}
 
-	public void setLightAverageValueByMonth(String lightAverageValueByMonth) {
+	public void setLightAverageValueByMonth(List<DataPointInfo> lightAverageValueByMonth) {
 		this.lightAverageValueByMonth = lightAverageValueByMonth;
 	}
 
-	public String getPhMaxValueByDay() {
+	public List<DataPointInfo> getPhMaxValueByDay() {
 		return phMaxValueByDay;
 	}
 
-	public void setPhMaxValueByDay(String phMaxValueByDay) {
+	public void setPhMaxValueByDay(List<DataPointInfo> phMaxValueByDay) {
 		this.phMaxValueByDay = phMaxValueByDay;
 	}
 
-	public String getSalinityMaxValueByDay() {
+	public List<DataPointInfo> getSalinityMaxValueByDay() {
 		return salinityMaxValueByDay;
 	}
 
-	public void setSalinityMaxValueByDay(String salinityMaxValueByDay) {
+	public void setSalinityMaxValueByDay(List<DataPointInfo> salinityMaxValueByDay) {
 		this.salinityMaxValueByDay = salinityMaxValueByDay;
 	}
 
-	public String getTdsMaxValueByDay() {
+	public List<DataPointInfo> getTdsMaxValueByDay() {
 		return tdsMaxValueByDay;
 	}
 
-	public void setTdsMaxValueByDay(String tdsMaxValueByDay) {
+	public void setTdsMaxValueByDay(List<DataPointInfo> tdsMaxValueByDay) {
 		this.tdsMaxValueByDay = tdsMaxValueByDay;
 	}
 
-	public String getTempMaxValueByDay() {
+	public List<DataPointInfo> getTempMaxValueByDay() {
 		return tempMaxValueByDay;
 	}
 
-	public void setTempMaxValueByDay(String tempMaxValueByDay) {
+	public void setTempMaxValueByDay(List<DataPointInfo> tempMaxValueByDay) {
 		this.tempMaxValueByDay = tempMaxValueByDay;
 	}
 
-	public String getLightMaxValueByDay() {
+	public List<DataPointInfo> getLightMaxValueByDay() {
 		return lightMaxValueByDay;
 	}
 
-	public void setLightMaxValueByDay(String lightMaxValueByDay) {
+	public void setLightMaxValueByDay(List<DataPointInfo> lightMaxValueByDay) {
 		this.lightMaxValueByDay = lightMaxValueByDay;
 	}
 
-	public String getPhMaxValueByWeek() {
+	public List<DataPointInfo> getPhMaxValueByWeek() {
 		return phMaxValueByWeek;
 	}
 
-	public void setPhMaxValueByWeek(String phMaxValueByWeek) {
+	public void setPhMaxValueByWeek(List<DataPointInfo> phMaxValueByWeek) {
 		this.phMaxValueByWeek = phMaxValueByWeek;
 	}
 
-	public String getSalinityMaxValueByWeek() {
+	public List<DataPointInfo> getSalinityMaxValueByWeek() {
 		return salinityMaxValueByWeek;
 	}
 
-	public void setSalinityMaxValueByWeek(String salinityMaxValueByWeek) {
+	public void setSalinityMaxValueByWeek(List<DataPointInfo> salinityMaxValueByWeek) {
 		this.salinityMaxValueByWeek = salinityMaxValueByWeek;
 	}
 
-	public String getTdsMaxValueByWeek() {
+	public List<DataPointInfo> getTdsMaxValueByWeek() {
 		return tdsMaxValueByWeek;
 	}
 
-	public void setTdsMaxValueByWeek(String tdsMaxValueByWeek) {
+	public void setTdsMaxValueByWeek(List<DataPointInfo> tdsMaxValueByWeek) {
 		this.tdsMaxValueByWeek = tdsMaxValueByWeek;
 	}
 
-	public String getTempMaxValueByWeek() {
+	public List<DataPointInfo> getTempMaxValueByWeek() {
 		return tempMaxValueByWeek;
 	}
 
-	public void setTempMaxValueByWeek(String tempMaxValueByWeek) {
+	public void setTempMaxValueByWeek(List<DataPointInfo> tempMaxValueByWeek) {
 		this.tempMaxValueByWeek = tempMaxValueByWeek;
 	}
 
-	public String getLightMaxValueByWeek() {
+	public List<DataPointInfo> getLightMaxValueByWeek() {
 		return lightMaxValueByWeek;
 	}
 
-	public void setLightMaxValueByWeek(String lightMaxValueByWeek) {
+	public void setLightMaxValueByWeek(List<DataPointInfo> lightMaxValueByWeek) {
 		this.lightMaxValueByWeek = lightMaxValueByWeek;
 	}
 
-	public String getPhMaxValueByMonth() {
+	public List<DataPointInfo> getPhMaxValueByMonth() {
 		return phMaxValueByMonth;
 	}
 
-	public void setPhMaxValueByMonth(String phMaxValueByMonth) {
+	public void setPhMaxValueByMonth(List<DataPointInfo> phMaxValueByMonth) {
 		this.phMaxValueByMonth = phMaxValueByMonth;
 	}
 
-	public String getSalinityMaxValueByMonth() {
+	public List<DataPointInfo> getSalinityMaxValueByMonth() {
 		return salinityMaxValueByMonth;
 	}
 
-	public void setSalinityMaxValueByMonth(String salinityMaxValueByMonth) {
+	public void setSalinityMaxValueByMonth(List<DataPointInfo> salinityMaxValueByMonth) {
 		this.salinityMaxValueByMonth = salinityMaxValueByMonth;
 	}
 
-	public String getTdsMaxValueByMonth() {
+	public List<DataPointInfo> getTdsMaxValueByMonth() {
 		return tdsMaxValueByMonth;
 	}
 
-	public void setTdsMaxValueByMonth(String tdsMaxValueByMonth) {
+	public void setTdsMaxValueByMonth(List<DataPointInfo> tdsMaxValueByMonth) {
 		this.tdsMaxValueByMonth = tdsMaxValueByMonth;
 	}
 
-	public String getTempMaxValueByMonth() {
+	public List<DataPointInfo> getTempMaxValueByMonth() {
 		return tempMaxValueByMonth;
 	}
 
-	public void setTempMaxValueByMonth(String tempMaxValueByMonth) {
+	public void setTempMaxValueByMonth(List<DataPointInfo> tempMaxValueByMonth) {
 		this.tempMaxValueByMonth = tempMaxValueByMonth;
 	}
 
-	public String getLightMaxValueByMonth() {
+	public List<DataPointInfo> getLightMaxValueByMonth() {
 		return lightMaxValueByMonth;
 	}
 
-	public void setLightMaxValueByMonth(String lightMaxValueByMonth) {
+	public void setLightMaxValueByMonth(List<DataPointInfo> lightMaxValueByMonth) {
 		this.lightMaxValueByMonth = lightMaxValueByMonth;
 	}
 
-	public String getPhMinValueByDay() {
+	public List<DataPointInfo> getPhMinValueByDay() {
 		return phMinValueByDay;
 	}
 
-	public void setPhMinValueByDay(String phMinValueByDay) {
+	public void setPhMinValueByDay(List<DataPointInfo> phMinValueByDay) {
 		this.phMinValueByDay = phMinValueByDay;
 	}
 
-	public String getSalinityMinValueByDay() {
+	public List<DataPointInfo> getSalinityMinValueByDay() {
 		return salinityMinValueByDay;
 	}
 
-	public void setSalinityMinValueByDay(String salinityMinValueByDay) {
+	public void setSalinityMinValueByDay(List<DataPointInfo> salinityMinValueByDay) {
 		this.salinityMinValueByDay = salinityMinValueByDay;
 	}
 
-	public String getTdsMinValueByDay() {
+	public List<DataPointInfo> getTdsMinValueByDay() {
 		return tdsMinValueByDay;
 	}
 
-	public void setTdsMinValueByDay(String tdsMinValueByDay) {
+	public void setTdsMinValueByDay(List<DataPointInfo> tdsMinValueByDay) {
 		this.tdsMinValueByDay = tdsMinValueByDay;
 	}
 
-	public String getTempMinValueByDay() {
+	public List<DataPointInfo> getTempMinValueByDay() {
 		return tempMinValueByDay;
 	}
 
-	public void setTempMinValueByDay(String tempMinValueByDay) {
+	public void setTempMinValueByDay(List<DataPointInfo> tempMinValueByDay) {
 		this.tempMinValueByDay = tempMinValueByDay;
 	}
 
-	public String getLightMinValueByDay() {
+	public List<DataPointInfo> getLightMinValueByDay() {
 		return lightMinValueByDay;
 	}
 
-	public void setLightMinValueByDay(String lightMinValueByDay) {
+	public void setLightMinValueByDay(List<DataPointInfo> lightMinValueByDay) {
 		this.lightMinValueByDay = lightMinValueByDay;
 	}
 
-	public String getPhMinValueByWeek() {
+	public List<DataPointInfo> getPhMinValueByWeek() {
 		return phMinValueByWeek;
 	}
 
-	public void setPhMinValueByWeek(String phMinValueByWeek) {
+	public void setPhMinValueByWeek(List<DataPointInfo> phMinValueByWeek) {
 		this.phMinValueByWeek = phMinValueByWeek;
 	}
 
-	public String getSalinityMinValueByWeek() {
+	public List<DataPointInfo> getSalinityMinValueByWeek() {
 		return salinityMinValueByWeek;
 	}
 
-	public void setSalinityMinValueByWeek(String salinityMinValueByWeek) {
+	public void setSalinityMinValueByWeek(List<DataPointInfo> salinityMinValueByWeek) {
 		this.salinityMinValueByWeek = salinityMinValueByWeek;
 	}
 
-	public String getTdsMinValueByWeek() {
+	public List<DataPointInfo> getTdsMinValueByWeek() {
 		return tdsMinValueByWeek;
 	}
 
-	public void setTdsMinValueByWeek(String tdsMinValueByWeek) {
+	public void setTdsMinValueByWeek(List<DataPointInfo> tdsMinValueByWeek) {
 		this.tdsMinValueByWeek = tdsMinValueByWeek;
 	}
 
-	public String getTempMinValueByWeek() {
+	public List<DataPointInfo> getTempMinValueByWeek() {
 		return tempMinValueByWeek;
 	}
 
-	public void setTempMinValueByWeek(String tempMinValueByWeek) {
+	public void setTempMinValueByWeek(List<DataPointInfo> tempMinValueByWeek) {
 		this.tempMinValueByWeek = tempMinValueByWeek;
 	}
 
-	public String getLightMinValueByWeek() {
+	public List<DataPointInfo> getLightMinValueByWeek() {
 		return lightMinValueByWeek;
 	}
 
-	public void setLightMinValueByWeek(String lightMinValueByWeek) {
+	public void setLightMinValueByWeek(List<DataPointInfo> lightMinValueByWeek) {
 		this.lightMinValueByWeek = lightMinValueByWeek;
 	}
 
-	public String getPhMinValueByMonth() {
+	public List<DataPointInfo> getPhMinValueByMonth() {
 		return phMinValueByMonth;
 	}
 
-	public void setPhMinValueByMonth(String phMinValueByMonth) {
+	public void setPhMinValueByMonth(List<DataPointInfo> phMinValueByMonth) {
 		this.phMinValueByMonth = phMinValueByMonth;
 	}
 
-	public String getSalinityMinValueByMonth() {
+	public List<DataPointInfo> getSalinityMinValueByMonth() {
 		return salinityMinValueByMonth;
 	}
 
-	public void setSalinityMinValueByMonth(String salinityMinValueByMonth) {
+	public void setSalinityMinValueByMonth(List<DataPointInfo> salinityMinValueByMonth) {
 		this.salinityMinValueByMonth = salinityMinValueByMonth;
 	}
 
-	public String getTdsMinValueByMonth() {
+	public List<DataPointInfo> getTdsMinValueByMonth() {
 		return tdsMinValueByMonth;
 	}
 
-	public void setTdsMinValueByMonth(String tdsMinValueByMonth) {
+	public void setTdsMinValueByMonth(List<DataPointInfo> tdsMinValueByMonth) {
 		this.tdsMinValueByMonth = tdsMinValueByMonth;
 	}
 
-	public String getTempMinValueByMonth() {
+	public List<DataPointInfo> getTempMinValueByMonth() {
 		return tempMinValueByMonth;
 	}
 
-	public void setTempMinValueByMonth(String tempMinValueByMonth) {
+	public void setTempMinValueByMonth(List<DataPointInfo> tempMinValueByMonth) {
 		this.tempMinValueByMonth = tempMinValueByMonth;
 	}
 
-	public String getLightMinValueByMonth() {
+	public List<DataPointInfo> getLightMinValueByMonth() {
 		return lightMinValueByMonth;
 	}
 
-	public void setLightMinValueByMonth(String lightMinValueByMonth) {
+	public void setLightMinValueByMonth(List<DataPointInfo> lightMinValueByMonth) {
 		this.lightMinValueByMonth = lightMinValueByMonth;
 	}
 

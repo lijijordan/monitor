@@ -1,5 +1,8 @@
 package com.monitor.server.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -9,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.monitor.common.model.DataPointsActiveInfo;
-import com.monitor.common.model.DataPointsInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.AllPastSensorInfo;
 import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.comm.CurSensorInfo;
+import com.monitor.server.comm.DataPointInfo;
 import com.monitor.server.comm.HealthInfo;
 import com.monitor.server.comm.HomePageInfo;
 import com.monitor.server.comm.PastSensorInfo;
@@ -66,115 +69,435 @@ public class SensorController {
 		homePageInfo.setLightHealth(healthInfo.getContent().getLight());
 		homePageInfo.setTempHealth(healthInfo.getContent().getTemperature());
 
-		// TDS历史值
-		homePageInfo.setTdsAverageValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getDtsValue().getValue());
-		homePageInfo
-				.setTdsMaxValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getDtsValue().getMaxvalue());
-		homePageInfo
-				.setTdsMinValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getDtsValue().getMinvalue());
+		// TDS历史值（天）
+		List<DataPointsStatisticsInfo> dtsDataPointsListByDay = allPastSensorInfo.getContent().getDayPastSensorInfo()
+				.getDtsValueList();
+		List<DataPointInfo> averageDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-		homePageInfo.setTdsAverageValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getDtsValue().getValue());
-		homePageInfo.setTdsMaxValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getDtsValue().getMaxvalue());
-		homePageInfo.setTdsMinValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getDtsValue().getMinvalue());
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByDay) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
 
-		homePageInfo.setTdsAverageValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getDtsValue().getValue());
-		homePageInfo.setTdsMaxValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getDtsValue().getMaxvalue());
-		homePageInfo.setTdsMinValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getDtsValue().getMinvalue());
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
 
-		// Salinity历史值
-		homePageInfo.setSalinityAverageValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getSalinityValue().getValue());
-		homePageInfo.setSalinityMaxValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getSalinityValue().getMaxvalue());
-		homePageInfo.setSalinityMinValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getSalinityValue().getMinvalue());
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
 
-		homePageInfo.setSalinityAverageValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getSalinityValue().getValue());
-		homePageInfo.setSalinityMaxValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getSalinityValue().getMaxvalue());
-		homePageInfo.setSalinityMinValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getSalinityValue().getMinvalue());
+			averageDataPointInfoListByDay.add(averageDataPointInfo);
+			minDataPointInfoListByDay.add(minDataPointInfo);
+			maxDataPointInfoListByDay.add(maxDataPointInfo);
+		}
 
-		homePageInfo.setSalinityAverageValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getSalinityValue().getValue());
-		homePageInfo.setSalinityMaxValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getSalinityValue().getMaxvalue());
-		homePageInfo.setSalinityMinValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getSalinityValue().getMinvalue());
+		homePageInfo.setTdsAverageValueByDay(averageDataPointInfoListByDay);
+		homePageInfo.setTdsMaxValueByDay(maxDataPointInfoListByDay);
+		homePageInfo.setTdsMinValueByDay(minDataPointInfoListByDay);
 
-		// 灯光历史值
-		homePageInfo.setLightAverageValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getLightValue().getValue());
-		homePageInfo.setLightMaxValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getLightValue().getMaxvalue());
-		homePageInfo.setLightMinValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getLightValue().getMinvalue());
+		// TDS历史值（周）
+		List<DataPointsStatisticsInfo> dtsDataPointsListByWeek = allPastSensorInfo.getContent().getWeekPastSensorInfo()
+				.getDtsValueList();
+		List<DataPointInfo> averageDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-		homePageInfo.setLightAverageValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getLightValue().getValue());
-		homePageInfo.setLightMaxValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getLightValue().getMaxvalue());
-		homePageInfo.setLightMinValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getLightValue().getMinvalue());
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByWeek) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
 
-		homePageInfo.setLightAverageValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getLightValue().getValue());
-		homePageInfo.setLightMaxValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getLightValue().getMaxvalue());
-		homePageInfo.setLightMinValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getLightValue().getMinvalue());
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
 
-		// PH历史值
-		homePageInfo
-				.setPhAverageValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getPhValue().getValue());
-		homePageInfo
-				.setPhMaxValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getPhValue().getMaxvalue());
-		homePageInfo
-				.setPhMinValueByDay(allPastSensorInfo.getContent().getDayPastSensorInfo().getPhValue().getMinvalue());
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
 
-		homePageInfo.setPhAverageValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getPhValue().getValue());
-		homePageInfo
-				.setPhMaxValueByWeek(allPastSensorInfo.getContent().getWeekPastSensorInfo().getPhValue().getMaxvalue());
-		homePageInfo
-				.setPhMinValueByWeek(allPastSensorInfo.getContent().getWeekPastSensorInfo().getPhValue().getMinvalue());
+			averageDataPointInfoListByWeek.add(averageDataPointInfo);
+			minDataPointInfoListByWeek.add(minDataPointInfo);
+			maxDataPointInfoListByWeek.add(maxDataPointInfo);
+		}
 
-		homePageInfo.setPhAverageValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getPhValue().getValue());
-		homePageInfo.setPhMaxValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getPhValue().getMaxvalue());
-		homePageInfo.setPhMinValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getPhValue().getMinvalue());
+		homePageInfo.setTdsAverageValueByWeek(averageDataPointInfoListByWeek);
+		homePageInfo.setTdsMaxValueByWeek(maxDataPointInfoListByWeek);
+		homePageInfo.setTdsMinValueByWeek(minDataPointInfoListByWeek);
 
-		// 温度历史值
-		homePageInfo.setTempAverageValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getTempValue().getValue());
-		homePageInfo.setTempMaxValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getTempValue().getMaxvalue());
-		homePageInfo.setTempMinValueByDay(
-				allPastSensorInfo.getContent().getDayPastSensorInfo().getTempValue().getMinvalue());
+		// TDS历史值（月）
+		List<DataPointsStatisticsInfo> dtsDataPointsListByMonth = allPastSensorInfo.getContent()
+				.getMonthPastSensorInfo().getDtsValueList();
+		List<DataPointInfo> averageDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-		homePageInfo.setTempAverageValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getTempValue().getValue());
-		homePageInfo.setTempMaxValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getTempValue().getMaxvalue());
-		homePageInfo.setTempMinValueByWeek(
-				allPastSensorInfo.getContent().getWeekPastSensorInfo().getTempValue().getMinvalue());
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByMonth) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
 
-		homePageInfo.setTempAverageValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getTempValue().getValue());
-		homePageInfo.setTempMaxValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getTempValue().getMaxvalue());
-		homePageInfo.setTempMinValueByMonth(
-				allPastSensorInfo.getContent().getMonthPastSensorInfo().getTempValue().getMinvalue());
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageDataPointInfoListByMonth.add(averageDataPointInfo);
+			minDataPointInfoListByMonth.add(minDataPointInfo);
+			maxDataPointInfoListByMonth.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setTdsAverageValueByMonth(averageDataPointInfoListByMonth);
+		homePageInfo.setTdsMaxValueByMonth(maxDataPointInfoListByMonth);
+		homePageInfo.setTdsMinValueByMonth(minDataPointInfoListByMonth);
+
+		// Salinity历史值（天）
+		List<DataPointsStatisticsInfo> salinityDataPointsListByDay = allPastSensorInfo.getContent()
+				.getDayPastSensorInfo().getSalinityValueList();
+		List<DataPointInfo> averageSalinityDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minSalinityDataSalinityPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxSalinityDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByDay) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageSalinityDataPointInfoListByDay.add(averageDataPointInfo);
+			minSalinityDataSalinityPointInfoListByDay.add(minDataPointInfo);
+			maxSalinityDataPointInfoListByDay.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setSalinityAverageValueByDay(averageSalinityDataPointInfoListByDay);
+		homePageInfo.setSalinityMaxValueByDay(maxSalinityDataPointInfoListByDay);
+		homePageInfo.setSalinityMinValueByDay(minSalinityDataSalinityPointInfoListByDay);
+
+		// Salinity历史值（周）
+		List<DataPointsStatisticsInfo> salinityDataPointsListByWeek = allPastSensorInfo.getContent()
+				.getWeekPastSensorInfo().getSalinityValueList();
+		List<DataPointInfo> averageSalinityDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minSalinityDataSalinityPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxSalinityDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByWeek) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageSalinityDataPointInfoListByWeek.add(averageDataPointInfo);
+			minSalinityDataSalinityPointInfoListByWeek.add(minDataPointInfo);
+			maxSalinityDataPointInfoListByWeek.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setSalinityAverageValueByWeek(averageSalinityDataPointInfoListByWeek);
+		homePageInfo.setSalinityMaxValueByWeek(maxSalinityDataPointInfoListByWeek);
+		homePageInfo.setSalinityMinValueByWeek(minSalinityDataSalinityPointInfoListByWeek);
+
+		// Salinity历史值（月）
+		List<DataPointsStatisticsInfo> salinityDataPointsListByMonth = allPastSensorInfo.getContent()
+				.getMonthPastSensorInfo().getSalinityValueList();
+		List<DataPointInfo> averageSalinityDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minSalinityDataSalinityPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxSalinityDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByMonth) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageSalinityDataPointInfoListByMonth.add(averageDataPointInfo);
+			minSalinityDataSalinityPointInfoListByMonth.add(minDataPointInfo);
+			maxSalinityDataPointInfoListByMonth.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setSalinityAverageValueByMonth(averageSalinityDataPointInfoListByMonth);
+		homePageInfo.setSalinityMaxValueByMonth(maxSalinityDataPointInfoListByMonth);
+		homePageInfo.setSalinityMinValueByMonth(minSalinityDataSalinityPointInfoListByMonth);
+
+		// 灯光历史值（天）
+		List<DataPointsStatisticsInfo> lightDataPointsListByDay = allPastSensorInfo.getContent().getDayPastSensorInfo()
+				.getLightValueList();
+		List<DataPointInfo> averageLightDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minLightDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxLightDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByDay) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageLightDataPointInfoListByDay.add(averageDataPointInfo);
+			minLightDataPointInfoListByDay.add(minDataPointInfo);
+			maxLightDataPointInfoListByDay.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setLightAverageValueByDay(averageLightDataPointInfoListByDay);
+		homePageInfo.setLightMaxValueByDay(maxLightDataPointInfoListByDay);
+		homePageInfo.setLightMinValueByDay(minLightDataPointInfoListByDay);
+
+		// 灯光历史值（周）
+		List<DataPointsStatisticsInfo> lightDataPointsListByWeek = allPastSensorInfo.getContent()
+				.getWeekPastSensorInfo().getLightValueList();
+		List<DataPointInfo> averageLightDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minLightDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxLightDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByWeek) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageLightDataPointInfoListByWeek.add(averageDataPointInfo);
+			minLightDataPointInfoListByWeek.add(minDataPointInfo);
+			maxLightDataPointInfoListByWeek.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setLightAverageValueByWeek(averageLightDataPointInfoListByWeek);
+		homePageInfo.setLightMaxValueByWeek(maxLightDataPointInfoListByWeek);
+		homePageInfo.setLightMinValueByWeek(minLightDataPointInfoListByWeek);
+
+		// 灯光历史值（月）
+		List<DataPointsStatisticsInfo> lightDataPointsListByMonth = allPastSensorInfo.getContent()
+				.getMonthPastSensorInfo().getLightValueList();
+		List<DataPointInfo> averageLightDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minLightDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxLightDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByMonth) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageLightDataPointInfoListByMonth.add(averageDataPointInfo);
+			minLightDataPointInfoListByMonth.add(minDataPointInfo);
+			maxLightDataPointInfoListByMonth.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setLightAverageValueByMonth(averageLightDataPointInfoListByMonth);
+		homePageInfo.setLightMaxValueByMonth(maxLightDataPointInfoListByMonth);
+		homePageInfo.setLightMinValueByMonth(minLightDataPointInfoListByMonth);
+
+		// PH历史值（天）
+		List<DataPointsStatisticsInfo> pHDataPointsListByDay = allPastSensorInfo.getContent().getDayPastSensorInfo()
+				.getPhValueList();
+		List<DataPointInfo> averagePhDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minPhDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxPhDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByDay) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averagePhDataPointInfoListByDay.add(averageDataPointInfo);
+			minPhDataPointInfoListByDay.add(minDataPointInfo);
+			maxPhDataPointInfoListByDay.add(maxDataPointInfo);
+		}
+		homePageInfo.setPhAverageValueByDay(averagePhDataPointInfoListByDay);
+		homePageInfo.setPhMaxValueByDay(maxPhDataPointInfoListByDay);
+		homePageInfo.setPhMinValueByDay(minPhDataPointInfoListByDay);
+
+		// PH历史值（周）
+		List<DataPointsStatisticsInfo> pHDataPointsListByWeek = allPastSensorInfo.getContent().getWeekPastSensorInfo()
+				.getPhValueList();
+		List<DataPointInfo> averagePhDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minPhDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxPhDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByWeek) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averagePhDataPointInfoListByWeek.add(averageDataPointInfo);
+			minPhDataPointInfoListByWeek.add(minDataPointInfo);
+			maxPhDataPointInfoListByWeek.add(maxDataPointInfo);
+		}
+
+		homePageInfo.setPhAverageValueByWeek(averagePhDataPointInfoListByWeek);
+		homePageInfo.setPhMaxValueByWeek(maxPhDataPointInfoListByWeek);
+		homePageInfo.setPhMinValueByWeek(minPhDataPointInfoListByWeek);
+
+		// PH历史值（月）
+		List<DataPointsStatisticsInfo> pHDataPointsListByMonth = allPastSensorInfo.getContent().getMonthPastSensorInfo()
+				.getPhValueList();
+		List<DataPointInfo> averagePhDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minPhDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxPhDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByMonth) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averagePhDataPointInfoListByMonth.add(averageDataPointInfo);
+			minPhDataPointInfoListByMonth.add(minDataPointInfo);
+			maxPhDataPointInfoListByMonth.add(maxDataPointInfo);
+		}
+		homePageInfo.setPhAverageValueByMonth(averagePhDataPointInfoListByMonth);
+		homePageInfo.setPhMaxValueByMonth(maxPhDataPointInfoListByMonth);
+		homePageInfo.setPhMinValueByMonth(minPhDataPointInfoListByMonth);
+
+		// 温度历史值（天）
+		List<DataPointsStatisticsInfo> tempDataPointsListByDay = allPastSensorInfo.getContent().getDayPastSensorInfo()
+				.getTempValueList();
+		List<DataPointInfo> averageTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByDay) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageTempDataPointInfoListByDay.add(averageDataPointInfo);
+			minTempDataPointInfoListByDay.add(minDataPointInfo);
+			maxTempDataPointInfoListByDay.add(maxDataPointInfo);
+		}
+		homePageInfo.setTempAverageValueByDay(averageTempDataPointInfoListByDay);
+		homePageInfo.setTempMaxValueByDay(maxTempDataPointInfoListByDay);
+		homePageInfo.setTempMinValueByDay(minTempDataPointInfoListByDay);
+
+		// 温度历史值（周）
+		List<DataPointsStatisticsInfo> tempDataPointsListByWeek = allPastSensorInfo.getContent().getWeekPastSensorInfo()
+				.getTempValueList();
+		List<DataPointInfo> averageTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByWeek) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageTempDataPointInfoListByWeek.add(averageDataPointInfo);
+			minTempDataPointInfoListByWeek.add(minDataPointInfo);
+			maxTempDataPointInfoListByWeek.add(maxDataPointInfo);
+		}
+		homePageInfo.setTempAverageValueByWeek(averageTempDataPointInfoListByWeek);
+		homePageInfo.setTempMaxValueByWeek(maxTempDataPointInfoListByWeek);
+		homePageInfo.setTempMinValueByWeek(minTempDataPointInfoListByWeek);
+
+		// 温度历史值（月）
+		List<DataPointsStatisticsInfo> tempDataPointsListByMonth = allPastSensorInfo.getContent()
+				.getWeekPastSensorInfo().getTempValueList();
+		List<DataPointInfo> averageTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> minTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+		List<DataPointInfo> maxTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
+
+		for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByMonth) {
+			DataPointInfo averageDataPointInfo = new DataPointInfo();
+			DataPointInfo minDataPointInfo = new DataPointInfo();
+			DataPointInfo maxDataPointInfo = new DataPointInfo();
+
+			averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			minDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+			maxDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+
+			averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+			minDataPointInfo.setValue(dataPointsStatisticsInfo.getMinvalue());
+			maxDataPointInfo.setValue(dataPointsStatisticsInfo.getMaxvalue());
+
+			averageTempDataPointInfoListByMonth.add(averageDataPointInfo);
+			minTempDataPointInfoListByMonth.add(minDataPointInfo);
+			maxTempDataPointInfoListByMonth.add(maxDataPointInfo);
+		}
+		homePageInfo.setTempAverageValueByMonth(averageTempDataPointInfoListByMonth);
+		homePageInfo.setTempMaxValueByMonth(maxTempDataPointInfoListByMonth);
+		homePageInfo.setTempMinValueByMonth(minTempDataPointInfoListByMonth);
 
 		return homePageInfo;
 	}
@@ -289,7 +612,7 @@ public class SensorController {
 	@ApiOperation(value = "获取某类型传感器一段时间周期历史值(包括：平均值、最大值、最小值)", httpMethod = "GET", notes = "获取用户某个设备某类型传感器一段时间周期历史值(包括：平均值、最大值、最小值)")
 	@RequestMapping(value = "/getSensorValByPeriod/{userID}/{equID}/{sensorType}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseVo<DataPointsStatisticsInfo> getSensorValByPeriod(
+	public ResponseVo<List<DataPointsStatisticsInfo>> getSensorValByPeriod(
 			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType,
@@ -298,7 +621,7 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 从设备获取传感器的值
-		ResponseVo<DataPointsStatisticsInfo> responseVo = sensorService.getSensorValsByPeriod(equID, sensorType,
+		ResponseVo<List<DataPointsStatisticsInfo>> responseVo = sensorService.getSensorValsByPeriod(equID, sensorType,
 				timePeriod);
 
 		return responseVo;
@@ -315,23 +638,24 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取各个传感器某个周期的值
-		ResponseVo<DataPointsStatisticsInfo> phValue = getSensorValByPeriod(userID, equID,
+		ResponseVo<List<DataPointsStatisticsInfo>> phValue = getSensorValByPeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_PH, timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> tempValue = getSensorValByPeriod(userID, equID,
+		ResponseVo<List<DataPointsStatisticsInfo>> tempValue = getSensorValByPeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_TEMPERATURE, timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> salinityValue = getSensorValByPeriod(userID, equID,
+		ResponseVo<List<DataPointsStatisticsInfo>> salinityValue = getSensorValByPeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_SALINITY, timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> lightValue = getSensorValByPeriod(userID, equID,
+		ResponseVo<List<DataPointsStatisticsInfo>> lightValue = getSensorValByPeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_LIGHT, timePeriod);
-		ResponseVo<DataPointsStatisticsInfo> dtsValue = getSensorValByPeriod(userID, equID,
+		ResponseVo<List<DataPointsStatisticsInfo>> dtsValue = getSensorValByPeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_TDS, timePeriod);
 
+		// 遍历获取值
 		PastSensorInfo pastSensorInfo = new PastSensorInfo();
-		pastSensorInfo.setSalinityValue(salinityValue.getContent());
-		pastSensorInfo.setLightValue(lightValue.getContent());
-		pastSensorInfo.setPhValue(phValue.getContent());
-		pastSensorInfo.setTempValue(tempValue.getContent());
-		pastSensorInfo.setDtsValue(dtsValue.getContent());
+		pastSensorInfo.setSalinityValueList(salinityValue.getContent());
+		pastSensorInfo.setLightValueList(lightValue.getContent());
+		pastSensorInfo.setPhValueList(phValue.getContent());
+		pastSensorInfo.setTempValueList(tempValue.getContent());
+		pastSensorInfo.setDtsValueList(dtsValue.getContent());
 
 		ResponseVo<PastSensorInfo> responseVo = new ResponseVo<PastSensorInfo>();
 		responseVo.setStatus(phValue.getStatus());

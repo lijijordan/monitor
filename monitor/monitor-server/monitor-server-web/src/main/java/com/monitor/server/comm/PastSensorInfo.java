@@ -1,6 +1,7 @@
 package com.monitor.server.comm;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.monitor.common.model.DataPointsStatisticsInfo;
 
@@ -14,50 +15,50 @@ public class PastSensorInfo implements Serializable {
 
 	private static final long serialVersionUID = 1262332799116848133L;
 
-	private DataPointsStatisticsInfo phValue;
-	private DataPointsStatisticsInfo salinityValue;
-	private DataPointsStatisticsInfo tempValue;
-	private DataPointsStatisticsInfo lightValue;
-	private DataPointsStatisticsInfo dtsValue;
+	private List<DataPointsStatisticsInfo> phValueList;
+	private List<DataPointsStatisticsInfo> salinityValueList;
+	private List<DataPointsStatisticsInfo> tempValueList;
+	private List<DataPointsStatisticsInfo> lightValueList;
+	private List<DataPointsStatisticsInfo> dtsValueList;
 
-	public DataPointsStatisticsInfo getDtsValue() {
-		return dtsValue;
+	public List<DataPointsStatisticsInfo> getPhValueList() {
+		return phValueList;
 	}
 
-	public void setDtsValue(DataPointsStatisticsInfo dtsValue) {
-		this.dtsValue = dtsValue;
+	public void setPhValueList(List<DataPointsStatisticsInfo> phValueList) {
+		this.phValueList = phValueList;
 	}
 
-	public DataPointsStatisticsInfo getPhValue() {
-		return phValue;
+	public List<DataPointsStatisticsInfo> getSalinityValueList() {
+		return salinityValueList;
 	}
 
-	public void setPhValue(DataPointsStatisticsInfo phValue) {
-		this.phValue = phValue;
+	public void setSalinityValueList(List<DataPointsStatisticsInfo> salinityValueList) {
+		this.salinityValueList = salinityValueList;
 	}
 
-	public DataPointsStatisticsInfo getSalinityValue() {
-		return salinityValue;
+	public List<DataPointsStatisticsInfo> getTempValueList() {
+		return tempValueList;
 	}
 
-	public void setSalinityValue(DataPointsStatisticsInfo salinityValue) {
-		this.salinityValue = salinityValue;
+	public void setTempValueList(List<DataPointsStatisticsInfo> tempValueList) {
+		this.tempValueList = tempValueList;
 	}
 
-	public DataPointsStatisticsInfo getTempValue() {
-		return tempValue;
+	public List<DataPointsStatisticsInfo> getLightValueList() {
+		return lightValueList;
 	}
 
-	public void setTempValue(DataPointsStatisticsInfo tempValue) {
-		this.tempValue = tempValue;
+	public void setLightValueList(List<DataPointsStatisticsInfo> lightValueList) {
+		this.lightValueList = lightValueList;
 	}
 
-	public DataPointsStatisticsInfo getLightValue() {
-		return lightValue;
+	public List<DataPointsStatisticsInfo> getDtsValueList() {
+		return dtsValueList;
 	}
 
-	public void setLightValue(DataPointsStatisticsInfo lightValue) {
-		this.lightValue = lightValue;
+	public void setDtsValueList(List<DataPointsStatisticsInfo> dtsValueList) {
+		this.dtsValueList = dtsValueList;
 	}
 
 }

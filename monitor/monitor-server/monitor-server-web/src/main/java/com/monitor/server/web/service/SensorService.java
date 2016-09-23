@@ -3,6 +3,8 @@
  */
 package com.monitor.server.web.service;
 
+import java.util.List;
+
 import com.monitor.common.model.DataPointsActiveInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
@@ -30,6 +32,7 @@ public interface SensorService {
 	 * @param timePeriod
 	 * @return
 	 */
-	public ResponseVo<DataPointsStatisticsInfo> getSensorValsByPeriod(String equID, String sensorType, String timePeriod);
+	public ResponseVo<List<DataPointsStatisticsInfo>> getSensorValsByPeriod(String equID, String sensorType,
+			String timePeriod);
 
 }
