@@ -6,12 +6,12 @@ import java.util.List;
 import com.monitor.common.model.DataPointsStatisticsInfo;
 
 /**
- * 一段时间各种传感器数据汇总
+ * 所有传感器一段时间数据汇总
  * 
  * @author yinhong
  *
  */
-public class PastSensorInfo implements Serializable {
+public class AllSensorPastInfo implements Serializable {
 
 	private static final long serialVersionUID = 1262332799116848133L;
 
