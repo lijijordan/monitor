@@ -20,7 +20,6 @@
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 	<bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
-	<bean class="com.monitor.device.web.common.CorsConfigurerAdapter"></bean>
 
 	<!-- 启动对@Aspectj的支持 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />

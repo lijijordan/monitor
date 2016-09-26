@@ -53,6 +53,11 @@ public class DataPointsVo {
 	}
 
 	public Date getCollectTime() {
+		
+		if(null == collectTime)
+		{
+			return new Date();
+		}
 		return collectTime;
 	}
 

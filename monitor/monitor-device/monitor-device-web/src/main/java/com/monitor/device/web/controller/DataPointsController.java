@@ -1,13 +1,16 @@
 package com.monitor.device.web.controller;
 
 import javax.annotation.Resource;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import com.monitor.common.vo.DataPointsVo;
+import com.monitor.common.vo.DataQueryVo;
 import com.monitor.device.web.service.IDataPointsService;
 import com.wordnik.swagger.annotations.ApiOperation;
 
@@ -30,8 +33,20 @@ public class DataPointsController {
 			service.Add(vo);
 			return "succ";
 		} catch (Exception ex) {
-			return "error" + ex.toString();
+			return "error:" + ex.toString();
 		}
 	}
 
+	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
+	@ResponseBody
+	@ApiOperation(value = "数据统计生成使用", httpMethod = "POST", response = String.class, notes = "创建统计数据")
+	public String statistics(@RequestBody DataQueryVo vo) {
+		try {
+			System.out.println(vo.toString());
+			service.Statistics(vo);
+			return "succ";
+		} catch (Exception ex) {
+			return "error:" + ex.toString();
+		}
+	}
 }

@@ -53,4 +53,10 @@ public class DataPointsServiceImpl implements IDataPointsService {
 			dataPointsActiveDao.updateByPrimaryKey(activeRecord);
 		}
 	}
+
+	@Override
+	public void Statistics(DataQueryVo vo) {
+		// TODO 根据不同周期，生成统计数据
+
+	}
 }

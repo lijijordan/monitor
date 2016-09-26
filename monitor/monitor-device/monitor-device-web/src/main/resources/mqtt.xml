@@ -68,4 +68,58 @@
 		input-channel="temperatureChannel" ref="mqttTemperatureService" method="process" />
 	<bean id="mqttTemperatureService" class="com.monitor.device.web.service.TemperatureMessageReceiverService" />  
 	<!-- 温度消息适配器结束 -->  
+	
+	<!-- 盐度消息适配器 -->  
+	<int-mqtt:message-driven-channel-adapter  
+		id="mqttInboundSalinity" client-id="clientfisherSalinity" url="tcp://106.185.35.79:1883"  
+		topics="Salinity"  
+		qos="1"  
+		client-factory="clientFactory"   
+		auto-startup="true"  
+		send-timeout="12"
+		converter="mqttConverter"
+		channel="salinityChannel" />  
+
+	<int:channel id="salinityChannel" />     
+	<!-- 消息处理类-->   
+	<int:service-activator id="salinityChannelService"  
+		input-channel="salinityChannel" ref="mqttPHService" method="process" />
+	<bean id="mqttSalinityService" class="com.monitor.device.web.service.SalinityMessageReceiverService" />  
+	<!-- 盐度消息适配器结束 -->  
+	
+	<!-- TDS消息适配器 -->  
+	<int-mqtt:message-driven-channel-adapter  
+		id="mqttInboundSalinity" client-id="clientfisherTDS" url="tcp://106.185.35.79:1883"  
+		topics="TDS"  
+		qos="1"  
+		client-factory="clientFactory"   
+		auto-startup="true"  
+		send-timeout="12"
+		converter="mqttConverter"
+		channel="tdsChannel" />  
+
+	<int:channel id="tdsChannel" />     
+	<!-- 消息处理类-->   
+	<int:service-activator id="tdsChannelService"  
+		input-channel="tdsChannel" ref="mqttTDSService" method="process" />
+	<bean id="mqttTDSService" class="com.monitor.device.web.service.TDSMessageReceiverService" />  
+	<!-- TDS消息适配器结束 -->  
+	
+	<!-- 光照消息适配器 -->  
+	<int-mqtt:message-driven-channel-adapter  
+		id="mqttInboundSalinity" client-id="clientfisherLight" url="tcp://106.185.35.79:1883"  
+		topics="Light"  
+		qos="1"  
+		client-factory="clientFactory"   
+		auto-startup="true"  
+		send-timeout="12"
+		converter="mqttConverter"
+		channel="lightChannel" />  
+
+	<int:channel id="lightChannel" />     
+	<!-- 消息处理类-->   
+	<int:service-activator id="lightChannelService"  
+		input-channel="lightChannel" ref="mqttLightService" method="process" />
+	<bean id="mqttLightService" class="com.monitor.device.web.service.LightMessageReceiverService" />  
+	<!-- 光照消息适配器结束 --> 
 </beans>  

@@ -18,6 +18,7 @@ import com.monitor.common.define.DataTypeEnum;
 import com.monitor.common.define.ResponseEnum;
 import com.monitor.common.model.DataPointsActiveInfo;
 import com.monitor.common.model.DataPointsStatisticsInfo;
+import com.monitor.common.vo.DataQueryVo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.device.web.service.IDataQueryService;
 import com.monitor.device.web.service.ITemperatureService;
@@ -31,7 +32,6 @@ public class QueryFacadeController {
 	private ITemperatureService service;
 	@Resource
 	private IDataQueryService queryService;
-
 
 	public QueryFacadeController() {
 		// TODO Auto-generated constructor stub
@@ -124,31 +124,12 @@ public class QueryFacadeController {
 
 		// TemperatureInfo tCurrent = (TemperatureInfo) queryService
 		// .queryCurrentData(DataTypeEnum.fromString(dataType));
-		DataPointsActiveInfo data = new DataPointsActiveInfo();
-		switch (DataTypeEnum.fromString(dataType)) {
-		case Temperature:
-			data.setCollecttime(new Date());
-			data.setValue("28");
-			break;
-		case PH:
-			data.setCollecttime(new Date());
-			data.setValue("7.1");
-			break;
-		case Salinity:
-			data.setCollecttime(new Date());
-			data.setValue("1.026");
-			break;
-		case TDS:
-			data.setCollecttime(new Date());
-			data.setValue("140");
-			break;
-		case Light:
-			data.setCollecttime(new Date());
-			data.setValue("85");
-			break;
-		default:
-			break;
-		}
+		DataQueryVo vo = new DataQueryVo();
+		vo.setDataType(DataTypeEnum.fromString(dataType).getKey());
+		vo.setDeviceSn(uniqid);
+
+		DataPointsActiveInfo data = (DataPointsActiveInfo) queryService
+				.queryCurrentData(vo);
 		try {
 			response.setContent(data);
 			response.setMessage(ResponseEnum.SUCCESS.getMessage());
@@ -160,5 +141,4 @@ public class QueryFacadeController {
 			return response;
 		}
 	}
-
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.device.web.dao.DataPointsStatisticsLogInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.monitor.device.web.model.DataPointsStatisticsLogInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sensorid" property="sensorid" jdbcType="BIGINT" />
+    <result column="laststatistics" property="laststatistics" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sensorid, laststatistics
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from datapointsstatisticslog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectBySensorKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from datapointsstatisticslog
+    where sensorid = #{sensorid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from datapointsstatisticslog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.monitor.device.web.model.DataPointsStatisticsLogInfo" >
+    insert into datapointsstatisticslog (id, sensorid, laststatistics
+      )
+    values (#{id,jdbcType=BIGINT}, #{sensorid,jdbcType=BIGINT}, #{laststatistics,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.monitor.device.web.model.DataPointsStatisticsLogInfo" >
+    insert into datapointsstatisticslog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sensorid != null" >
+        sensorid,
+      </if>
+      <if test="laststatistics != null" >
+        laststatistics,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sensorid != null" >
+        #{sensorid,jdbcType=BIGINT},
+      </if>
+      <if test="laststatistics != null" >
+        #{laststatistics,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.monitor.device.web.model.DataPointsStatisticsLogInfo" >
+    update datapointsstatisticslog
+    <set >
+      <if test="sensorid != null" >
+        sensorid = #{sensorid,jdbcType=BIGINT},
+      </if>
+      <if test="laststatistics != null" >
+        laststatistics = #{laststatistics,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.monitor.device.web.model.DataPointsStatisticsLogInfo" >
+    update datapointsstatisticslog
+    set sensorid = #{sensorid,jdbcType=BIGINT},
+      laststatistics = #{laststatistics,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
