@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ResponseEnum {
-	SUCCESS("200", "成功"), PARAMERROR("10001", "参数错误");
+	SUCCESS("200", "成功"), PARAMNULL("10001", "参数不能为空"), PARAMCONVERTERROR(
+			"10002", "参数转换枚举错误"), SYSEXCEPTION("99999", "系统异常");
 
 	private ResponseEnum(String status, String message) {
 		this.status = status;

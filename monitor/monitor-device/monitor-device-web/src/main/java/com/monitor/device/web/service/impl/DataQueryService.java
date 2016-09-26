@@ -1,14 +1,16 @@
 package com.monitor.device.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.monitor.common.define.DataTypeEnum;
 import com.monitor.common.define.QueryScopeEnum;
+import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.DataQueryVo;
 import com.monitor.device.web.dao.DataPointsActiveInfoMapper;
 import com.monitor.device.web.dao.DataPointsStatisticsInfoMapper;
@@ -38,9 +40,27 @@ public class DataQueryService implements IDataQueryService {
 	}
 
 	@Override
-	public List<Object> queryHistoryData(DataQueryVo vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DataPointsStatisticsInfo> queryHistoryData(DataQueryVo vo) {
+		Date dtNow = new Date();
+		List<DataPointsStatisticsInfo> statisticsList = null;
+		switch (QueryScopeEnum.fromString(vo.getQueryScopeText())) {
+		case Day:
+			vo.setStartTime(DateUtils.addDays(dtNow, -1));
+			vo.setEndTime(dtNow);
+			statisticsList = dataPointsStatisticsDao.selectByDay(vo);
+			break;
+		case Week:
+			vo.setStartTime(DateUtils.addWeeks(dtNow, -1));
+			vo.setEndTime(dtNow);
+			statisticsList = dataPointsStatisticsDao.selectByWeek(vo);
+			break;
+		case Month:
+		default:
+			vo.setStartTime(DateUtils.addMonths(dtNow, -1));
+			vo.setEndTime(dtNow);
+			statisticsList = dataPointsStatisticsDao.selectByMonth(vo);
+			break;
+		}
+		return statisticsList;
 	}
-
 }

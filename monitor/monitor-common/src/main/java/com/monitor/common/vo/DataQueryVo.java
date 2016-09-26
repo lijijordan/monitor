@@ -37,6 +37,24 @@ public class DataQueryVo {
 
 	private int dataType;
 	private int queryScope;
+	private String dataTypeText;
+	private String queryScopeText;
+	public String getDataTypeText() {
+		return dataTypeText;
+	}
+
+	public void setDataTypeText(String dataTypeText) {
+		this.dataTypeText = dataTypeText;
+	}
+
+	public String getQueryScopeText() {
+		return queryScopeText;
+	}
+
+	public void setQueryScopeText(String queryScopeText) {
+		this.queryScopeText = queryScopeText;
+	}
+
 	private Date startTime;
 	private Date endTime;
 

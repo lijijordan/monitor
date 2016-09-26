@@ -7,15 +7,63 @@
     <result column="sensorid" jdbcType="BIGINT" property="sensorid" />
     <result column="collecttime" jdbcType="TIMESTAMP" property="collecttime" />
     <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="maxvalue" jdbcType="VARCHAR" property="maxvalue" />
+    <result column="minvalue" jdbcType="VARCHAR" property="minvalue" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, statisticstype, sensorid, collecttime, value
+    id, statisticstype, sensorid, collecttime, value, maxvalue, minvalue
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from datapointsstatistics
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 日报 -->
+  <select id="selectByDay" parameterType="com.monitor.common.vo.DataQueryVo" resultMap="BaseResultMap">
+   	  select 0, 0, sensorid, date_add(date(collecttime), interval hour(collecttime) HOUR) as collecttime,
+       round(avg(convert(value, decimal(10, 2))), 2) as value,
+       max(convert(value, decimal(10, 2))) as 'maxvalue',
+       min(convert(value, decimal(10, 2))) as 'minvalue'       
+  	 from datapoints
+ 		where sensorid = (select id
+                     from sensor
+                    where devicesn = #{deviceSn,jdbcType=VARCHAR}
+                      and type = #{dataType,jdbcType=INTEGER})
+   				and collecttime between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+				 group by date_add(date(collecttime), interval hour(collecttime) HOUR) 
+				 order by date_add(date(collecttime), interval hour(collecttime) HOUR) 
+  </select>
+  <!-- 周报 -->
+  <select id="selectByWeek" parameterType="com.monitor.common.vo.DataQueryVo" resultMap="BaseResultMap">
+   	  select 0, 0, sensorid,date(collecttime) as collecttime,
+       round(avg(convert(value, decimal(10, 2))), 2) as value,
+       max(convert(value, decimal(10, 2))) as 'maxvalue',
+       min(convert(value, decimal(10, 2))) as 'minvalue'
+	  from datapoints
+	 	where sensorid = (select id
+	                     from sensor
+	                    where devicesn = #{deviceSn,jdbcType=VARCHAR}
+	                      and type = #{dataType,jdbcType=INTEGER})
+	   and collecttime between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP} 
+		 group by date(collecttime)
+		 order by date(collecttime)
+
+  </select>
+  <!-- 月报 -->
+  <select id="selectByMonth" parameterType="com.monitor.common.vo.DataQueryVo" resultMap="BaseResultMap">
+   	   select 0,0,sensorid, date(collecttime) as collecttime,
+       round(avg(convert(value, decimal(10, 2))), 2) as value,
+       max(convert(value, decimal(10, 2))) as 'maxvalue',
+       min(convert(value, decimal(10, 2))) as 'minvalue'      
+	  from datapoints
+		 where sensorid = (select id
+		                     from sensor
+		                    where devicesn = #{deviceSn,jdbcType=VARCHAR}
+		                      and type = #{dataType,jdbcType=INTEGER})
+		   and collecttime between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP} 
+		 group by date(collecttime)
+		 order by date(collecttime)
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from datapointsstatistics

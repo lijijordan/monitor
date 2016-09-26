@@ -36,7 +36,7 @@
 	<bean id="mqttConverter" class="com.monitor.device.web.common.MqttUtf8MessageConverter" />
 	<!-- PH消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundPH" client-id="clientfisherPH" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundPH" client-id="clientfisherPH1" url="tcp://106.185.35.79:1883"  
 		topics="PH"  
 		qos="1"  
 		client-factory="clientFactory"   
@@ -53,7 +53,7 @@
 	<!-- PH消息适配器结束 -->  
 	<!-- 温度消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundTemperature" client-id="clientfisherTemperature" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundTemperature" client-id="clientfisherTemperature1" url="tcp://106.185.35.79:1883"  
 		topics="temperature"  
 		qos="1"  
 		client-factory="clientFactory"   
@@ -71,7 +71,7 @@
 	
 	<!-- 盐度消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundSalinity" client-id="clientfisherSalinity" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundSalinity" client-id="clientfisherSalinity1" url="tcp://106.185.35.79:1883"  
 		topics="Salinity"  
 		qos="1"  
 		client-factory="clientFactory"   
@@ -89,7 +89,7 @@
 	
 	<!-- TDS消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundSalinity" client-id="clientfisherTDS" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundSalinity" client-id="clientfisherTDS1" url="tcp://106.185.35.79:1883"  
 		topics="TDS"  
 		qos="1"  
 		client-factory="clientFactory"   
@@ -107,7 +107,7 @@
 	
 	<!-- 光照消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundSalinity" client-id="clientfisherLight" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundSalinity" client-id="clientfisherLight1" url="tcp://106.185.35.79:1883"  
 		topics="Light"  
 		qos="1"  
 		client-factory="clientFactory"   
