@@ -1,5 +1,7 @@
 package com.monitor.device.web.service.impl;
 
+import java.util.TimeZone;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class DataPointsServiceImpl implements IDataPointsService {
 	private SensorInfoMapper sensorDao;
 
 	public void Add(DataPointsVo vo) {
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT+08:00"));
 		SensorInfo sensor = sensorDao.selectByDeviceSn(vo);
 		DataPointsInfo record = new DataPointsInfo();
 		record.setSensorid(sensor.getId());
