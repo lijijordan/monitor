@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author yinhong
  *
  */
-public class CurSensorInfo implements Serializable {
+public class AllSensorCurInfo implements Serializable {
 
 	private static final long serialVersionUID = 6834622589607657812L;
 	private String ph;
