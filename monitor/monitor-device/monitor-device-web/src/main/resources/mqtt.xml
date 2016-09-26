@@ -54,7 +54,7 @@
 	<!-- 温度消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
 		id="mqttInboundTemperature" client-id="clientfisherTemperature" url="tcp://106.185.35.79:1883"  
-		topics="temperature"  
+		topics="Temperature"  
 		qos="1"  
 		client-factory="clientFactory"   
 		auto-startup="true"  
