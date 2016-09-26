@@ -49,7 +49,7 @@
 	<!-- 消息处理类-->   
 	<int:service-activator id="phChannelService"  
 		input-channel="phChannel" ref="mqttPHService" method="process" />
-	<bean id="mqttPHService" class="com.monitor.device.web.service.PHMessageReceiverService" />  
+	<bean id="mqttPHService" class="com.monitor.device.web.service.mqtt.PHMessageReceiverService" />  
 	<!-- PH消息适配器结束 -->  
 	<!-- 温度消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
@@ -66,7 +66,7 @@
 	<!-- 消息处理类-->   
 	<int:service-activator id="temperatureChannelService"  
 		input-channel="temperatureChannel" ref="mqttTemperatureService" method="process" />
-	<bean id="mqttTemperatureService" class="com.monitor.device.web.service.TemperatureMessageReceiverService" />  
+	<bean id="mqttTemperatureService" class="com.monitor.device.web.service.mqtt.TemperatureMessageReceiverService" />  
 	<!-- 温度消息适配器结束 -->  
 	
 	<!-- 盐度消息适配器 -->  
@@ -84,7 +84,7 @@
 	<!-- 消息处理类-->   
 	<int:service-activator id="salinityChannelService"  
 		input-channel="salinityChannel" ref="mqttPHService" method="process" />
-	<bean id="mqttSalinityService" class="com.monitor.device.web.service.SalinityMessageReceiverService" />  
+	<bean id="mqttSalinityService" class="com.monitor.device.web.service.mqtt.SalinityMessageReceiverService" />  
 	<!-- 盐度消息适配器结束 -->  
 	
 	<!-- TDS消息适配器 -->  
@@ -102,7 +102,7 @@
 	<!-- 消息处理类-->   
 	<int:service-activator id="tdsChannelService"  
 		input-channel="tdsChannel" ref="mqttTDSService" method="process" />
-	<bean id="mqttTDSService" class="com.monitor.device.web.service.TDSMessageReceiverService" />  
+	<bean id="mqttTDSService" class="com.monitor.device.web.service.mqtt.TDSMessageReceiverService" />  
 	<!-- TDS消息适配器结束 -->  
 	
 	<!-- 光照消息适配器 -->  
@@ -120,6 +120,6 @@
 	<!-- 消息处理类-->   
 	<int:service-activator id="lightChannelService"  
 		input-channel="lightChannel" ref="mqttLightService" method="process" />
-	<bean id="mqttLightService" class="com.monitor.device.web.service.LightMessageReceiverService" />  
+	<bean id="mqttLightService" class="com.monitor.device.web.service.mqtt.LightMessageReceiverService" />  
 	<!-- 光照消息适配器结束 --> 
 </beans>  
