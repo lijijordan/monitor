@@ -89,7 +89,7 @@
 	
 	<!-- TDS消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundSalinity" client-id="clientfisherTDS" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundTDS" client-id="clientfisherTDS" url="tcp://106.185.35.79:1883"  
 		topics="TDS"  
 		qos="1"  
 		client-factory="clientFactory"   
@@ -107,7 +107,7 @@
 	
 	<!-- 光照消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
-		id="mqttInboundSalinity" client-id="clientfisherLight" url="tcp://106.185.35.79:1883"  
+		id="mqttInboundLight" client-id="clientfisherLight" url="tcp://106.185.35.79:1883"  
 		topics="Light"  
 		qos="1"  
 		client-factory="clientFactory"   
