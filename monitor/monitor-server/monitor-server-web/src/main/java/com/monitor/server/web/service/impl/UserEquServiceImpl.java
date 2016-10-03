@@ -11,15 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.monitor.server.comm.OptObject;
-import com.monitor.server.comm.OptResult;
-import com.monitor.server.comm.OptTypeEum;
-import com.monitor.server.comm.Util;
+import com.monitor.server.comm.BusinessException;
 import com.monitor.server.dao.EquInfoDao;
 import com.monitor.server.dao.OptInfoDao;
 import com.monitor.server.dao.UserInfoDao;
 import com.monitor.server.entity.EquInfo;
+import com.monitor.server.entity.FishTankInfo;
+import com.monitor.server.entity.NetworkInfo;
 import com.monitor.server.entity.OptInfo;
+import com.monitor.server.entity.UserDevInfo;
 import com.monitor.server.entity.UserInfo;
 import com.monitor.server.web.service.UserEquService;
 
@@ -40,42 +40,83 @@ public class UserEquServiceImpl implements UserEquService {
 	private OptInfoDao optInfoDao;
 
 	/**
-	 * 发现设备
-	 */
-	@Override
-	public EquInfo discoverEqu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * 注册用户和设备
+	 * 注册用户
 	 */
 	@Override
 	@Transactional
-	public void regUserEqu(UserInfo userInfo, EquInfo equInfo) {
+	public UserInfo registerUser(UserInfo userInfo) throws BusinessException {
+
+		int saveResult = 0;
 
 		// 校验输入条件
-		checkUserIsExisted(userInfo.getName());
-		checkUserInfoIsComplete(userInfo);
-		checkEquIsExisted(equInfo.getSn());
-		checkEquInfoIsComplete(equInfo);
+		boolean isExisted = checkUserIsExisted(userInfo.getAccount());
+		boolean isCompleted = checkUserIsCompleted(userInfo);
+
+		if (isExisted) {
+			throw new BusinessException("Account has bean used.");
+		}
+
+		if (!isCompleted) {
+			throw new BusinessException("User information error.");
+		}
 
 		// 保存用户信息
-		createUser(userInfo);
+		try {
+			saveResult = createUser(userInfo);
+		} catch (Exception e) {
+			throw new BusinessException("Database error.");
+		}
 
-		// 保存设备信息
-		equInfo.setUserInfo(userInfo);
-		createEqu(equInfo);
+		if (saveResult != 1) {
+			throw new BusinessException("Database error.");
+		}
 
-		// 记录用户操作记录
-		OptInfo optInfo = Util.createOptInfo(OptTypeEum.CREATE.getValue(), OptObject.USEREQU.getValue(),
-				OptResult.SUCCESS.getValue(), userInfo, equInfo);
-		createOptInfo(optInfo);
+		// 记录用户操作记录待增加
 
-		/**
-		 * 跳转到注册成功页面，注册成功页面跳转到首页
-		 */
+		return userInfo;
+
+	}
+
+	/**
+	 * 注册网络
+	 */
+	@Override
+	@Transactional
+	public NetworkInfo registerNetwork(NetworkInfo networkInfo) throws BusinessException {
+
+		int saveResult = 0;
+
+		// 校验网络配置是否正确
+		boolean isCorrect = checkNetworkIsCorrect(networkInfo);
+
+		if (!isCorrect) {
+			throw new BusinessException("Network information is wrong.");
+		}
+
+		// 保存网络信息
+		try {
+			saveResult = createNetwork(networkInfo);
+		} catch (Exception e) {
+			throw new BusinessException("Database error.");
+		}
+
+		if (saveResult != 1) {
+			throw new BusinessException("Database error.");
+		}
+
+		// 记录用户操作记录待增加
+
+		return networkInfo;
+
+	}
+
+	/**
+	 * 发现设备
+	 */
+	@Override
+	public EquInfo discoverDev() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -93,37 +134,36 @@ public class UserEquServiceImpl implements UserEquService {
 
 	/**
 	 * 检查用户名是否已经被注册
+	 * 
+	 * @param account
+	 * @return
 	 */
-	public void checkUserIsExisted(String userName) {
+	private boolean checkUserIsExisted(String account) {
 		// TODO Auto-generated method stub
 
+		return false;
 	}
 
 	/**
 	 * 检查用户信息是否完整（比填项是否全面填写、校验用户信息是否符合规则）
 	 * 
 	 * @param userInfo
+	 * @return
 	 */
-	private void checkUserInfoIsComplete(UserInfo userInfo) {
+	private boolean checkUserIsCompleted(UserInfo userInfo) {
 
+		return true;
 	}
 
 	/**
-	 * 检查设备是否已经被注册
-	 */
-	@Override
-	public void checkEquIsExisted(String equSN) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * 检查设备信息是否完整（比填项是否全面填写、校验用户信息是否符合规则）
+	 * 检查网络输入信息是否正确，是否可以正常联网
 	 * 
-	 * @param userInfo
+	 * @param networkInfo
+	 * @return
 	 */
-	private void checkEquInfoIsComplete(EquInfo equInfo) {
+	private boolean checkNetworkIsCorrect(NetworkInfo networkInfo) {
 
+		return true;
 	}
 
 	/**
@@ -153,9 +193,27 @@ public class UserEquServiceImpl implements UserEquService {
 
 	}
 
-	@Override
-	public int createUser(UserInfo userInfo) {
+	private int createUser(UserInfo userInfo) {
 		return userInfoDao.createUser(userInfo);
+	}
+
+	@Override
+	public int createFishTank(FishTankInfo fishTackInfo) {
+		return userInfoDao.createFishTank(fishTackInfo);
+	}
+
+	@Override
+	public int createNetwork(NetworkInfo networkInfo) {
+		return userInfoDao.createNetwork(networkInfo);
+	}
+
+	@Override
+	public int createUserDevLink(UserDevInfo userDevInfo) {
+		return userInfoDao.createUserDevLink(userDevInfo);
+	}
+
+	public String getDevSNByUserAccount(String account) {
+		return userInfoDao.getDevSNByUserAccount(account);
 	}
 
 	@Override
@@ -179,8 +237,8 @@ public class UserEquServiceImpl implements UserEquService {
 	}
 
 	@Override
-	public UserInfo findUserByID(int userID) {
-		return userInfoDao.selectUserById(userID);
+	public UserInfo selectUserByAccount(String account) {
+		return userInfoDao.selectUserByAccount(account);
 	}
 
 	@Override

@@ -19,6 +19,9 @@
 	</settings>
 	<typeAliases>
 		<typeAlias alias="UserInfo" type="com.monitor.server.entity.UserInfo" />
+		<typeAlias alias="FishTankInfo" type="com.monitor.server.entity.FishTankInfo" />
+		<typeAlias alias="NetworkInfo" type="com.monitor.server.entity.NetworkInfo" />
+		<typeAlias alias="UserDevInfo" type="com.monitor.server.entity.UserDevInfo" />
 		<typeAlias alias="PhInfo" type="com.monitor.server.entity.PhInfo" />
 		<typeAlias alias="AlarmInfo" type="com.monitor.server.entity.AlarmInfo" />
 		<typeAlias alias="ConductivityInfo"

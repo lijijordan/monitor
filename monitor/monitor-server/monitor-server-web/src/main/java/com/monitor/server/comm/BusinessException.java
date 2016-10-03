@@ -11,30 +11,16 @@ public class BusinessException extends RuntimeException {
 
 	private static final long serialVersionUID = -5050745931951542954L;
 
-	public BusinessException(String frdMessage) {
-		super(createFriendlyErrMsg(frdMessage));
+	public BusinessException(String errorMessage) {
+		super(errorMessage);
 	}
 
 	public BusinessException(Throwable throwable) {
 		super(throwable);
 	}
 
-	public BusinessException(Throwable throwable, String frdMessage) {
-		super(throwable);
+	public BusinessException(String errorMessage, Throwable throwable) {
+		super(errorMessage, throwable);
 	}
 
-	private static String createFriendlyErrMsg(String msgBody) {
-		String prefixStr = "Sorry,";
-		String suffixStr = " please contact with administrator later!";
-
-		StringBuffer friendlyErrMsg = new StringBuffer("");
-
-		friendlyErrMsg.append(prefixStr);
-
-		friendlyErrMsg.append(msgBody);
-
-		friendlyErrMsg.append(suffixStr);
-
-		return friendlyErrMsg.toString();
-	}
 }

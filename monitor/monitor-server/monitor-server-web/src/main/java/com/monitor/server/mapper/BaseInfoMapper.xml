@@ -5,22 +5,144 @@
 
 <mapper namespace="BaseInfoMapper">
 
+	<!-- 用户 -->
 	<resultMap id="UserInfoMap" type="UserInfo">
-		<id property="id" column="user_id" />
-		<result property="name" column="user_name" />
-		<result property="sex" column="user_sex" />
-		<result property="email" column="user_email" />
-		<result property="telNum" column="user_tel" />
-		<result property="age" column="user_age" />
-		<result property="pwd" column="user_pwd" />
-		<result property="webChat" column="user_wechat" />
-		<result property="aquariumsLength" column="aquariums_length" />
-		<result property="aquariumsWidth" column="aquariums_width" />
-		<result property="aquariumsHeigth" column="aquariums_height" />
-		<result property="aquariumsType" column="aquariums_type" />
-		<result property="aquariumsAge" column="aquariums_age" />
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="nickname" column="nickname" />
+		<result property="password" column="password" />
+		<result property="cellphone" column="cellphone" />
+		<result property="telephone" column="telephone" />
+		<result property="email" column="email" />
+		<result property="sex" column="sex" />
+		<result property="age" column="age" />
+		<result property="headimgurl" column="headimgurl" />
+		<result property="country" column="country" />
+		<result property="province" column="province" />
+		<result property="city" column="city" />
+		<result property="privilege" column="privilege" />
+		<result property="unionid" column="unionid" />
 	</resultMap>
 
+	<select id="getUserByAccount" parameterType="String" resultMap="UserInfoMap">
+		SELECT *
+		FROM user
+		WHERE account = #{account}
+	</select>
+
+	<insert id="createUser" parameterType="UserInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user
+		(account,nickname,password,cellphone,telephone,email,sex,age,province,city,country,headimgurl,privilege,unionid)
+		VALUES
+		(#{account},#{nickname},#{password},#{cellphone},#{telephone},#{email},#{sex},#{age},#{province},#{city},#{country},#{headimgurl},#{privilege}),#{unionid})
+	</insert>
+
+	<delete id="deleteUser" parameterType="int">
+		DELETE from user
+		WHERE
+		user_id = #{id}
+	</delete>
+
+	<update id="updateUser" parameterType="UserInfo">
+		UPDATE user SET
+		user_name =
+		#{name},
+		user_sex = #{sex},
+		user_email = #{email},
+		user_tel =
+		#{telNum},
+		user_age = #{age},
+		user_pwd = #{pwd},
+		user_wechat =
+		#{webChat},
+		aquariums_length = #{aquariumsLength},
+		aquariums_width =
+		#{aquariumsWidth},
+		aquariums_height = #{aquariumsHeigth},
+		aquariums_type = #{aquariumsType},
+		aquariums_age = #{aquariumsAge}
+		WHERE user_id = #{id}
+	</update>
+
+	<select id="countAllUserNum" resultType="Integer">
+		SELECT count(u.user_id)
+		FROM user u
+	</select>
+
+	<select id="selectAllUser" resultMap="UserInfoMap">
+		SELECT *
+		FROM user
+	</select>
+
+	<!-- 鱼缸 -->
+	<resultMap id="FishTankMap" type="FishTankInfo">
+		<id property="id" column="id" />
+		<result property="length" column="length" />
+		<result property="width" column="width" />
+		<result property="height" column="height" />
+		<result property="volume" column="volume" />
+		<result property="type" column="type" />
+		<association property="userInfo" resultMap="UserInfoMap" />
+	</resultMap>
+
+	<insert id="createFishTank" parameterType="FishTankInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO fishtank
+		(length,width,height,volume,type,userid)
+		VALUES
+		(#{length},#{width},#{height},#{volume},#{type},#{userInfo.id})
+	</insert>
+
+	<!-- 网络 -->
+	<resultMap id="NetworkMap" type="NetworkInfo">
+		<id property="id" column="id" />
+		<result property="ssid" column="ssid" />
+		<result property="password" column="password" />
+		<association property="userInfo" resultMap="UserInfoMap" />
+	</resultMap>
+
+	<insert id="createNetwork" parameterType="NetworkInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO network
+		(ssid,password,userid)
+		VALUES
+		(#{ssid},#{password},#{userInfo.id})
+	</insert>
+
+	<!-- 设备 -->
+	<resultMap id="DevMap" type="com.monitor.common.vo.DeviceVo">
+		<id property="id" column="id" />
+		<result property="alias" column="alias" />
+		<result property="type" column="type" />
+		<result property="remark" column="remark" />
+		<result property="sn" column="sn" />
+		<result property="registtime" column="registtime" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<resultMap id="UserDevMap" type="UserDevInfo">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="sn" column="sn" />
+	</resultMap>
+
+	<insert id="createUserDevLink" parameterType="UserDevInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user_dev
+		(account,sn)
+		VALUES
+		(#{account},#{sn})
+	</insert>
+	
+	<select id="getDevSNByUserAccount" parameterType="String" resultMap="String">
+		SELECT sn
+		FROM user_dev
+		WHERE account = #{account}
+	</select>
+
+
+	<!-- 老代码 -->
 	<resultMap id="EquInfoMap" type="EquInfo">
 		<id property="id" column="fish_equ_id" />
 		<result property="sn" column="fish_equ_sn" />
@@ -58,59 +180,9 @@
 		<association property="equInfo" resultMap="EquInfoMap" />
 	</resultMap>
 
-	<select id="getUserById" parameterType="int" resultMap="UserInfoMap">
-		SELECT *
-		FROM user_info u
-		WHERE u.user_id = #{id}
-	</select>
-
-	<select id="countAllUserNum" resultType="Integer">
-		SELECT count(u.user_id)
-		FROM user_info u
-	</select>
-
-	<select id="selectAllUser" resultMap="UserInfoMap">
-		SELECT *
-		FROM user_info
-	</select>
-
-	<insert id="createUser" parameterType="UserInfo"
-		useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO user_info
-		(user_name,user_sex,user_email,user_tel,user_age,user_pwd,user_wechat,aquariums_length,aquariums_width,aquariums_height,aquariums_type,aquariums_age)
-		VALUES
-		(#{name},#{sex},#{email},#{telNum},#{age},#{pwd},#{webChat},#{aquariumsLength},#{aquariumsWidth},#{aquariumsHeigth},#{aquariumsType},#{aquariumsAge})
-	</insert>
-
-	<update id="updateUser" parameterType="UserInfo">
-		UPDATE user_info SET
-		user_name = #{name},
-		user_sex = #{sex},
-		user_email = #{email},
-		user_tel =
-		#{telNum},
-		user_age = #{age},
-		user_pwd = #{pwd},
-		user_wechat =
-		#{webChat},
-		aquariums_length = #{aquariumsLength},
-		aquariums_width =
-		#{aquariumsWidth},
-		aquariums_height = #{aquariumsHeigth},
-		aquariums_type = #{aquariumsType},
-		aquariums_age = #{aquariumsAge}
-		WHERE user_id = #{id}
-	</update>
-
-	<delete id="deleteUser" parameterType="int">
-		DELETE from user_info
-		WHERE
-		user_id = #{id}
-	</delete>
-
 	<select id="getEquById" parameterType="int" resultMap="EquInfoMap">
 		SELECT *
-		FROM fish_equ_info f, user_info u
+		FROM fish_equ_info f, user u
 		WHERE f.user_id = u.user_id AND
 		f.fish_equ_id = #{id}
 	</select>
@@ -124,7 +196,7 @@
 	<select id="selectAllEqus" resultMap="EquInfoMap">
 		SELECT *
 		FROM fish_equ_info
-		f, user_info u
+		f, user u
 		WHERE f.user_id = u.user_id
 	</select>
 

@@ -1,9 +1,10 @@
 /**
- * 传感器逻辑层
+ * 传感器逻辑层，从设备层获取传感器数据
  * 
  */
 package com.monitor.server.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,15 @@ public class SensorServiceImpl implements SensorService {
 		ResponseVo<DataPointsActiveInfo> result = new ResponseVo<DataPointsActiveInfo>();
 		result.setStatus(responseVo.getStatus());
 		result.setMessage(responseVo.getMessage());
-		JSONObject obj = new JSONObject().fromObject(responseVo.getContent().toString());
-		result.setContent((DataPointsActiveInfo) JSONObject.toBean(obj, DataPointsActiveInfo.class));
+		if (responseVo.getContent() != null) {
+			JSONObject obj = new JSONObject().fromObject(responseVo.getContent().toString());
+			result.setContent((DataPointsActiveInfo) JSONObject.toBean(obj, DataPointsActiveInfo.class));
+		} else {
+			// 返回值为空，设置为"0"
+			DataPointsActiveInfo dataPointsActiveInfo = new DataPointsActiveInfo();
+			dataPointsActiveInfo.setValue("0");
+			result.setContent(dataPointsActiveInfo);
+		}
 
 		return result;
 	}
@@ -70,9 +78,20 @@ public class SensorServiceImpl implements SensorService {
 		ResponseVo<List<DataPointsStatisticsInfo>> result = new ResponseVo<List<DataPointsStatisticsInfo>>();
 		result.setStatus(responseVo.getStatus());
 		result.setMessage(responseVo.getMessage());
-		JSONArray jsonArray = JSONArray.fromObject(responseVo.getContent().toString());
-		List<DataPointsStatisticsInfo> plist = jsonArray.toList(jsonArray, DataPointsStatisticsInfo.class);
-		result.setContent(plist);
+		if (responseVo.getContent() != null) {
+			JSONArray jsonArray = JSONArray.fromObject(responseVo.getContent().toString());
+			List<DataPointsStatisticsInfo> plist = jsonArray.toList(jsonArray, DataPointsStatisticsInfo.class);
+			result.setContent(plist);
+		} else {
+			// 返回值为空，设置为"0"
+			List<DataPointsStatisticsInfo> plist = new ArrayList<DataPointsStatisticsInfo>();
+			DataPointsStatisticsInfo dataPointsStatisticsInfo = new DataPointsStatisticsInfo();
+			dataPointsStatisticsInfo.setMaxvalue("0");
+			dataPointsStatisticsInfo.setMinvalue("0");
+			dataPointsStatisticsInfo.setValue("0");
+			plist.add(dataPointsStatisticsInfo);
+			result.setContent(plist);
+		}
 
 		return result;
 	}

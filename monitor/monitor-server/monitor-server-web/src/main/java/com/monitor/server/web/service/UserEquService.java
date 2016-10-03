@@ -5,8 +5,12 @@ package com.monitor.server.web.service;
 
 import java.util.List;
 
+import com.monitor.server.comm.BusinessException;
 import com.monitor.server.entity.EquInfo;
+import com.monitor.server.entity.FishTankInfo;
+import com.monitor.server.entity.NetworkInfo;
 import com.monitor.server.entity.OptInfo;
+import com.monitor.server.entity.UserDevInfo;
 import com.monitor.server.entity.UserInfo;
 
 /**
@@ -15,23 +19,25 @@ import com.monitor.server.entity.UserInfo;
  */
 public interface UserEquService {
 
-	public void checkUserIsExisted(String userName);
-	
-	public void checkEquIsExisted(String equSN);
-	
-	public EquInfo discoverEqu();
+	public UserInfo registerUser(UserInfo userInfo) throws BusinessException;
 
-	public void regUserEqu(UserInfo userInfo, EquInfo equInfo);
+	public NetworkInfo registerNetwork(NetworkInfo networkInfo) throws BusinessException;
 
 	public void login(UserInfo userInfo);
-	
+
 	public void logout(UserInfo userInfo);
-	
+
 	public void editUserInfo(UserInfo userInfo);
-	
+
+	public EquInfo discoverDev();
+
 	public void editEquInfo(EquInfo equInfo);
 
-	public int createUser(UserInfo userInfo);
+	public int createFishTank(FishTankInfo fishTackInfo);
+
+	public int createNetwork(NetworkInfo networkInfo);
+
+	public int createUserDevLink(UserDevInfo userDevInfo);
 
 	public int createEqu(EquInfo equInfo);
 
@@ -51,9 +57,11 @@ public interface UserEquService {
 
 	public int countAllEqu();
 
-	public UserInfo findUserByID(int userID);
+	public UserInfo selectUserByAccount(String account);
+
+	public String getDevSNByUserAccount(String account);
 
 	public EquInfo findEquByID(int equID);
-	
+
 	public int createOptInfo(OptInfo optInfo);
 }
