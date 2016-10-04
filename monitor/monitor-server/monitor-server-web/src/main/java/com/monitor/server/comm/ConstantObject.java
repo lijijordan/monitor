@@ -26,4 +26,12 @@ public final class ConstantObject {
 
 	public static final String TIMEPERIOD_MONTH = "Month";
 
+	public static final String RETURN_TO_UI_STATAUS_SUCCESS = "0";
+
+	public static final String RETURN_TO_UI_STATAUS_SUCCESS_MESS = "success";
+
+	public static final String RETURN_TO_UI_STATAUS_FAILURE = "1";
+	
+	public static final String RETURN_TO_UI_STATAUS_FAILURE_MESS = "failure";
+
 }

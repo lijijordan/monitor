@@ -13,18 +13,20 @@ public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = -2277018491304480258L;
 	private int id;
-	private String name;
-	private int sex;
+	private String account;
+	private String nickname;
+	private String password;
+	private int cellphone;
+	private int telephone;
 	private String email;
-	private String telNum;
+	private String sex;
 	private int age;
-	private String pwd;
-	private String webChat;
-	private int aquariumsLength;
-	private int aquariumsWidth;
-	private int aquariumsHeigth;
-	private int aquariumsType;
-	private int aquariumsAge;
+	private String headimgurl;
+	private String country;
+	private String province;
+	private String city;
+	private String privilege;
+	private String unionid;
 
 	public int getId() {
 		return id;
@@ -34,28 +36,44 @@ public class UserInfo implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
-	public int getSex() {
-		return sex;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSex(int sex) {
-		this.sex = sex;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(int cellphone) {
+		this.cellphone = cellphone;
+	}
+
+	public int getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(int telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getEmail() {
@@ -66,12 +84,12 @@ public class UserInfo implements Serializable {
 		this.email = email;
 	}
 
-	public String getTelNum() {
-		return telNum;
+	public String getSex() {
+		return sex;
 	}
 
-	public void setTelNum(String telNum) {
-		this.telNum = telNum;
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public int getAge() {
@@ -82,52 +100,52 @@ public class UserInfo implements Serializable {
 		this.age = age;
 	}
 
-	public String getWebChat() {
-		return webChat;
+	public String getHeadimgurl() {
+		return headimgurl;
 	}
 
-	public void setWebChat(String webChat) {
-		this.webChat = webChat;
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
 	}
 
-	public int getAquariumsLength() {
-		return aquariumsLength;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setAquariumsLength(int aquariumsLength) {
-		this.aquariumsLength = aquariumsLength;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public int getAquariumsWidth() {
-		return aquariumsWidth;
+	public String getProvince() {
+		return province;
 	}
 
-	public void setAquariumsWidth(int aquariumsWidth) {
-		this.aquariumsWidth = aquariumsWidth;
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
-	public int getAquariumsHeigth() {
-		return aquariumsHeigth;
+	public String getCity() {
+		return city;
 	}
 
-	public void setAquariumsHeigth(int aquariumsHeigth) {
-		this.aquariumsHeigth = aquariumsHeigth;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public int getAquariumsType() {
-		return aquariumsType;
+	public String getPrivilege() {
+		return privilege;
 	}
 
-	public void setAquariumsType(int aquariumsType) {
-		this.aquariumsType = aquariumsType;
+	public void setPrivilege(String privilege) {
+		this.privilege = privilege;
 	}
 
-	public int getAquariumsAge() {
-		return aquariumsAge;
+	public String getUnionid() {
+		return unionid;
 	}
 
-	public void setAquariumsAge(int aquariumsAge) {
-		this.aquariumsAge = aquariumsAge;
+	public void setUnionid(String unionid) {
+		this.unionid = unionid;
 	}
 
 }

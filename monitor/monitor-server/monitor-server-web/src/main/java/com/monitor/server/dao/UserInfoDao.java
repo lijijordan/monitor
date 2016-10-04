@@ -9,6 +9,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.monitor.server.entity.FishTankInfo;
+import com.monitor.server.entity.NetworkInfo;
+import com.monitor.server.entity.UserDevInfo;
 import com.monitor.server.entity.UserInfo;
 
 /**
@@ -21,8 +24,12 @@ public class UserInfoDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	public UserInfo selectUserById(int id) {
-		return (UserInfo) sqlSessionTemplate.selectOne("BaseInfoMapper.getUserById", id);
+	public UserInfo selectUserByAccount(String account) {
+		return (UserInfo) sqlSessionTemplate.selectOne("BaseInfoMapper.getUserByAccount", account);
+	}
+
+	public String getDevSNByUserAccount(String account) {
+		return (String) sqlSessionTemplate.selectOne("BaseInfoMapper.getDevSNByUserAccount", account);
 	}
 
 	public int countAllUserNum() {
@@ -42,6 +49,18 @@ public class UserInfoDao {
 
 	public int createUser(UserInfo userInfo) {
 		return sqlSessionTemplate.insert("BaseInfoMapper.createUser", userInfo);
+	}
+
+	public int createFishTank(FishTankInfo fishTackInfo) {
+		return sqlSessionTemplate.insert("BaseInfoMapper.createFishTank", fishTackInfo);
+	}
+
+	public int createNetwork(NetworkInfo networkInfo) {
+		return sqlSessionTemplate.insert("BaseInfoMapper.createNetwork", networkInfo);
+	}
+
+	public int createUserDevLink(UserDevInfo userDevInfo) {
+		return sqlSessionTemplate.insert("BaseInfoMapper.createUserDevLink", userDevInfo);
 	}
 
 	public int updateUser(UserInfo userInfo) {
