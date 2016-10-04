@@ -30,7 +30,7 @@
                      from sensor
                     where devicesn = #{deviceSn,jdbcType=VARCHAR}
                       and type = #{dataType,jdbcType=INTEGER})
-   				and collecttime between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+   				and collecttime <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP} and collecottime <![CDATA[<]]> #{endTime,jdbcType=TIMESTAMP}
 				 group by date_add(date(collecttime), interval hour(collecttime) HOUR) 
 				 order by date_add(date(collecttime), interval hour(collecttime) HOUR) 
   </select>
@@ -45,7 +45,7 @@
 	                     from sensor
 	                    where devicesn = #{deviceSn,jdbcType=VARCHAR}
 	                      and type = #{dataType,jdbcType=INTEGER})
-	   and collecttime between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP} 
+	   and collecttime <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP} and collecttime <![CDATA[<]]> #{endTime,jdbcType=TIMESTAMP} 
 		 group by date(collecttime)
 		 order by date(collecttime)
 
@@ -61,7 +61,7 @@
 		                     from sensor
 		                    where devicesn = #{deviceSn,jdbcType=VARCHAR}
 		                      and type = #{dataType,jdbcType=INTEGER})
-		   and collecttime between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP} 
+		   and collecttime <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP} and collecttime<![CDATA[<]]> #{endTime,jdbcType=TIMESTAMP} 
 		 group by date(collecttime)
 		 order by date(collecttime)
   </select>
