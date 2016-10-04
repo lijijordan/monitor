@@ -30,7 +30,7 @@
                      from sensor
                     where devicesn = #{deviceSn,jdbcType=VARCHAR}
                       and type = #{dataType,jdbcType=INTEGER})
-   				and collecttime <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP} and collecottime <![CDATA[<]]> #{endTime,jdbcType=TIMESTAMP}
+   				and collecttime <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP} and collecttime <![CDATA[<]]> #{endTime,jdbcType=TIMESTAMP}
 				 group by date_add(date(collecttime), interval hour(collecttime) HOUR) 
 				 order by date_add(date(collecttime), interval hour(collecttime) HOUR) 
   </select>
