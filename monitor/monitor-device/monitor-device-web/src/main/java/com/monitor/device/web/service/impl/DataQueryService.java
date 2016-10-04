@@ -45,7 +45,8 @@ public class DataQueryService implements IDataQueryService {
 		List<DataPointsStatisticsInfo> statisticsList = null;
 		switch (QueryScopeEnum.fromString(vo.getQueryScopeText())) {
 		case Day:
-			vo.setStartTime(DateUtils.addDays(dtNow, -1));
+			vo.setStartTime(DateUtils.addHours((DateUtils.addDays(dtNow, -1)),
+					1));
 			vo.setEndTime(dtNow);
 			statisticsList = dataPointsStatisticsDao.selectByDay(vo);
 			break;
