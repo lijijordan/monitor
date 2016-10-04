@@ -1,7 +1,7 @@
 /**
  * 用户设备逻辑层
  * 
- * 目前按照一个用户只用一套设备，一个家里只有一套设备设计代码
+ * 目前按照一个用户只用一套设备
  */
 package com.monitor.server.web.service.impl;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.monitor.server.comm.BusinessException;
+import com.monitor.server.comm.ErrorCodeMessEnum;
 import com.monitor.server.dao.EquInfoDao;
 import com.monitor.server.dao.OptInfoDao;
 import com.monitor.server.dao.UserInfoDao;
@@ -48,37 +49,39 @@ public class UserEquServiceImpl implements UserEquService {
 
 		int saveResult = 0;
 
-		// 校验输入条件
+		// 校验
 		boolean isExisted = checkUserIsExisted(userInfo.getAccount());
 		boolean isCompleted = checkUserIsCompleted(userInfo);
 
 		if (isExisted) {
-			throw new BusinessException("Account has bean used.");
+			throw new BusinessException(ErrorCodeMessEnum.AccountExisted.getErrorCode(),
+					ErrorCodeMessEnum.AccountExisted.getErrorMessage());
 		}
 
 		if (!isCompleted) {
-			throw new BusinessException("User information error.");
+			throw new BusinessException(ErrorCodeMessEnum.AccountInfoError.getErrorCode(),
+					ErrorCodeMessEnum.AccountInfoError.getErrorMessage());
 		}
 
-		// 保存用户信息
+		// 保存
 		try {
 			saveResult = createUser(userInfo);
 		} catch (Exception e) {
-			throw new BusinessException("Database error.");
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
 		}
 
 		if (saveResult != 1) {
-			throw new BusinessException("Database error.");
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage());
 		}
-
-		// 记录用户操作记录待增加
 
 		return userInfo;
 
 	}
 
 	/**
-	 * 注册网络
+	 * 注册WIFI网络
 	 */
 	@Override
 	@Transactional
@@ -86,27 +89,105 @@ public class UserEquServiceImpl implements UserEquService {
 
 		int saveResult = 0;
 
-		// 校验网络配置是否正确
+		// 校验
 		boolean isCorrect = checkNetworkIsCorrect(networkInfo);
+		boolean isExisted = checkNetworkIsExisted(networkInfo);
 
-		if (!isCorrect) {
-			throw new BusinessException("Network information is wrong.");
+		if (isExisted) {
+			// 更新网络信息
 		}
 
-		// 保存网络信息
+		if (!isCorrect) {
+			throw new BusinessException(ErrorCodeMessEnum.NetworkInfoError.getErrorCode(),
+					ErrorCodeMessEnum.NetworkInfoError.getErrorMessage());
+		}
+
+		// 保存
 		try {
 			saveResult = createNetwork(networkInfo);
 		} catch (Exception e) {
-			throw new BusinessException("Database error.");
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
 		}
 
 		if (saveResult != 1) {
-			throw new BusinessException("Database error.");
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage());
 		}
 
-		// 记录用户操作记录待增加
-
 		return networkInfo;
+
+	}
+
+	/**
+	 * 绑定用户和设备
+	 */
+	@Override
+	@Transactional
+	public UserDevInfo bindUserDev(UserDevInfo userDevInfo) throws BusinessException {
+
+		int saveResult = 0;
+
+		// 校验
+		boolean isExisted = checkUserDevIsBinded(userDevInfo);
+
+		if (isExisted) {
+			throw new BusinessException(ErrorCodeMessEnum.DevBinded.getErrorCode(),
+					ErrorCodeMessEnum.DevBinded.getErrorMessage());
+		}
+
+		// 保存
+		try {
+			saveResult = createUserDevLink(userDevInfo);
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
+
+		if (saveResult != 1) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage());
+		}
+
+		return userDevInfo;
+
+	}
+
+	/**
+	 * 用户登录，返回用户绑定的设备SN
+	 */
+	@Override
+	public String login(String account, String password) {
+
+		String devSN = null;
+		UserInfo userInfo = null;
+
+		// 根据用户账号查询用户信息
+		try {
+			userInfo = selectUserByAccount(account);
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
+
+		if (userInfo == null) {
+			throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
+					ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
+		}
+
+		String userPass = userInfo.getPassword();
+
+		// 如果密码正确，返回用户绑定的设备SN
+		if (password.equals(userPass)) {
+			try {
+				devSN = getDevSNByUserAccount(account);
+			} catch (Exception e) {
+				throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+						ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+			}
+		}
+
+		return devSN;
 
 	}
 
@@ -115,32 +196,16 @@ public class UserEquServiceImpl implements UserEquService {
 	 */
 	@Override
 	public EquInfo discoverDev() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * 用户登录
-	 */
-	@Override
-	public void login(UserInfo userInfo) {
-
-		/**
-		 * 1、通过用户名查询用户和设备信息（查询失败，跳转到密码错误或网络异常页面）
-		 * 2、通过设备信息连接网络（连接网络失败，跳转到修改网络SSID和密码页面） 3、跳转到首页
-		 */
-
-	}
-
-	/**
-	 * 检查用户名是否已经被注册
+	 * 检查用户名是否已经被注册过
 	 * 
 	 * @param account
 	 * @return
 	 */
 	private boolean checkUserIsExisted(String account) {
-		// TODO Auto-generated method stub
-
 		return false;
 	}
 
@@ -151,7 +216,6 @@ public class UserEquServiceImpl implements UserEquService {
 	 * @return
 	 */
 	private boolean checkUserIsCompleted(UserInfo userInfo) {
-
 		return true;
 	}
 
@@ -162,8 +226,27 @@ public class UserEquServiceImpl implements UserEquService {
 	 * @return
 	 */
 	private boolean checkNetworkIsCorrect(NetworkInfo networkInfo) {
-
 		return true;
+	}
+
+	/**
+	 * 检查WIFI网络信息是否已经注册过
+	 * 
+	 * @param networkInfo
+	 * @return
+	 */
+	private boolean checkNetworkIsExisted(NetworkInfo networkInfo) {
+		return false;
+	}
+
+	/**
+	 * 校验用户和设备是否已经绑定
+	 * 
+	 * @param userDevInfo
+	 * @return
+	 */
+	private boolean checkUserDevIsBinded(UserDevInfo userDevInfo) {
+		return false;
 	}
 
 	/**
@@ -171,7 +254,6 @@ public class UserEquServiceImpl implements UserEquService {
 	 */
 	@Override
 	public void logout(UserInfo userInfo) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -180,7 +262,6 @@ public class UserEquServiceImpl implements UserEquService {
 	 */
 	@Override
 	public void editUserInfo(UserInfo userInfo) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -189,7 +270,6 @@ public class UserEquServiceImpl implements UserEquService {
 	 */
 	@Override
 	public void editEquInfo(EquInfo equInfo) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -197,22 +277,19 @@ public class UserEquServiceImpl implements UserEquService {
 		return userInfoDao.createUser(userInfo);
 	}
 
-	@Override
-	public int createFishTank(FishTankInfo fishTackInfo) {
+	private int createFishTank(FishTankInfo fishTackInfo) {
 		return userInfoDao.createFishTank(fishTackInfo);
 	}
 
-	@Override
-	public int createNetwork(NetworkInfo networkInfo) {
+	private int createNetwork(NetworkInfo networkInfo) {
 		return userInfoDao.createNetwork(networkInfo);
 	}
 
-	@Override
-	public int createUserDevLink(UserDevInfo userDevInfo) {
+	private int createUserDevLink(UserDevInfo userDevInfo) {
 		return userInfoDao.createUserDevLink(userDevInfo);
 	}
 
-	public String getDevSNByUserAccount(String account) {
+	private String getDevSNByUserAccount(String account) {
 		return userInfoDao.getDevSNByUserAccount(account);
 	}
 
@@ -236,8 +313,7 @@ public class UserEquServiceImpl implements UserEquService {
 		return userInfoDao.countAllUserNum();
 	}
 
-	@Override
-	public UserInfo selectUserByAccount(String account) {
+	private UserInfo selectUserByAccount(String account) {
 		return userInfoDao.selectUserByAccount(account);
 	}
 

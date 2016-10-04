@@ -1,4 +1,4 @@
-package com.monitor.server.comm;
+package com.monitor.server.entity;
 
 import java.util.Date;
 

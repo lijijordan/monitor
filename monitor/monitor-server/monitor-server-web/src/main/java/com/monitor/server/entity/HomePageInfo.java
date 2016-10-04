@@ -1,4 +1,4 @@
-package com.monitor.server.comm;
+package com.monitor.server.entity;
 
 import java.io.Serializable;
 import java.util.List;

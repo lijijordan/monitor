@@ -21,8 +21,7 @@
 	<context:annotation-config />
 	<aop:aspectj-autoproxy />
 
-	<!-- 数据源以及事物配置 -->
-	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:property-placeholder location="classpath:app.properties" />
 
 	<bean id="dataSource_base" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${database.driverClassName}" />
@@ -73,23 +72,6 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="txManager" />
-
-	<!-- 异常处理 -->
-	<bean id="exceptionHandler" class="com.monitor.server.comm.ExceptionAdvisor"></bean>
-	<bean
-		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="beanNames">
-			<list>
-				<value>*Dao</value>
-				<value>*Service</value>
-			</list>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>exceptionHandler</value>
-			</list>
-		</property>
-	</bean>
 
 	<!--使用jdk的实现 -->
 	<bean id="ky.requestFactory"

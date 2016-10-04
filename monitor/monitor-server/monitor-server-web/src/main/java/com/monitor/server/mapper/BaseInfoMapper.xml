@@ -134,8 +134,9 @@
 		VALUES
 		(#{account},#{sn})
 	</insert>
-	
-	<select id="getDevSNByUserAccount" parameterType="String" resultMap="String">
+
+	<select id="getDevSNByUserAccount" parameterType="String"
+		resultMap="String">
 		SELECT sn
 		FROM user_dev
 		WHERE account = #{account}
@@ -168,14 +169,6 @@
 		<result property="optObject" column="opt_info_obj" />
 		<result property="result" column="opt_info_result" />
 		<result property="createTime" column="opt_info_time" />
-		<association property="userInfo" resultMap="UserInfoMap" />
-		<association property="equInfo" resultMap="EquInfoMap" />
-	</resultMap>
-
-	<resultMap id="PowerSwitchInfoMap" type="PowerSwitchInfo">
-		<id property="id" column="power_switch_id" />
-		<result property="sn" column="power_switch_sn" />
-		<result property="perStatus" column="power_switch_perstatus" />
 		<association property="userInfo" resultMap="UserInfoMap" />
 		<association property="equInfo" resultMap="EquInfoMap" />
 	</resultMap>

@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.entity.EquInfo;
-import com.monitor.server.entity.FishTankInfo;
 import com.monitor.server.entity.NetworkInfo;
 import com.monitor.server.entity.OptInfo;
 import com.monitor.server.entity.UserDevInfo;
@@ -23,7 +22,9 @@ public interface UserEquService {
 
 	public NetworkInfo registerNetwork(NetworkInfo networkInfo) throws BusinessException;
 
-	public void login(UserInfo userInfo);
+	public UserDevInfo bindUserDev(UserDevInfo userDevInfo) throws BusinessException;
+
+	public String login(String account, String password);
 
 	public void logout(UserInfo userInfo);
 
@@ -32,12 +33,6 @@ public interface UserEquService {
 	public EquInfo discoverDev();
 
 	public void editEquInfo(EquInfo equInfo);
-
-	public int createFishTank(FishTankInfo fishTackInfo);
-
-	public int createNetwork(NetworkInfo networkInfo);
-
-	public int createUserDevLink(UserDevInfo userDevInfo);
 
 	public int createEqu(EquInfo equInfo);
 
@@ -56,10 +51,6 @@ public interface UserEquService {
 	public int countAllUser();
 
 	public int countAllEqu();
-
-	public UserInfo selectUserByAccount(String account);
-
-	public String getDevSNByUserAccount(String account);
 
 	public EquInfo findEquByID(int equID);
 
