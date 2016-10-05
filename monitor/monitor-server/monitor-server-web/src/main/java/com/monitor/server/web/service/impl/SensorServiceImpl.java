@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.monitor.common.model.DataPointsActiveInfo;
-import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.comm.ErrorCodeMessEnum;
+import com.monitor.server.entity.DataPointsDevInfo;
+import com.monitor.server.entity.DataPointsDevStatisticsInfo;
 import com.monitor.server.web.service.SensorService;
 
 import net.sf.json.JSONArray;
@@ -36,7 +36,7 @@ public class SensorServiceImpl implements SensorService {
 	 * 获取某设备某类型传感器当前值
 	 */
 	@Override
-	public ResponseVo<DataPointsActiveInfo> getCurSensorValByType(String equID, String sensorType)
+	public ResponseVo<DataPointsDevInfo> getCurSensorValByType(String equID, String sensorType)
 			throws BusinessException {
 
 		// 拼接设备服务端URL
@@ -48,12 +48,12 @@ public class SensorServiceImpl implements SensorService {
 		url.append(sensorType);
 
 		// 设置返回默认值
-		ResponseVo<DataPointsActiveInfo> result = new ResponseVo<DataPointsActiveInfo>();
+		ResponseVo<DataPointsDevInfo> result = new ResponseVo<DataPointsDevInfo>();
 		result.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
 		result.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
 
 		// 返回值为空，值设置为"0"
-		DataPointsActiveInfo dataPointsActiveInfo = new DataPointsActiveInfo();
+		DataPointsDevInfo dataPointsActiveInfo = new DataPointsDevInfo();
 		dataPointsActiveInfo.setValue("0");
 		result.setContent(dataPointsActiveInfo);
 
@@ -69,8 +69,8 @@ public class SensorServiceImpl implements SensorService {
 				result.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
 
 				if (responseVo.getContent() != null) {
-					JSONObject obj = new JSONObject().fromObject(responseVo.getContent().toString());
-					result.setContent((DataPointsActiveInfo) JSONObject.toBean(obj, DataPointsActiveInfo.class));
+					JSONObject obj = new JSONObject().fromObject(responseVo.getContent());
+					result.setContent((DataPointsDevInfo) JSONObject.toBean(obj, DataPointsDevInfo.class));
 				}
 			}
 
@@ -86,7 +86,7 @@ public class SensorServiceImpl implements SensorService {
 	 * 获取某设备某类型传感器一段之间值
 	 */
 	@Override
-	public ResponseVo<List<DataPointsStatisticsInfo>> getSensorValsByPeriod(String equID, String sensorType,
+	public ResponseVo<List<DataPointsDevStatisticsInfo>> getSensorValsByPeriod(String equID, String sensorType,
 			String timePeriod) throws BusinessException {
 
 		// 拼接设备服务端URL
@@ -100,13 +100,13 @@ public class SensorServiceImpl implements SensorService {
 		url.append(timePeriod);
 
 		// 设置返回默认值
-		ResponseVo<List<DataPointsStatisticsInfo>> result = new ResponseVo<List<DataPointsStatisticsInfo>>();
+		ResponseVo<List<DataPointsDevStatisticsInfo>> result = new ResponseVo<List<DataPointsDevStatisticsInfo>>();
 		result.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
 		result.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
 
 		// 返回值为空，设置为"0"
-		List<DataPointsStatisticsInfo> plist = new ArrayList<DataPointsStatisticsInfo>();
-		DataPointsStatisticsInfo dataPointsStatisticsInfo = new DataPointsStatisticsInfo();
+		List<DataPointsDevStatisticsInfo> plist = new ArrayList<DataPointsDevStatisticsInfo>();
+		DataPointsDevStatisticsInfo dataPointsStatisticsInfo = new DataPointsDevStatisticsInfo();
 		dataPointsStatisticsInfo.setMaxvalue("0");
 		dataPointsStatisticsInfo.setMinvalue("0");
 		dataPointsStatisticsInfo.setValue("0");
@@ -126,8 +126,8 @@ public class SensorServiceImpl implements SensorService {
 
 				if (responseVo.getContent() != null) {
 					JSONArray jsonArray = JSONArray.fromObject(responseVo.getContent().toString());
-					List<DataPointsStatisticsInfo> tempList = jsonArray.toList(jsonArray,
-							DataPointsStatisticsInfo.class);
+					List<DataPointsDevStatisticsInfo> tempList = (List<DataPointsDevStatisticsInfo>) jsonArray
+							.toList(jsonArray, DataPointsDevStatisticsInfo.class);
 					result.setContent(tempList);
 				}
 			}

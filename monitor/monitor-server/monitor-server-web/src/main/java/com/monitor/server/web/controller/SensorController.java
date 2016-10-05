@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.monitor.common.model.DataPointsActiveInfo;
-import com.monitor.common.model.DataPointsStatisticsInfo;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.comm.ConstantObject;
@@ -22,6 +20,8 @@ import com.monitor.server.entity.AllSensorAllPastInfo;
 import com.monitor.server.entity.AllSensorCurInfo;
 import com.monitor.server.entity.AllSensorPastInfo;
 import com.monitor.server.entity.DataPointInfo;
+import com.monitor.server.entity.DataPointsDevInfo;
+import com.monitor.server.entity.DataPointsDevStatisticsInfo;
 import com.monitor.server.entity.HomePageInfo;
 import com.monitor.server.entity.SensorAllPastInfo;
 import com.monitor.server.entity.SensorDetailPageInfo;
@@ -85,13 +85,13 @@ public class SensorController {
 			// homePageInfo.setTempHealth(healthInfo.getContent().getTemperature());
 
 			// TDS历史值（天）
-			List<DataPointsStatisticsInfo> dtsDataPointsListByDay = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> dtsDataPointsListByDay = allPastSensorInfo.getContent()
 					.getDayPastSensorInfo().getDtsValueList();
 			List<DataPointInfo> averageDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByDay) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByDay) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -114,13 +114,13 @@ public class SensorController {
 			homePageInfo.setTdsMinValueByDay(minDataPointInfoListByDay);
 
 			// TDS历史值（周）
-			List<DataPointsStatisticsInfo> dtsDataPointsListByWeek = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> dtsDataPointsListByWeek = allPastSensorInfo.getContent()
 					.getWeekPastSensorInfo().getDtsValueList();
 			List<DataPointInfo> averageDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByWeek) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByWeek) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -143,13 +143,13 @@ public class SensorController {
 			homePageInfo.setTdsMinValueByWeek(minDataPointInfoListByWeek);
 
 			// TDS历史值（月）
-			List<DataPointsStatisticsInfo> dtsDataPointsListByMonth = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> dtsDataPointsListByMonth = allPastSensorInfo.getContent()
 					.getMonthPastSensorInfo().getDtsValueList();
 			List<DataPointInfo> averageDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByMonth) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : dtsDataPointsListByMonth) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -172,13 +172,13 @@ public class SensorController {
 			homePageInfo.setTdsMinValueByMonth(minDataPointInfoListByMonth);
 
 			// Salinity历史值（天）
-			List<DataPointsStatisticsInfo> salinityDataPointsListByDay = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> salinityDataPointsListByDay = allPastSensorInfo.getContent()
 					.getDayPastSensorInfo().getSalinityValueList();
 			List<DataPointInfo> averageSalinityDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minSalinityDataSalinityPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxSalinityDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByDay) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByDay) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -201,13 +201,13 @@ public class SensorController {
 			homePageInfo.setSalinityMinValueByDay(minSalinityDataSalinityPointInfoListByDay);
 
 			// Salinity历史值（周）
-			List<DataPointsStatisticsInfo> salinityDataPointsListByWeek = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> salinityDataPointsListByWeek = allPastSensorInfo.getContent()
 					.getWeekPastSensorInfo().getSalinityValueList();
 			List<DataPointInfo> averageSalinityDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minSalinityDataSalinityPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxSalinityDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByWeek) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByWeek) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -230,13 +230,13 @@ public class SensorController {
 			homePageInfo.setSalinityMinValueByWeek(minSalinityDataSalinityPointInfoListByWeek);
 
 			// Salinity历史值（月）
-			List<DataPointsStatisticsInfo> salinityDataPointsListByMonth = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> salinityDataPointsListByMonth = allPastSensorInfo.getContent()
 					.getMonthPastSensorInfo().getSalinityValueList();
 			List<DataPointInfo> averageSalinityDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minSalinityDataSalinityPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxSalinityDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByMonth) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : salinityDataPointsListByMonth) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -259,13 +259,13 @@ public class SensorController {
 			homePageInfo.setSalinityMinValueByMonth(minSalinityDataSalinityPointInfoListByMonth);
 
 			// 灯光历史值（天）
-			List<DataPointsStatisticsInfo> lightDataPointsListByDay = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> lightDataPointsListByDay = allPastSensorInfo.getContent()
 					.getDayPastSensorInfo().getLightValueList();
 			List<DataPointInfo> averageLightDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minLightDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxLightDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByDay) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByDay) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -288,13 +288,13 @@ public class SensorController {
 			homePageInfo.setLightMinValueByDay(minLightDataPointInfoListByDay);
 
 			// 灯光历史值（周）
-			List<DataPointsStatisticsInfo> lightDataPointsListByWeek = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> lightDataPointsListByWeek = allPastSensorInfo.getContent()
 					.getWeekPastSensorInfo().getLightValueList();
 			List<DataPointInfo> averageLightDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minLightDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxLightDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByWeek) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByWeek) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -317,13 +317,13 @@ public class SensorController {
 			homePageInfo.setLightMinValueByWeek(minLightDataPointInfoListByWeek);
 
 			// 灯光历史值（月）
-			List<DataPointsStatisticsInfo> lightDataPointsListByMonth = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> lightDataPointsListByMonth = allPastSensorInfo.getContent()
 					.getMonthPastSensorInfo().getLightValueList();
 			List<DataPointInfo> averageLightDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minLightDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxLightDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByMonth) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : lightDataPointsListByMonth) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -346,13 +346,13 @@ public class SensorController {
 			homePageInfo.setLightMinValueByMonth(minLightDataPointInfoListByMonth);
 
 			// PH历史值（天）
-			List<DataPointsStatisticsInfo> pHDataPointsListByDay = allPastSensorInfo.getContent().getDayPastSensorInfo()
-					.getPhValueList();
+			List<DataPointsDevStatisticsInfo> pHDataPointsListByDay = allPastSensorInfo.getContent()
+					.getDayPastSensorInfo().getPhValueList();
 			List<DataPointInfo> averagePhDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minPhDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxPhDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByDay) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByDay) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -374,13 +374,13 @@ public class SensorController {
 			homePageInfo.setPhMinValueByDay(minPhDataPointInfoListByDay);
 
 			// PH历史值（周）
-			List<DataPointsStatisticsInfo> pHDataPointsListByWeek = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> pHDataPointsListByWeek = allPastSensorInfo.getContent()
 					.getWeekPastSensorInfo().getPhValueList();
 			List<DataPointInfo> averagePhDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minPhDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxPhDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByWeek) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByWeek) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -403,13 +403,13 @@ public class SensorController {
 			homePageInfo.setPhMinValueByWeek(minPhDataPointInfoListByWeek);
 
 			// PH历史值（月）
-			List<DataPointsStatisticsInfo> pHDataPointsListByMonth = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> pHDataPointsListByMonth = allPastSensorInfo.getContent()
 					.getMonthPastSensorInfo().getPhValueList();
 			List<DataPointInfo> averagePhDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minPhDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxPhDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByMonth) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : pHDataPointsListByMonth) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -431,13 +431,13 @@ public class SensorController {
 			homePageInfo.setPhMinValueByMonth(minPhDataPointInfoListByMonth);
 
 			// 温度历史值（天）
-			List<DataPointsStatisticsInfo> tempDataPointsListByDay = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> tempDataPointsListByDay = allPastSensorInfo.getContent()
 					.getDayPastSensorInfo().getTempValueList();
 			List<DataPointInfo> averageTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByDay) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByDay) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -459,13 +459,13 @@ public class SensorController {
 			homePageInfo.setTempMinValueByDay(minTempDataPointInfoListByDay);
 
 			// 温度历史值（周）
-			List<DataPointsStatisticsInfo> tempDataPointsListByWeek = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> tempDataPointsListByWeek = allPastSensorInfo.getContent()
 					.getWeekPastSensorInfo().getTempValueList();
 			List<DataPointInfo> averageTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByWeek) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByWeek) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -487,13 +487,13 @@ public class SensorController {
 			homePageInfo.setTempMinValueByWeek(minTempDataPointInfoListByWeek);
 
 			// 温度历史值（月）
-			List<DataPointsStatisticsInfo> tempDataPointsListByMonth = allPastSensorInfo.getContent()
+			List<DataPointsDevStatisticsInfo> tempDataPointsListByMonth = allPastSensorInfo.getContent()
 					.getWeekPastSensorInfo().getTempValueList();
 			List<DataPointInfo> averageTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByMonth) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByMonth) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -537,7 +537,7 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 获取相关显示数据
-		ResponseVo<DataPointsActiveInfo> curSensorInfo = getCurSensorValByType(userID, equID, sensorType);
+		ResponseVo<DataPointsDevInfo> curSensorInfo = getCurSensorValByType(userID, equID, sensorType);
 		ResponseVo<SensorAllPastInfo> allPastSensorVal = getAllPastSensorValByType(userID, equID, sensorType);
 
 		if (curSensorInfo.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -549,14 +549,14 @@ public class SensorController {
 			sensorDetailPageInfo.setCurValue(curSensorInfo.getContent().getValue());
 
 			// 历史值（天）
-			List<DataPointsStatisticsInfo> tempDataPointsListByDay = allPastSensorVal.getContent()
+			List<DataPointsDevStatisticsInfo> tempDataPointsListByDay = allPastSensorVal.getContent()
 					.getDayPastSensorInfo();
 
 			List<DataPointInfo> averageTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxTempDataPointInfoListByDay = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByDay) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByDay) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -578,14 +578,14 @@ public class SensorController {
 			sensorDetailPageInfo.setMinValueByDay(minTempDataPointInfoListByDay);
 
 			// 历史值（周）
-			List<DataPointsStatisticsInfo> tempDataPointsListByWeek = allPastSensorVal.getContent()
+			List<DataPointsDevStatisticsInfo> tempDataPointsListByWeek = allPastSensorVal.getContent()
 					.getWeekPastSensorInfo();
 
 			List<DataPointInfo> averageTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxTempDataPointInfoListByWeek = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByWeek) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByWeek) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -607,14 +607,14 @@ public class SensorController {
 			sensorDetailPageInfo.setMinValueByWeek(minTempDataPointInfoListByWeek);
 
 			// 历史值（月）
-			List<DataPointsStatisticsInfo> tempDataPointsListByMonth = allPastSensorVal.getContent()
+			List<DataPointsDevStatisticsInfo> tempDataPointsListByMonth = allPastSensorVal.getContent()
 					.getMonthPastSensorInfo();
 
 			List<DataPointInfo> averageTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> minTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 			List<DataPointInfo> maxTempDataPointInfoListByMonth = new ArrayList<DataPointInfo>();
 
-			for (DataPointsStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByMonth) {
+			for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tempDataPointsListByMonth) {
 				DataPointInfo averageDataPointInfo = new DataPointInfo();
 				DataPointInfo minDataPointInfo = new DataPointInfo();
 				DataPointInfo maxDataPointInfo = new DataPointInfo();
@@ -635,6 +635,8 @@ public class SensorController {
 			sensorDetailPageInfo.setMaxValueByMonth(minTempDataPointInfoListByMonth);
 			sensorDetailPageInfo.setMinValueByMonth(maxTempDataPointInfoListByMonth);
 
+			responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
+			responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
 			responseVo.setContent(sensorDetailPageInfo);
 		}
 
@@ -655,15 +657,15 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取各个传感器的值
-		ResponseVo<DataPointsActiveInfo> phCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> phCurrentValue = getCurSensorValByType(userID, equID,
 				ConstantObject.SENSOR_TYPE_PH);
-		ResponseVo<DataPointsActiveInfo> tempCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> tempCurrentValue = getCurSensorValByType(userID, equID,
 				ConstantObject.SENSOR_TYPE_TEMPERATURE);
-		ResponseVo<DataPointsActiveInfo> salinityCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> salinityCurrentValue = getCurSensorValByType(userID, equID,
 				ConstantObject.SENSOR_TYPE_SALINITY);
-		ResponseVo<DataPointsActiveInfo> lightCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> lightCurrentValue = getCurSensorValByType(userID, equID,
 				ConstantObject.SENSOR_TYPE_LIGHT);
-		ResponseVo<DataPointsActiveInfo> tdsCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> tdsCurrentValue = getCurSensorValByType(userID, equID,
 				ConstantObject.SENSOR_TYPE_TDS);
 
 		if (phCurrentValue.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -762,14 +764,14 @@ public class SensorController {
 	@ApiOperation(value = "获取某类型传感器当前值", httpMethod = "GET", notes = "获取用户某个设备某类型传感器当前值")
 	@RequestMapping(value = "/getCurSensorValByType/{userID}/{equID}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseVo<DataPointsActiveInfo> getCurSensorValByType(
+	public ResponseVo<DataPointsDevInfo> getCurSensorValByType(
 			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType) {
 
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
-		ResponseVo<DataPointsActiveInfo> responseVo = null;
+		ResponseVo<DataPointsDevInfo> responseVo = null;
 
 		// 从设备获取传感器的值
 		try {
@@ -779,7 +781,7 @@ public class SensorController {
 		} catch (BusinessException e) {
 			sensorControllerLogger.error(e.getMessage(), e);
 
-			responseVo = new ResponseVo<DataPointsActiveInfo>();
+			responseVo = new ResponseVo<DataPointsDevInfo>();
 			responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
 			responseVo.setMessage(e.getMessage());
 		}
@@ -802,11 +804,11 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取所有传感器历史值（天、周、月）
-		ResponseVo<List<DataPointsStatisticsInfo>> dayPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> dayPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
 				sensorType, ConstantObject.TIMEPERIOD_DAY);
-		ResponseVo<List<DataPointsStatisticsInfo>> weekPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> weekPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
 				sensorType, ConstantObject.TIMEPERIOD_WEEK);
-		ResponseVo<List<DataPointsStatisticsInfo>> monthPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> monthPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
 				sensorType, ConstantObject.TIMEPERIOD_MONTH);
 
 		if (dayPastSensorInfo.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -831,7 +833,7 @@ public class SensorController {
 	@ApiOperation(value = "获取某类型传感器特定时间周期历史值(包括：平均值、最大值、最小值)", httpMethod = "GET", notes = "获取用户某个设备某类型传感器特定时间周期历史值(包括：平均值、最大值、最小值)")
 	@RequestMapping(value = "/getPastSensorValByTypePeriod/{userID}/{equID}/{sensorType}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseVo<List<DataPointsStatisticsInfo>> getPastSensorValByTypePeriod(
+	public ResponseVo<List<DataPointsDevStatisticsInfo>> getPastSensorValByTypePeriod(
 			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
 			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType,
@@ -840,7 +842,7 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 从设备获取传感器的值
-		ResponseVo<List<DataPointsStatisticsInfo>> responseVo = null;
+		ResponseVo<List<DataPointsDevStatisticsInfo>> responseVo = null;
 
 		// 从设备获取传感器的值
 		try {
@@ -850,7 +852,7 @@ public class SensorController {
 		} catch (BusinessException e) {
 			sensorControllerLogger.error(e.getMessage(), e);
 
-			responseVo = new ResponseVo<List<DataPointsStatisticsInfo>>();
+			responseVo = new ResponseVo<List<DataPointsDevStatisticsInfo>>();
 			responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
 			responseVo.setMessage(e.getMessage());
 		}
@@ -873,15 +875,15 @@ public class SensorController {
 		responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
 
 		// 分别从设备获取各个传感器某个周期的值
-		ResponseVo<List<DataPointsStatisticsInfo>> phValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> phValue = getPastSensorValByTypePeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_PH, timePeriod);
-		ResponseVo<List<DataPointsStatisticsInfo>> tempValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> tempValue = getPastSensorValByTypePeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_TEMPERATURE, timePeriod);
-		ResponseVo<List<DataPointsStatisticsInfo>> salinityValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> salinityValue = getPastSensorValByTypePeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_SALINITY, timePeriod);
-		ResponseVo<List<DataPointsStatisticsInfo>> lightValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> lightValue = getPastSensorValByTypePeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_LIGHT, timePeriod);
-		ResponseVo<List<DataPointsStatisticsInfo>> dtsValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> dtsValue = getPastSensorValByTypePeriod(userID, equID,
 				ConstantObject.SENSOR_TYPE_TDS, timePeriod);
 
 		if (phValue.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -901,7 +903,6 @@ public class SensorController {
 			responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
 			responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
 			responseVo.setContent(pastSensorInfo);
-
 		}
 
 		return responseVo;

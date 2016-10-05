@@ -1,12 +1,12 @@
-/**
- * 告警信息实体
- */
 package com.monitor.server.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 
+ * 告警信息实体
+ * 
  * @author yinhong
  *
  */

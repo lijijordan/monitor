@@ -1,18 +1,26 @@
 package com.monitor.server.entity;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class DataPointInfo {
+/**
+ * 返回给UI的数据对象
+ * 
+ * @author yinhong
+ *
+ */
+public class DataPointInfo implements Serializable {
 
-	private Date collecttime;
+	private static final long serialVersionUID = -5411636903638254520L;
+
+	private Long collecttime;
 
 	private String value;
 
-	public Date getCollecttime() {
+	public Long getCollecttime() {
 		return collecttime;
 	}
 
-	public void setCollecttime(Date collecttime) {
+	public void setCollecttime(Long collecttime) {
 		this.collecttime = collecttime;
 	}
 
