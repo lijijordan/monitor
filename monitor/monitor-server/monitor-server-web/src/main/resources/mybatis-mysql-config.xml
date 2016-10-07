@@ -23,7 +23,6 @@
 		<typeAlias alias="NetworkInfo" type="com.monitor.server.entity.NetworkInfo" />
 		<typeAlias alias="UserDevInfo" type="com.monitor.server.entity.UserDevInfo" />
 		<typeAlias alias="AlarmInfo" type="com.monitor.server.entity.AlarmInfo" />
-		<typeAlias alias="EquInfo" type="com.monitor.server.entity.EquInfo" />
 		<typeAlias alias="OptInfo" type="com.monitor.server.entity.OptInfo" />
 	</typeAliases>
 	<mappers>

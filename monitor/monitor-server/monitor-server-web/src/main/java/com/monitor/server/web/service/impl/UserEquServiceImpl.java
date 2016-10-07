@@ -5,18 +5,15 @@
  */
 package com.monitor.server.web.service.impl;
 
-import java.util.List;
-
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.comm.ErrorCodeMessEnum;
-import com.monitor.server.dao.EquInfoDao;
 import com.monitor.server.dao.OptInfoDao;
 import com.monitor.server.dao.UserInfoDao;
-import com.monitor.server.entity.EquInfo;
 import com.monitor.server.entity.FishTankInfo;
 import com.monitor.server.entity.NetworkInfo;
 import com.monitor.server.entity.OptInfo;
@@ -35,9 +32,6 @@ public class UserEquServiceImpl implements UserEquService {
 	private UserInfoDao userInfoDao;
 
 	@Autowired
-	private EquInfoDao equInfoDao;
-
-	@Autowired
 	private OptInfoDao optInfoDao;
 
 	/**
@@ -51,7 +45,7 @@ public class UserEquServiceImpl implements UserEquService {
 
 		// 校验
 		boolean isExisted = checkUserIsExisted(userInfo.getAccount());
-		boolean isCompleted = checkUserIsCompleted(userInfo);
+		boolean isCompleted = checkCreateUserInfoIsCompleted(userInfo);
 
 		if (isExisted) {
 			throw new BusinessException(ErrorCodeMessEnum.AccountExisted.getErrorCode(),
@@ -65,7 +59,7 @@ public class UserEquServiceImpl implements UserEquService {
 
 		// 保存
 		try {
-			saveResult = createUser(userInfo);
+			saveResult = userInfoDao.createUser(userInfo);
 		} catch (Exception e) {
 			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
 					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
@@ -91,10 +85,12 @@ public class UserEquServiceImpl implements UserEquService {
 
 		// 校验
 		boolean isCorrect = checkNetworkIsCorrect(networkInfo);
-		boolean isExisted = checkNetworkIsExisted(networkInfo);
+		boolean networkIsExisted = checkNetworkIsExisted(networkInfo);
+		boolean userIsExisted = checkUserIsExisted(networkInfo.getUserAccount());
 
-		if (isExisted) {
-			// 更新网络信息
+		if (!userIsExisted) {
+			throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
+					ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
 		}
 
 		if (!isCorrect) {
@@ -102,9 +98,14 @@ public class UserEquServiceImpl implements UserEquService {
 					ErrorCodeMessEnum.NetworkInfoError.getErrorMessage());
 		}
 
-		// 保存
 		try {
-			saveResult = createNetwork(networkInfo);
+			if (networkIsExisted) {
+				// 更新网络信息
+				saveResult = userInfoDao.updateNetwork(networkInfo);
+			} else {
+				// 保存
+				saveResult = userInfoDao.createNetwork(networkInfo);
+			}
 		} catch (Exception e) {
 			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
 					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
@@ -129,16 +130,22 @@ public class UserEquServiceImpl implements UserEquService {
 		int saveResult = 0;
 
 		// 校验
-		boolean isExisted = checkUserDevIsBinded(userDevInfo);
+		boolean userIsExisted = checkUserIsExisted(userDevInfo.getUserAccount());
+		boolean isBinded = checkUserDevIsBinded(userDevInfo);
 
-		if (isExisted) {
+		if (!userIsExisted) {
+			throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
+					ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
+		}
+
+		if (isBinded) {
 			throw new BusinessException(ErrorCodeMessEnum.DevBinded.getErrorCode(),
 					ErrorCodeMessEnum.DevBinded.getErrorMessage());
 		}
 
 		// 保存
 		try {
-			saveResult = createUserDevLink(userDevInfo);
+			saveResult = userInfoDao.createUserDevLink(userDevInfo);
 		} catch (Exception e) {
 			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
 					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
@@ -157,14 +164,14 @@ public class UserEquServiceImpl implements UserEquService {
 	 * 用户登录，返回用户绑定的设备SN
 	 */
 	@Override
-	public String login(String account, String password) {
+	public String login(String account, String password) throws BusinessException {
 
 		String devSN = null;
 		UserInfo userInfo = null;
 
 		// 根据用户账号查询用户信息
 		try {
-			userInfo = selectUserByAccount(account);
+			userInfo = userInfoDao.selectUserByAccount(account);
 		} catch (Exception e) {
 			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
 					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
@@ -180,11 +187,14 @@ public class UserEquServiceImpl implements UserEquService {
 		// 如果密码正确，返回用户绑定的设备SN
 		if (password.equals(userPass)) {
 			try {
-				devSN = getDevSNByUserAccount(account);
+				devSN = userInfoDao.getDevSNByUserAccount(account);
 			} catch (Exception e) {
 				throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
 						ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
 			}
+		} else {
+			throw new BusinessException(ErrorCodeMessEnum.AccountPasswordError.getErrorCode(),
+					ErrorCodeMessEnum.AccountPasswordError.getErrorMessage());
 		}
 
 		return devSN;
@@ -192,11 +202,74 @@ public class UserEquServiceImpl implements UserEquService {
 	}
 
 	/**
-	 * 发现设备
+	 * 修改用户信息
 	 */
 	@Override
-	public EquInfo discoverDev() {
-		return null;
+	public void editUserInfo(UserInfo userInfo, FishTankInfo fishTankInfo) throws BusinessException {
+
+		int result = 0;
+		UserInfo returnUserInfo = null;
+		FishTankInfo returnfishTankInfo = null;
+
+		// 根据用户账号查询用户信息
+		try {
+			returnUserInfo = userInfoDao.selectUserByAccount(userInfo.getAccount());
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
+
+		if (returnUserInfo == null) {
+			throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
+					ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
+		}
+
+		try {
+
+			// 设置需要更新的信息
+			returnUserInfo.setCity(userInfo.getCity());
+			returnUserInfo.setPhone(userInfo.getPhone());
+
+			// 更新用户信息
+			userInfoDao.updateUser(returnUserInfo);
+
+			// 根据用户账号查询用户鱼缸信息
+			returnfishTankInfo = userInfoDao.getFishTankByAccount(userInfo.getAccount());
+
+			// 如果没有鱼缸信息则直接保存，如果有则更新
+			if (returnfishTankInfo == null) {
+
+				fishTankInfo.setUserAccount(userInfo.getAccount());
+				result = userInfoDao.createFishTank(fishTankInfo);
+
+			} else {
+
+				// 设置需要修改的信息
+				returnfishTankInfo.setVolume(fishTankInfo.getVolume());
+				returnfishTankInfo.setTankCreateTime(fishTankInfo.getTankCreateTime());
+				returnfishTankInfo.setType(fishTankInfo.getType());
+
+				result = userInfoDao.updateFishTankByUserAccount(returnfishTankInfo);
+			}
+
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
+
+		if (result != 1) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage());
+		}
+
+	}
+
+	/**
+	 * 注销用户
+	 */
+	@Override
+	public void logout(UserInfo userInfo) {
+
 	}
 
 	/**
@@ -205,8 +278,22 @@ public class UserEquServiceImpl implements UserEquService {
 	 * @param account
 	 * @return
 	 */
-	private boolean checkUserIsExisted(String account) {
-		return false;
+	private boolean checkUserIsExisted(String account) throws BusinessException {
+
+		boolean isExisted = true;
+
+		try {
+			UserInfo userInfo = userInfoDao.selectUserByAccount(account);
+
+			if (userInfo == null) {
+				isExisted = false;
+			}
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
+
+		return isExisted;
 	}
 
 	/**
@@ -215,8 +302,19 @@ public class UserEquServiceImpl implements UserEquService {
 	 * @param userInfo
 	 * @return
 	 */
-	private boolean checkUserIsCompleted(UserInfo userInfo) {
-		return true;
+	private boolean checkCreateUserInfoIsCompleted(UserInfo userInfo) {
+
+		boolean isCompleted = false;
+
+		String account = userInfo.getAccount();
+		String pass = userInfo.getPassword();
+		String nickName = userInfo.getNickName();
+
+		if (!StringUtils.isBlank(account) && !StringUtils.isBlank(pass) && !StringUtils.isBlank(nickName)) {
+			isCompleted = true;
+		}
+
+		return isCompleted;
 	}
 
 	/**
@@ -236,7 +334,25 @@ public class UserEquServiceImpl implements UserEquService {
 	 * @return
 	 */
 	private boolean checkNetworkIsExisted(NetworkInfo networkInfo) {
-		return false;
+
+		boolean isExisted = true;
+
+		String userAccount = networkInfo.getUserAccount();
+		String SSID = networkInfo.getSsid();
+
+		try {
+			NetworkInfo returnValue = userInfoDao.getNetworkByAccountSSID(userAccount, SSID);
+
+			if (returnValue == null) {
+				isExisted = false;
+			}
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
+
+		return isExisted;
+
 	}
 
 	/**
@@ -246,105 +362,25 @@ public class UserEquServiceImpl implements UserEquService {
 	 * @return
 	 */
 	private boolean checkUserDevIsBinded(UserDevInfo userDevInfo) {
-		return false;
-	}
 
-	/**
-	 * 注销用户
-	 */
-	@Override
-	public void logout(UserInfo userInfo) {
+		boolean isExisted = true;
 
-	}
+		String userAccount = userDevInfo.getUserAccount();
+		String devSN = userDevInfo.getDevSN();
 
-	/**
-	 * 修改用户信息
-	 */
-	@Override
-	public void editUserInfo(UserInfo userInfo) {
+		try {
+			UserDevInfo returnValue = userInfoDao.getBindInfoByAccountSN(userAccount, devSN);
 
-	}
+			if (returnValue == null) {
+				isExisted = false;
+			}
+		} catch (Exception e) {
+			throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
+					ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+		}
 
-	/**
-	 * 修改设备信息（SSID、密码）
-	 */
-	@Override
-	public void editEquInfo(EquInfo equInfo) {
+		return isExisted;
 
-	}
-
-	private int createUser(UserInfo userInfo) {
-		return userInfoDao.createUser(userInfo);
-	}
-
-	private int createFishTank(FishTankInfo fishTackInfo) {
-		return userInfoDao.createFishTank(fishTackInfo);
-	}
-
-	private int createNetwork(NetworkInfo networkInfo) {
-		return userInfoDao.createNetwork(networkInfo);
-	}
-
-	private int createUserDevLink(UserDevInfo userDevInfo) {
-		return userInfoDao.createUserDevLink(userDevInfo);
-	}
-
-	private String getDevSNByUserAccount(String account) {
-		return userInfoDao.getDevSNByUserAccount(account);
-	}
-
-	@Override
-	public int updateUser(UserInfo userInfo) {
-		return userInfoDao.updateUser(userInfo);
-	}
-
-	@Override
-	public int deleteUser(int userID) {
-		return userInfoDao.deleteUser(userID);
-	}
-
-	@Override
-	public List<UserInfo> selectAllUsers() {
-		return userInfoDao.selectAllUser();
-	}
-
-	@Override
-	public int countAllUser() {
-		return userInfoDao.countAllUserNum();
-	}
-
-	private UserInfo selectUserByAccount(String account) {
-		return userInfoDao.selectUserByAccount(account);
-	}
-
-	@Override
-	public int createEqu(EquInfo equInfo) {
-		return equInfoDao.createEqu(equInfo);
-	}
-
-	@Override
-	public int updateEqu(EquInfo equInfo) {
-		return equInfoDao.updateEqu(equInfo);
-	}
-
-	@Override
-	public int deleteEqu(int equID) {
-		return equInfoDao.delete(equID);
-	}
-
-	@Override
-	public List<EquInfo> selectAllEqus() {
-		return equInfoDao.selectAllEqus();
-	}
-
-	@Override
-	public int countAllEqu() {
-		return equInfoDao.countAllEquNum();
-	}
-
-	@Override
-	public EquInfo findEquByID(int equID) {
-		return equInfoDao.selectEquById(equID);
 	}
 
 	@Override

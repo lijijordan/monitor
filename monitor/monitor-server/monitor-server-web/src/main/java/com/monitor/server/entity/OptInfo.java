@@ -20,7 +20,6 @@ public class OptInfo implements Serializable {
 	private Date createTime;
 
 	private UserInfo userInfo;
-	private EquInfo equInfo;
 
 	public int getId() {
 		return id;
@@ -70,12 +69,5 @@ public class OptInfo implements Serializable {
 		this.userInfo = userInfo;
 	}
 
-	public EquInfo getEquInfo() {
-		return equInfo;
-	}
-
-	public void setEquInfo(EquInfo equInfo) {
-		this.equInfo = equInfo;
-	}
 
 }

@@ -47,19 +47,19 @@ public class SensorController {
 	public static Logger sensorControllerLogger = Logger.getLogger(SensorController.class);
 
 	@ApiOperation(value = "获取首页所有数据（包括：传感器当前值、历史值（天、周、月）、健康度）", httpMethod = "GET", notes = "获取首页所有数据（包括：传感器当前值、历史值（天、周、月）、健康度")
-	@RequestMapping(value = "/getHomePageVal/{userID}/{equID}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getHomePageVal/{userAccount}/{devSN}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<HomePageInfo> getHomePageVal(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID) {
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN) {
 
 		ResponseVo<HomePageInfo> responseVo = new ResponseVo<HomePageInfo>();
 		responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
 		responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
 
 		// 获取相关显示数据
-		ResponseVo<AllSensorCurInfo> curSensorInfo = getAllSensorCurVal(userID, equID);
-		ResponseVo<AllSensorAllPastInfo> allPastSensorInfo = getAllSensorAllPastVal(userID, equID);
+		ResponseVo<AllSensorCurInfo> curSensorInfo = getAllSensorCurVal(userAccount, devSN);
+		ResponseVo<AllSensorAllPastInfo> allPastSensorInfo = getAllSensorAllPastVal(userAccount, devSN);
 		// ResponseVo<HealthInfo> healthInfo = getEntiretySensorHealth(userID,
 		// equID);
 
@@ -523,11 +523,11 @@ public class SensorController {
 	}
 
 	@ApiOperation(value = "获取某类传感器详情页所有数据（包括：传感器当前值、历史值（天、周、月））", httpMethod = "GET", notes = "获取用户设备某类传感器详情页所有数据（包括：传感器当前值、历史值（天、周、月）")
-	@RequestMapping(value = "/getSensorDetailPageVal/{userID}/{equID}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getSensorDetailPageVal/{userAccount}/{devSN}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<SensorDetailPageInfo> getSensorDetailPageVal(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType) {
 
 		ResponseVo<SensorDetailPageInfo> responseVo = new ResponseVo<SensorDetailPageInfo>();
@@ -537,8 +537,8 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 获取相关显示数据
-		ResponseVo<DataPointsDevInfo> curSensorInfo = getCurSensorValByType(userID, equID, sensorType);
-		ResponseVo<SensorAllPastInfo> allPastSensorVal = getAllPastSensorValByType(userID, equID, sensorType);
+		ResponseVo<DataPointsDevInfo> curSensorInfo = getCurSensorValByType(userAccount, devSN, sensorType);
+		ResponseVo<SensorAllPastInfo> allPastSensorVal = getAllPastSensorValByType(userAccount, devSN, sensorType);
 
 		if (curSensorInfo.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
 				&& allPastSensorVal.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())) {
@@ -644,11 +644,11 @@ public class SensorController {
 	}
 
 	@ApiOperation(value = "获取所有传感器当前值", httpMethod = "GET", notes = "获取用户某个设备所有传感器当前值")
-	@RequestMapping(value = "/getAllSensorCurVal/{userID}/{equID}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getAllSensorCurVal/{userAccount}/{devSN}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<AllSensorCurInfo> getAllSensorCurVal(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID) {
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN) {
 
 		ResponseVo<AllSensorCurInfo> responseVo = new ResponseVo<AllSensorCurInfo>();
 		responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
@@ -657,15 +657,15 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取各个传感器的值
-		ResponseVo<DataPointsDevInfo> phCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> phCurrentValue = getCurSensorValByType(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_PH);
-		ResponseVo<DataPointsDevInfo> tempCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> tempCurrentValue = getCurSensorValByType(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_TEMPERATURE);
-		ResponseVo<DataPointsDevInfo> salinityCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> salinityCurrentValue = getCurSensorValByType(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_SALINITY);
-		ResponseVo<DataPointsDevInfo> lightCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> lightCurrentValue = getCurSensorValByType(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_LIGHT);
-		ResponseVo<DataPointsDevInfo> tdsCurrentValue = getCurSensorValByType(userID, equID,
+		ResponseVo<DataPointsDevInfo> tdsCurrentValue = getCurSensorValByType(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_TDS);
 
 		if (phCurrentValue.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -693,11 +693,11 @@ public class SensorController {
 	}
 
 	@ApiOperation(value = "获取所有传感器所有时间段历史值(包括：平均值、最大值、最小值)", httpMethod = "GET", notes = "获取用户某个设备所有传感器所有时间段（包括：天、周、月）历史值(包括：平均值、最大值、最小值)")
-	@RequestMapping(value = "/getAllSensorAllPastVal/{userID}/{equID}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getAllSensorAllPastVal/{userAccount}/{devSN}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<AllSensorAllPastInfo> getAllSensorAllPastVal(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID) {
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN) {
 
 		ResponseVo<AllSensorAllPastInfo> responseVo = new ResponseVo<AllSensorAllPastInfo>();
 		responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
@@ -706,11 +706,11 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取所有传感器历史值（天、周、月）
-		ResponseVo<AllSensorPastInfo> dayPastSensorInfo = getAllPastSensorValByPeriod(userID, equID,
+		ResponseVo<AllSensorPastInfo> dayPastSensorInfo = getAllPastSensorValByPeriod(userAccount, devSN,
 				ConstantObject.TIMEPERIOD_DAY);
-		ResponseVo<AllSensorPastInfo> weekPastSensorInfo = getAllPastSensorValByPeriod(userID, equID,
+		ResponseVo<AllSensorPastInfo> weekPastSensorInfo = getAllPastSensorValByPeriod(userAccount, devSN,
 				ConstantObject.TIMEPERIOD_WEEK);
-		ResponseVo<AllSensorPastInfo> monthPastSensorInfo = getAllPastSensorValByPeriod(userID, equID,
+		ResponseVo<AllSensorPastInfo> monthPastSensorInfo = getAllPastSensorValByPeriod(userAccount, devSN,
 				ConstantObject.TIMEPERIOD_MONTH);
 
 		if (dayPastSensorInfo.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -762,11 +762,11 @@ public class SensorController {
 	// }
 
 	@ApiOperation(value = "获取某类型传感器当前值", httpMethod = "GET", notes = "获取用户某个设备某类型传感器当前值")
-	@RequestMapping(value = "/getCurSensorValByType/{userID}/{equID}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getCurSensorValByType/{userAccount}/{devSN}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<DataPointsDevInfo> getCurSensorValByType(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType) {
 
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
@@ -776,7 +776,7 @@ public class SensorController {
 		// 从设备获取传感器的值
 		try {
 
-			responseVo = sensorService.getCurSensorValByType(equID, sensorType);
+			responseVo = sensorService.getCurSensorValByType(devSN, sensorType);
 
 		} catch (BusinessException e) {
 			sensorControllerLogger.error(e.getMessage(), e);
@@ -790,11 +790,11 @@ public class SensorController {
 	}
 
 	@ApiOperation(value = "获取某类型传感器所有时间周期历史值(包括：平均值、最大值、最小值)", httpMethod = "GET", notes = "获取用户某个设备某类型传感器所有时间周期历史值(包括：平均值、最大值、最小值)")
-	@RequestMapping(value = "/getAllPastSensorValByType/{userID}/{equID}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getAllPastSensorValByType/{userAccount}/{devSN}/{sensorType}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<SensorAllPastInfo> getAllPastSensorValByType(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType) {
 
 		ResponseVo<SensorAllPastInfo> responseVo = new ResponseVo<SensorAllPastInfo>();
@@ -804,12 +804,12 @@ public class SensorController {
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
 
 		// 分别从设备获取所有传感器历史值（天、周、月）
-		ResponseVo<List<DataPointsDevStatisticsInfo>> dayPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
-				sensorType, ConstantObject.TIMEPERIOD_DAY);
-		ResponseVo<List<DataPointsDevStatisticsInfo>> weekPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
-				sensorType, ConstantObject.TIMEPERIOD_WEEK);
-		ResponseVo<List<DataPointsDevStatisticsInfo>> monthPastSensorInfo = getPastSensorValByTypePeriod(userID, equID,
-				sensorType, ConstantObject.TIMEPERIOD_MONTH);
+		ResponseVo<List<DataPointsDevStatisticsInfo>> dayPastSensorInfo = getPastSensorValByTypePeriod(userAccount,
+				devSN, sensorType, ConstantObject.TIMEPERIOD_DAY);
+		ResponseVo<List<DataPointsDevStatisticsInfo>> weekPastSensorInfo = getPastSensorValByTypePeriod(userAccount,
+				devSN, sensorType, ConstantObject.TIMEPERIOD_WEEK);
+		ResponseVo<List<DataPointsDevStatisticsInfo>> monthPastSensorInfo = getPastSensorValByTypePeriod(userAccount,
+				devSN, sensorType, ConstantObject.TIMEPERIOD_MONTH);
 
 		if (dayPastSensorInfo.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
 				&& weekPastSensorInfo.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())
@@ -831,11 +831,11 @@ public class SensorController {
 	}
 
 	@ApiOperation(value = "获取某类型传感器特定时间周期历史值(包括：平均值、最大值、最小值)", httpMethod = "GET", notes = "获取用户某个设备某类型传感器特定时间周期历史值(包括：平均值、最大值、最小值)")
-	@RequestMapping(value = "/getPastSensorValByTypePeriod/{userID}/{equID}/{sensorType}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getPastSensorValByTypePeriod/{userAccount}/{devSN}/{sensorType}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<List<DataPointsDevStatisticsInfo>> getPastSensorValByTypePeriod(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN,
 			@ApiParam(required = true, name = "sensorType", value = "传感器类型（PH,Temperature,Salinity,TDS,Light）") @PathVariable("sensorType") String sensorType,
 			@ApiParam(required = true, name = "timePeriod", value = "时间周期（Day,Week,Month）") @PathVariable("timePeriod") String timePeriod) {
 
@@ -847,7 +847,7 @@ public class SensorController {
 		// 从设备获取传感器的值
 		try {
 
-			responseVo = sensorService.getSensorValsByPeriod(equID, sensorType, timePeriod);
+			responseVo = sensorService.getSensorValsByPeriod(devSN, sensorType, timePeriod);
 
 		} catch (BusinessException e) {
 			sensorControllerLogger.error(e.getMessage(), e);
@@ -861,11 +861,11 @@ public class SensorController {
 	}
 
 	@ApiOperation(value = "获取所有传感器一段时间周期历史值(包括：平均值、最大值、最小值)", httpMethod = "GET", notes = "获取用户某个设备所有传感器一段时间周期历史值(包括：平均值、最大值、最小值)")
-	@RequestMapping(value = "/getAllPastSensorValByPeriod/{userID}/{equID}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/getAllPastSensorValByPeriod/{userAccount}/{devSN}/{timePeriod}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseVo<AllSensorPastInfo> getAllPastSensorValByPeriod(
-			@ApiParam(required = true, name = "userID", value = "用户ID") @PathVariable("userID") String userID,
-			@ApiParam(required = true, name = "equID", value = "设备ID") @PathVariable("equID") String equID,
+			@ApiParam(required = true, name = "userAccount", value = "用户账号") @PathVariable("userAccount") String userAccount,
+			@ApiParam(required = true, name = "devSN", value = "设备SN") @PathVariable("devSN") String devSN,
 			@ApiParam(required = true, name = "timePeriod", value = "时间周期（Day,Week,Month）") @PathVariable("timePeriod") String timePeriod) {
 
 		// 根据用户ID检查输入设备ID是否正确（待增加代码）
@@ -875,15 +875,15 @@ public class SensorController {
 		responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
 
 		// 分别从设备获取各个传感器某个周期的值
-		ResponseVo<List<DataPointsDevStatisticsInfo>> phValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> phValue = getPastSensorValByTypePeriod(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_PH, timePeriod);
-		ResponseVo<List<DataPointsDevStatisticsInfo>> tempValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> tempValue = getPastSensorValByTypePeriod(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_TEMPERATURE, timePeriod);
-		ResponseVo<List<DataPointsDevStatisticsInfo>> salinityValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> salinityValue = getPastSensorValByTypePeriod(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_SALINITY, timePeriod);
-		ResponseVo<List<DataPointsDevStatisticsInfo>> lightValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> lightValue = getPastSensorValByTypePeriod(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_LIGHT, timePeriod);
-		ResponseVo<List<DataPointsDevStatisticsInfo>> dtsValue = getPastSensorValByTypePeriod(userID, equID,
+		ResponseVo<List<DataPointsDevStatisticsInfo>> dtsValue = getPastSensorValByTypePeriod(userAccount, devSN,
 				ConstantObject.SENSOR_TYPE_TDS, timePeriod);
 
 		if (phValue.getStatus().equalsIgnoreCase(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString())

@@ -3,10 +3,8 @@
  */
 package com.monitor.server.web.service;
 
-import java.util.List;
-
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.entity.EquInfo;
+import com.monitor.server.entity.FishTankInfo;
 import com.monitor.server.entity.NetworkInfo;
 import com.monitor.server.entity.OptInfo;
 import com.monitor.server.entity.UserDevInfo;
@@ -24,35 +22,11 @@ public interface UserEquService {
 
 	public UserDevInfo bindUserDev(UserDevInfo userDevInfo) throws BusinessException;
 
-	public String login(String account, String password);
+	public String login(String account, String password) throws BusinessException;
 
-	public void logout(UserInfo userInfo);
+	public void logout(UserInfo userInfo) throws BusinessException;
 
-	public void editUserInfo(UserInfo userInfo);
-
-	public EquInfo discoverDev();
-
-	public void editEquInfo(EquInfo equInfo);
-
-	public int createEqu(EquInfo equInfo);
-
-	public int updateUser(UserInfo userInfo);
-
-	public int updateEqu(EquInfo equInfo);
-
-	public int deleteUser(int userID);
-
-	public int deleteEqu(int equID);
-
-	public List<UserInfo> selectAllUsers();
-
-	public List<EquInfo> selectAllEqus();
-
-	public int countAllUser();
-
-	public int countAllEqu();
-
-	public EquInfo findEquByID(int equID);
+	public void editUserInfo(UserInfo userInfo, FishTankInfo fishTankInfo) throws BusinessException;
 
 	public int createOptInfo(OptInfo optInfo);
 }

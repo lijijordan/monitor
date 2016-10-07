@@ -3,6 +3,7 @@
  */
 package com.monitor.server.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,17 +22,28 @@ public class AlarmInfoDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	public AlarmInfo selectAlarmById(int id) {
-		return (AlarmInfo) sqlSessionTemplate.selectOne("BaseInfoMapper.getAlarmById", id);
-	}
+	public List<AlarmInfo> getAllAlarmByUserAccountDevSN(String userAccount, String devSN) {
 
-	@SuppressWarnings("unchecked")
-	public List<AlarmInfo> selectAlarmsByUserID(int id) {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("userAccount", userAccount);
+		hashMap.put("devSN", devSN);
 
-		@SuppressWarnings("rawtypes")
-		List alarmList = sqlSessionTemplate.selectList("BaseInfoMapper.getAlarmsByUserID", id);
+		List<AlarmInfo> alarmList = sqlSessionTemplate.selectList("BaseInfoMapper.getAllAlarmByUserAccountDevSN",
+				hashMap);
 
 		return (List<AlarmInfo>) alarmList;
+	}
+
+	public AlarmInfo getAlarmByAccountDevSNType(String userAccount, String devSN, String sensorType) {
+
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("userAccount", userAccount);
+		hashMap.put("devSN", devSN);
+		hashMap.put("sensorType", sensorType);
+
+		AlarmInfo alarmInfo = sqlSessionTemplate.selectOne("BaseInfoMapper.getAlarmByAccountDevSNType", hashMap);
+
+		return alarmInfo;
 	}
 
 	public int createAlarm(AlarmInfo alarmInfo) {
@@ -42,7 +54,4 @@ public class AlarmInfoDao {
 		return sqlSessionTemplate.update("BaseInfoMapper.updateAlarm", alarmInfo);
 	}
 
-	public int deleteAlarm(int id) {
-		return sqlSessionTemplate.delete("BaseInfoMapper.deleteAlarm", id);
-	}
 }

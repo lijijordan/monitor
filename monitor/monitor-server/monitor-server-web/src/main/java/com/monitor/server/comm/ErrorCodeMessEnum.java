@@ -2,10 +2,11 @@ package com.monitor.server.comm;
 
 public enum ErrorCodeMessEnum {
 
-	SUCCESS(0, "Success"), FAILURE(1, "Failure"), DatabaseError(2, "User information error."), AccountExisted(11,
+	SUCCESS(0, "Success"), FAILURE(1, "Failure"), DatabaseError(2, "Database error."), AccountExisted(11,
 			"User account has bean used."), AccountInfoError(12, "User information error."), AccountNotExisted(13,
-					"User account is not exist."), NetworkInfoError(21, "Network information error."), DevBinded(31,
-							"Dev has bean binded."), DevAppError(41, "Dev application error.");
+					"User account does not existed."), AccountPasswordError(14,
+							"User password error."), NetworkInfoError(21, "Network information error."), DevBinded(31,
+									"Dev has bean binded."), DevAppError(41, "Dev application error.");
 
 	private Integer errorCode;
 	private String errorMessage;

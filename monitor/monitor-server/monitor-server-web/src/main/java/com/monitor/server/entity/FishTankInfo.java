@@ -17,7 +17,9 @@ public class FishTankInfo implements Serializable {
 	private int width;
 	private int height;
 	private int volume;
-	private UserInfo userInfo;
+	private String userAccount;
+	private String type;
+	private String tankCreateTime;
 
 	public int getId() {
 		return id;
@@ -25,14 +27,6 @@ public class FishTankInfo implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public UserInfo getUserInfo() {
-		return userInfo;
-	}
-
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
 	}
 
 	public int getLength() {
@@ -65,6 +59,30 @@ public class FishTankInfo implements Serializable {
 
 	public void setVolume(int volume) {
 		this.volume = volume;
+	}
+
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getTankCreateTime() {
+		return tankCreateTime;
+	}
+
+	public void setTankCreateTime(String tankCreateTime) {
+		this.tankCreateTime = tankCreateTime;
 	}
 
 }

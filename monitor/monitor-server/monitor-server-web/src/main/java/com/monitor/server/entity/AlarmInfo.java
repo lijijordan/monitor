@@ -1,7 +1,6 @@
 package com.monitor.server.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 
@@ -13,15 +12,14 @@ import java.util.Date;
 public class AlarmInfo implements Serializable {
 
 	private static final long serialVersionUID = 54320056261584713L;
-	private int id;
-	private int sensorType;
-	private int currentVal;
-	private int threshold;
-	private String advice;
-	private Date createTime;
 
-	private UserInfo userInfo;
-	private EquInfo equInfo;
+	private int id;
+	private String userAccount;
+	private String devSN;
+	private String sensorType;
+	private String maxThreshold;
+	private String minThreshold;
+	private String switchStatus;
 
 	public int getId() {
 		return id;
@@ -31,60 +29,52 @@ public class AlarmInfo implements Serializable {
 		this.id = id;
 	}
 
-	public int getSensorType() {
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public String getDevSN() {
+		return devSN;
+	}
+
+	public void setDevSN(String devSN) {
+		this.devSN = devSN;
+	}
+
+	public String getSensorType() {
 		return sensorType;
 	}
 
-	public void setSensorType(int sensorType) {
+	public void setSensorType(String sensorType) {
 		this.sensorType = sensorType;
 	}
 
-	public int getCurrentVal() {
-		return currentVal;
+	public String getMaxThreshold() {
+		return maxThreshold;
 	}
 
-	public void setCurrentVal(int currentVal) {
-		this.currentVal = currentVal;
+	public void setMaxThreshold(String maxThreshold) {
+		this.maxThreshold = maxThreshold;
 	}
 
-	public int getThreshold() {
-		return threshold;
+	public String getMinThreshold() {
+		return minThreshold;
 	}
 
-	public void setThreshold(int threshold) {
-		this.threshold = threshold;
+	public void setMinThreshold(String minThreshold) {
+		this.minThreshold = minThreshold;
 	}
 
-	public String getAdvice() {
-		return advice;
+	public String getSwitchStatus() {
+		return switchStatus;
 	}
 
-	public void setAdvice(String advice) {
-		this.advice = advice;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public UserInfo getUserInfo() {
-		return userInfo;
-	}
-
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
-	}
-
-	public EquInfo getEquInfo() {
-		return equInfo;
-	}
-
-	public void setEquInfo(EquInfo equInfo) {
-		this.equInfo = equInfo;
+	public void setSwitchStatus(String switchStatus) {
+		this.switchStatus = switchStatus;
 	}
 
 }

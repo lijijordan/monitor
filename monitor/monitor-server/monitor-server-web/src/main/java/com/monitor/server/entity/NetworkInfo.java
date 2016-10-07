@@ -15,7 +15,7 @@ public class NetworkInfo implements Serializable {
 	private int id;
 	private String ssid;
 	private String password;
-	private UserInfo userInfo;
+	private String userAccount;
 
 	public int getId() {
 		return id;
@@ -25,12 +25,12 @@ public class NetworkInfo implements Serializable {
 		this.id = id;
 	}
 
-	public UserInfo getUserInfo() {
-		return userInfo;
+	public String getUserAccount() {
+		return userAccount;
 	}
 
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
 	}
 
 	public String getSsid() {
