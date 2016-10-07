@@ -83,7 +83,7 @@
 	<int:channel id="salinityChannel" />     
 	<!-- 消息处理类-->   
 	<int:service-activator id="salinityChannelService"  
-		input-channel="salinityChannel" ref="mqttPHService" method="process" />
+		input-channel="salinityChannel" ref="mqttSalinityService" method="process" />
 	<bean id="mqttSalinityService" class="com.monitor.device.web.service.mqtt.SalinityMessageReceiverService" />  
 	<!-- 盐度消息适配器结束 -->  
 	
