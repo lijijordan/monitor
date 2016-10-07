@@ -3,7 +3,7 @@
  */
 package com.monitor.server.dao;
 
-import java.util.List;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +32,16 @@ public class UserInfoDao {
 		return (String) sqlSessionTemplate.selectOne("BaseInfoMapper.getDevSNByUserAccount", account);
 	}
 
-	public int countAllUserNum() {
-		Integer countInteger = sqlSessionTemplate.selectOne("BaseInfoMapper.countAllUserNum");
-		int count = countInteger.intValue();
-		return count;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<UserInfo> selectAllUser() {
-
-		@SuppressWarnings("rawtypes")
-		List userList = sqlSessionTemplate.selectList("BaseInfoMapper.selectAllUser");
-
-		return (List<UserInfo>) userList;
-	}
-
 	public int createUser(UserInfo userInfo) {
 		return sqlSessionTemplate.insert("BaseInfoMapper.createUser", userInfo);
 	}
 
-	public int createFishTank(FishTankInfo fishTackInfo) {
-		return sqlSessionTemplate.insert("BaseInfoMapper.createFishTank", fishTackInfo);
+	public int createFishTank(FishTankInfo fishTankInfo) {
+		return sqlSessionTemplate.insert("BaseInfoMapper.createFishTank", fishTankInfo);
+	}
+
+	public FishTankInfo getFishTankByAccount(String account) {
+		return (FishTankInfo) sqlSessionTemplate.selectOne("BaseInfoMapper.getFishTankByAccount", account);
 	}
 
 	public int createNetwork(NetworkInfo networkInfo) {
@@ -67,7 +56,26 @@ public class UserInfoDao {
 		return sqlSessionTemplate.update("BaseInfoMapper.updateUser", userInfo);
 	}
 
-	public int deleteUser(int id) {
-		return sqlSessionTemplate.delete("BaseInfoMapper.deleteUser", id);
+	public int updateFishTankByUserAccount(FishTankInfo fishTankInfo) {
+		return sqlSessionTemplate.update("BaseInfoMapper.updateFishTankByUserAccount", fishTankInfo);
 	}
+
+	public int updateNetwork(NetworkInfo networkInfo) {
+		return sqlSessionTemplate.update("BaseInfoMapper.updateNetworkByUserAccount", networkInfo);
+	}
+
+	public NetworkInfo getNetworkByAccountSSID(String userAccount, String ssid) {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("userAccount", userAccount);
+		hashMap.put("ssid", ssid);
+		return sqlSessionTemplate.selectOne("BaseInfoMapper.getNetworkByAccountSSID", hashMap);
+	}
+
+	public UserDevInfo getBindInfoByAccountSN(String userAccount, String devSN) {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("userAccount", userAccount);
+		hashMap.put("devSN", devSN);
+		return sqlSessionTemplate.selectOne("BaseInfoMapper.getBindInfoByAccountSN", hashMap);
+	}
+
 }

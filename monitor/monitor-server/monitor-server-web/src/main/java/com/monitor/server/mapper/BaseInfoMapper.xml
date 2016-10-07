@@ -9,19 +9,14 @@
 	<resultMap id="UserInfoMap" type="UserInfo">
 		<id property="id" column="id" />
 		<result property="account" column="account" />
-		<result property="nickname" column="nickname" />
+		<result property="nickName" column="nickName" />
 		<result property="password" column="password" />
-		<result property="cellphone" column="cellphone" />
-		<result property="telephone" column="telephone" />
-		<result property="email" column="email" />
+		<result property="phone" column="phone" />
 		<result property="sex" column="sex" />
 		<result property="age" column="age" />
-		<result property="headimgurl" column="headimgurl" />
 		<result property="country" column="country" />
 		<result property="province" column="province" />
 		<result property="city" column="city" />
-		<result property="privilege" column="privilege" />
-		<result property="unionid" column="unionid" />
 	</resultMap>
 
 	<select id="getUserByAccount" parameterType="String" resultMap="UserInfoMap">
@@ -33,47 +28,29 @@
 	<insert id="createUser" parameterType="UserInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO user
-		(account,nickname,password,cellphone,telephone,email,sex,age,province,city,country,headimgurl,privilege,unionid)
+		(account,nickName,password,phone,sex,age,province,city,country)
 		VALUES
-		(#{account},#{nickname},#{password},#{cellphone},#{telephone},#{email},#{sex},#{age},#{province},#{city},#{country},#{headimgurl},#{privilege}),#{unionid})
+		(#{account},#{nickName},#{password},#{phone},#{sex},#{age},#{province},#{city},#{country})
 	</insert>
-
-	<delete id="deleteUser" parameterType="int">
-		DELETE from user
-		WHERE
-		user_id = #{id}
-	</delete>
 
 	<update id="updateUser" parameterType="UserInfo">
 		UPDATE user SET
-		user_name =
-		#{name},
-		user_sex = #{sex},
-		user_email = #{email},
-		user_tel =
-		#{telNum},
-		user_age = #{age},
-		user_pwd = #{pwd},
-		user_wechat =
-		#{webChat},
-		aquariums_length = #{aquariumsLength},
-		aquariums_width =
-		#{aquariumsWidth},
-		aquariums_height = #{aquariumsHeigth},
-		aquariums_type = #{aquariumsType},
-		aquariums_age = #{aquariumsAge}
-		WHERE user_id = #{id}
+		nickName =
+		#{nickName},
+		password = #{password},
+		phone =
+		#{phone},
+		sex = #{sex},
+		age =
+		#{age},
+		province =
+		#{province},
+		city = #{city},
+		country =
+		#{country}
+		WHERE
+		account = #{account}
 	</update>
-
-	<select id="countAllUserNum" resultType="Integer">
-		SELECT count(u.user_id)
-		FROM user u
-	</select>
-
-	<select id="selectAllUser" resultMap="UserInfoMap">
-		SELECT *
-		FROM user
-	</select>
 
 	<!-- 鱼缸 -->
 	<resultMap id="FishTankMap" type="FishTankInfo">
@@ -83,85 +60,159 @@
 		<result property="height" column="height" />
 		<result property="volume" column="volume" />
 		<result property="type" column="type" />
-		<association property="userInfo" resultMap="UserInfoMap" />
+		<result property="userAccount" column="userAccount" />
+		<result property="tankCreateTime" column="tankCreateTime" />
 	</resultMap>
 
 	<insert id="createFishTank" parameterType="FishTankInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO fishtank
-		(length,width,height,volume,type,userid)
+		(length,width,height,volume,type,userAccount,tankCreateTime)
 		VALUES
-		(#{length},#{width},#{height},#{volume},#{type},#{userInfo.id})
+		(#{length},#{width},#{height},#{volume},#{type},#{userAccount},#{tankCreateTime})
 	</insert>
+
+	<update id="updateFishTankByUserAccount" parameterType="FishTankInfo">
+		UPDATE
+		fishtank SET
+		length
+		= #{length},
+		width = #{width},
+		height = #{height},
+		volume =
+		#{volume},
+		type = #{type},
+		tankCreateTime = #{tankCreateTime}
+		WHERE
+		userAccount =
+		#{userAccount}
+	</update>
+
+	<select id="getFishTankByAccount" parameterType="String"
+		resultMap="FishTankMap">
+		SELECT *
+		FROM fishtank
+		WHERE userAccount = #{userAccount}
+	</select>
 
 	<!-- 网络 -->
 	<resultMap id="NetworkMap" type="NetworkInfo">
 		<id property="id" column="id" />
 		<result property="ssid" column="ssid" />
 		<result property="password" column="password" />
-		<association property="userInfo" resultMap="UserInfoMap" />
+		<result property="userAccount" column="userAccount" />
 	</resultMap>
 
 	<insert id="createNetwork" parameterType="NetworkInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO network
-		(ssid,password,userid)
+		(ssid,password,userAccount)
 		VALUES
-		(#{ssid},#{password},#{userInfo.id})
+		(#{ssid},#{password},#{userAccount})
 	</insert>
 
-	<!-- 设备 -->
-	<resultMap id="DevMap" type="com.monitor.common.vo.DeviceVo">
-		<id property="id" column="id" />
-		<result property="alias" column="alias" />
-		<result property="type" column="type" />
-		<result property="remark" column="remark" />
-		<result property="sn" column="sn" />
-		<result property="registtime" column="registtime" />
-		<result property="status" column="status" />
-	</resultMap>
+	<select id="getNetworkByAccountSSID" parameterType="HashMap"
+		resultMap="NetworkMap">
+		SELECT *
+		FROM network
+		WHERE userAccount = #{userAccount} and
+		ssid = #{ssid}
+	</select>
 
+	<update id="updateNetworkByUserAccount" parameterType="NetworkInfo">
+		UPDATE
+		network SET
+		ssid
+		= #{ssid},
+		password = #{password}
+		WHERE
+		userAccount =
+		#{userAccount}
+	</update>
+
+	<!-- 设备与用户关系 -->
 	<resultMap id="UserDevMap" type="UserDevInfo">
 		<id property="id" column="id" />
-		<result property="account" column="account" />
-		<result property="sn" column="sn" />
+		<result property="userAccount" column="userAccount" />
+		<result property="devSN" column="devSN" />
 	</resultMap>
 
 	<insert id="createUserDevLink" parameterType="UserDevInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO user_dev
-		(account,sn)
+		(userAccount,devSN)
 		VALUES
-		(#{account},#{sn})
+		(#{userAccount},#{devSN})
 	</insert>
-	
-	<select id="getDevSNByUserAccount" parameterType="String" resultMap="String">
-		SELECT sn
+
+	<select id="getDevSNByUserAccount" parameterType="String"
+		resultType="String">
+		SELECT devSN
 		FROM user_dev
-		WHERE account = #{account}
+		WHERE userAccount = #{userAccount}
 	</select>
 
+	<select id="getBindInfoByAccountSN" parameterType="HashMap"
+		resultMap="UserDevMap">
+		SELECT *
+		FROM user_dev
+		WHERE userAccount = #{userAccount} and
+		devSN = #{devSN}
+	</select>
+
+	<!-- 告警 -->
+	<resultMap id="AlarmInfoMap" type="AlarmInfo">
+		<id property="id" column="id" />
+		<result property="userAccount" column="userAccount" />
+		<result property="devSN" column="devSN" />
+		<result property="sensorType" column="sensorType" />
+		<result property="maxThreshold" column="maxThreshold" />
+		<result property="minThreshold" column="minThreshold" />
+		<result property="switchStatus" column="switchStatus" />
+	</resultMap>
+
+	<insert id="createAlarm" parameterType="AlarmInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO alarm
+		(userAccount,devSN,sensorType,maxThreshold,minThreshold,switchStatus)
+		VALUES
+		(#{userAccount},#{devSN},#{sensorType},#{maxThreshold},#{minThreshold},#{switchStatus})
+	</insert>
+
+	<update id="updateAlarm" parameterType="AlarmInfo">
+		UPDATE alarm SET
+		maxThreshold
+		= #{maxThreshold},
+		minThreshold = #{minThreshold},
+		switchStatus = #{switchStatus}
+		WHERE devSN =
+		#{devSN} and userAccount =
+		#{userAccount} and sensorType =
+		#{sensorType}
+	</update>
+
+	<select id="getAllAlarmByUserAccountDevSN" parameterType="HashMap"
+		resultMap="AlarmInfoMap">
+		SELECT *
+		FROM alarm
+		WHERE
+		devSN =
+		#{devSN} and userAccount =
+		#{userAccount}
+	</select>
+
+	<select id="getAlarmByAccountDevSNType" parameterType="HashMap"
+		resultMap="AlarmInfoMap">
+		SELECT *
+		FROM alarm
+		WHERE
+		devSN =
+		#{devSN} and userAccount =
+		#{userAccount} and sensorType =
+		#{sensorType}
+	</select>
 
 	<!-- 老代码 -->
-	<resultMap id="EquInfoMap" type="EquInfo">
-		<id property="id" column="fish_equ_id" />
-		<result property="sn" column="fish_equ_sn" />
-		<result property="ssid" column="fish_equ_ssid" />
-		<result property="pwd" column="fish_equ_pwd" />
-		<association property="userInfo" resultMap="UserInfoMap" />
-	</resultMap>
-
-	<resultMap id="AlarmInfoMap" type="AlarmInfo">
-		<id property="id" column="alarm_id" />
-		<result property="sensorType" column="alarm_devtype" />
-		<result property="currentVal" column="alarm_devcurrentval" />
-		<result property="threshold" column="alarm_devthreshold" />
-		<result property="advice" column="alarm_advice" />
-		<result property="createTime" column="alarm_time" />
-		<association property="userInfo" resultMap="UserInfoMap" />
-		<association property="equInfo" resultMap="EquInfoMap" />
-	</resultMap>
-
 	<resultMap id="OptInfoMap" type="OptInfo">
 		<id property="id" column="opt_info_id" />
 		<result property="optType" column="opt_info_type" />
@@ -169,98 +220,7 @@
 		<result property="result" column="opt_info_result" />
 		<result property="createTime" column="opt_info_time" />
 		<association property="userInfo" resultMap="UserInfoMap" />
-		<association property="equInfo" resultMap="EquInfoMap" />
 	</resultMap>
-
-	<resultMap id="PowerSwitchInfoMap" type="PowerSwitchInfo">
-		<id property="id" column="power_switch_id" />
-		<result property="sn" column="power_switch_sn" />
-		<result property="perStatus" column="power_switch_perstatus" />
-		<association property="userInfo" resultMap="UserInfoMap" />
-		<association property="equInfo" resultMap="EquInfoMap" />
-	</resultMap>
-
-	<select id="getEquById" parameterType="int" resultMap="EquInfoMap">
-		SELECT *
-		FROM fish_equ_info f, user u
-		WHERE f.user_id = u.user_id AND
-		f.fish_equ_id = #{id}
-	</select>
-
-	<select id="countAllEquNum" resultType="Integer">
-		SELECT
-		count(f.fish_equ_id)
-		FROM fish_equ_info f
-	</select>
-
-	<select id="selectAllEqus" resultMap="EquInfoMap">
-		SELECT *
-		FROM fish_equ_info
-		f, user u
-		WHERE f.user_id = u.user_id
-	</select>
-
-	<insert id="createEqu" parameterType="EquInfo" useGeneratedKeys="true"
-		keyProperty="id">
-		INSERT INTO fish_equ_info
-		(fish_equ_sn,fish_equ_ssid,fish_equ_pwd,user_id)
-		VALUES
-		(#{sn},#{ssid},#{pwd},#{userInfo.id})
-	</insert>
-
-	<update id="updateEqu" parameterType="EquInfo">
-		UPDATE fish_equ_info SET
-		fish_equ_sn = #{sn},
-		fish_equ_ssid = #{ssid},
-		fish_equ_pwd = #{pwd},
-		user_id = #{userInfo.id}
-		WHERE fish_equ_id = #{id}
-	</update>
-
-	<delete id="deleteEqu" parameterType="int">
-		DELETE FROM fish_equ_info
-		WHERE
-		fish_equ_id = #{id}
-	</delete>
-
-	<select id="getAlarmById" parameterType="int" resultMap="AlarmInfoMap">
-		SELECT *
-		FROM alarm_info a
-		WHERE a.alarm_id = #{id}
-	</select>
-
-	<select id="getAlarmsByUserID" parameterType="int" resultMap="AlarmInfoMap">
-		SELECT *
-		FROM alarm_info a
-		WHERE a.user_id = #{id}
-	</select>
-
-	<insert id="createAlarm" parameterType="AlarmInfo"
-		useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO alarm_info
-		(alarm_time,alarm_devtype,alarm_devcurrentval,alarm_devthreshold,alarm_advice,user_id,fish_equ_id)
-		VALUES
-		(#{createTime},#{sensorType},#{currentVal},#{threshold},#{advice},#{userInfo.id},#{equInfo.id})
-	</insert>
-
-	<update id="updateAlarm" parameterType="AlarmInfo">
-		UPDATE alarm_info SET
-		alarm_time = #{createTime},
-		alarm_devtype = #{sensorType},
-		alarm_devcurrentval = #{currentVal},
-		alarm_devthreshold = #{threshold},
-		alarm_advice = #{advice},
-		user_id = #{userInfo.id},
-		fish_equ_id =
-		#{equInfo.id}
-		WHERE alarm_id = #{id}
-	</update>
-
-	<delete id="deleteAlarm" parameterType="int">
-		DELETE FROM alarm_info
-		WHERE
-		alarm_id = #{id}
-	</delete>
 
 	<select id="getOptInfoById" parameterType="int" resultMap="OptInfoMap">
 		SELECT *

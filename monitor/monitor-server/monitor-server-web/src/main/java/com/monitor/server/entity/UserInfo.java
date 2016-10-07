@@ -14,19 +14,14 @@ public class UserInfo implements Serializable {
 	private static final long serialVersionUID = -2277018491304480258L;
 	private int id;
 	private String account;
-	private String nickname;
+	private String nickName;
 	private String password;
-	private int cellphone;
-	private int telephone;
-	private String email;
+	private int phone;
 	private String sex;
 	private int age;
-	private String headimgurl;
 	private String country;
 	private String province;
 	private String city;
-	private String privilege;
-	private String unionid;
 
 	public int getId() {
 		return id;
@@ -44,12 +39,12 @@ public class UserInfo implements Serializable {
 		this.account = account;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getPassword() {
@@ -60,28 +55,12 @@ public class UserInfo implements Serializable {
 		this.password = password;
 	}
 
-	public int getCellphone() {
-		return cellphone;
+	public int getPhone() {
+		return phone;
 	}
 
-	public void setCellphone(int cellphone) {
-		this.cellphone = cellphone;
-	}
-
-	public int getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(int telephone) {
-		this.telephone = telephone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhone(int phone) {
+		this.phone = phone;
 	}
 
 	public String getSex() {
@@ -98,14 +77,6 @@ public class UserInfo implements Serializable {
 
 	public void setAge(int age) {
 		this.age = age;
-	}
-
-	public String getHeadimgurl() {
-		return headimgurl;
-	}
-
-	public void setHeadimgurl(String headimgurl) {
-		this.headimgurl = headimgurl;
 	}
 
 	public String getCountry() {
@@ -130,22 +101,6 @@ public class UserInfo implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public String getPrivilege() {
-		return privilege;
-	}
-
-	public void setPrivilege(String privilege) {
-		this.privilege = privilege;
-	}
-
-	public String getUnionid() {
-		return unionid;
-	}
-
-	public void setUnionid(String unionid) {
-		this.unionid = unionid;
 	}
 
 }

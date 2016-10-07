@@ -5,6 +5,7 @@ package com.monitor.server.web.service;
 
 import java.util.List;
 
+import com.monitor.server.comm.BusinessException;
 import com.monitor.server.entity.AlarmInfo;
 
 /**
@@ -13,13 +14,8 @@ import com.monitor.server.entity.AlarmInfo;
  */
 public interface AlarmService {
 
-	public AlarmInfo selectAlarmById(int id);
+	public List<AlarmInfo> getAllSensorThresholds(String userAccount, String devSN) throws BusinessException;
 
-	public List<AlarmInfo> selectAlarmsByUserID(int id);
+	public AlarmInfo setSensorThreshold(AlarmInfo AlarmInfo) throws BusinessException;
 
-	public int createAlarm(AlarmInfo alarmInfo);
-
-	public int updateAlarm(AlarmInfo alarmInfo);
-
-	public int deleteAlarm(int id);
 }

@@ -22,18 +22,10 @@
 		<typeAlias alias="FishTankInfo" type="com.monitor.server.entity.FishTankInfo" />
 		<typeAlias alias="NetworkInfo" type="com.monitor.server.entity.NetworkInfo" />
 		<typeAlias alias="UserDevInfo" type="com.monitor.server.entity.UserDevInfo" />
-		<typeAlias alias="PhInfo" type="com.monitor.server.entity.PhInfo" />
 		<typeAlias alias="AlarmInfo" type="com.monitor.server.entity.AlarmInfo" />
-		<typeAlias alias="ConductivityInfo"
-			type="com.monitor.server.entity.ConductivityInfo" />
-		<typeAlias alias="EquInfo" type="com.monitor.server.entity.EquInfo" />
 		<typeAlias alias="OptInfo" type="com.monitor.server.entity.OptInfo" />
-		<typeAlias alias="PowerSwitchInfo" type="com.monitor.server.entity.PowerSwitchInfo" />
-		<typeAlias alias="TempInfo" type="com.monitor.server.entity.TempInfo" />
-		<typeAlias alias="WaterLineInfo" type="com.monitor.server.entity.WaterLineInfo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/monitor/server/mapper/BaseInfoMapper.xml" />
-		<mapper resource="com/monitor/server/mapper/SensorInfoMapper.xml" />
 	</mappers>
 </configuration>

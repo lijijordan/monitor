@@ -21,10 +21,9 @@
 	<context:annotation-config />
 	<aop:aspectj-autoproxy />
 
-	<!-- 数据源以及事物配置 -->
-	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:property-placeholder location="classpath:app.properties" />
 
-	<bean id="dataSource_base" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${database.driverClassName}" />
 		<property name="jdbcUrl" value="${database.url_base}" />
 		<property name="user" value="${database.username}" />
@@ -34,28 +33,6 @@
 		<property name="maxPoolSize" value="${pool.maxPoolSize}" />
 		<property name="maxIdleTime" value="${pool.maxIdleTime}" />
 		<property name="acquireIncrement" value="${pool.acquireIncrement}" />
-	</bean>
-
-	<bean id="dataSource_dev" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="${database.driverClassName}" />
-		<property name="jdbcUrl" value="${database.url_dev}" />
-		<property name="user" value="${database.username}" />
-		<property name="password" value="${database.password}" />
-		<property name="initialPoolSize" value="${pool.initialPoolSize}" />
-		<property name="minPoolSize" value="${pool.minPoolSize}" />
-		<property name="maxPoolSize" value="${pool.maxPoolSize}" />
-		<property name="maxIdleTime" value="${pool.maxIdleTime}" />
-		<property name="acquireIncrement" value="${pool.acquireIncrement}" />
-	</bean>
-
-	<bean id="dataSource" class="com.monitor.framework.mybatis.support.DynamicDataSource">
-		<property name="targetDataSources">
-			<map key-type="java.lang.String">
-				<entry value-ref="dataSource_base" key="dataSource_base"></entry>
-				<entry value-ref="dataSource_dev" key="dataSource_dev"></entry>
-			</map>
-		</property>
-		<property name="defaultTargetDataSource" ref="dataSource_base"></property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -73,23 +50,6 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="txManager" />
-
-	<!-- 异常处理 -->
-	<bean id="exceptionHandler" class="com.monitor.server.comm.ExceptionAdvisor"></bean>
-	<bean
-		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="beanNames">
-			<list>
-				<value>*Dao</value>
-				<value>*Service</value>
-			</list>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>exceptionHandler</value>
-			</list>
-		</property>
-	</bean>
 
 	<!--使用jdk的实现 -->
 	<bean id="ky.requestFactory"

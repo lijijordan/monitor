@@ -5,13 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.monitor.framework.mybatis.support.CustomerDBContextHolder;
-import com.monitor.server.entity.PhInfo;
 import com.monitor.server.web.service.SensorService;
 
 public class Test {
