@@ -45,20 +45,32 @@ public class DataQueryService implements IDataQueryService {
 		List<DataPointsStatisticsInfo> statisticsList = null;
 		switch (QueryScopeEnum.fromString(vo.getQueryScopeText())) {
 		case Day:
-			vo.setStartTime(DateUtils.addHours((DateUtils.addDays(dtNow, -1)),
-					1));
-			vo.setEndTime(dtNow);
+			if (null == vo.getStartTime()) {
+				vo.setStartTime(DateUtils.addHours(
+						(DateUtils.addDays(dtNow, -1)), 1));
+			}
+			if (null == vo.getEndTime()) {
+				vo.setEndTime(dtNow);
+			}
 			statisticsList = dataPointsStatisticsDao.selectByDay(vo);
 			break;
 		case Week:
-			vo.setStartTime(DateUtils.addWeeks(dtNow, -1));
-			vo.setEndTime(dtNow);
+			if (null == vo.getStartTime()) {
+				vo.setStartTime(DateUtils.addWeeks(dtNow, -1));
+			}
+			if (null == vo.getEndTime()) {
+				vo.setEndTime(dtNow);
+			}
 			statisticsList = dataPointsStatisticsDao.selectByWeek(vo);
 			break;
 		case Month:
 		default:
-			vo.setStartTime(DateUtils.addMonths(dtNow, -1));
-			vo.setEndTime(dtNow);
+			if (null == vo.getStartTime()) {
+				vo.setStartTime(DateUtils.addMonths(dtNow, -1));
+			}
+			if (null == vo.getEndTime()) {
+				vo.setEndTime(dtNow);
+			}
 			statisticsList = dataPointsStatisticsDao.selectByMonth(vo);
 			break;
 		}

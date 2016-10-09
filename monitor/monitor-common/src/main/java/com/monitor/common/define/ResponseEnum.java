@@ -5,7 +5,8 @@ import java.util.Map;
 
 public enum ResponseEnum {
 	SUCCESS("200", "成功"), PARAMNULL("10001", "参数不能为空"), PARAMCONVERTERROR(
-			"10002", "参数转换枚举错误"), SYSEXCEPTION("99999", "系统异常");
+			"10002", "参数转换枚举错误"), PARAMDATEFORMATERROR("10003", "日期格式不正确"), SYSEXCEPTION(
+			"99999", "系统异常");
 
 	private ResponseEnum(String status, String message) {
 		this.status = status;

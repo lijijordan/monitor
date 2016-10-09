@@ -1,11 +1,13 @@
 package com.monitor.device.web.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -71,6 +73,70 @@ public class QueryFacadeController {
 			vo.setQueryScope(scopeEnum.getKey());
 			vo.setQueryScopeText(scopeEnum.getVal());
 			vo.setDeviceSn(devicesn);
+			List<DataPointsStatisticsInfo> datas = queryService
+					.queryHistoryData(vo);
+
+			response.setContent(datas);
+			response.setMessage(ResponseEnum.SUCCESS.getMessage());
+			response.setStatus(ResponseEnum.SUCCESS.getStatus());
+			return response;
+		} catch (Exception ex) {
+			response.setStatus(ResponseEnum.SYSEXCEPTION.getStatus());
+			response.setMessage(ex.getMessage());
+			return response;
+		}
+	}
+
+	@RequestMapping(value = "/getList/{devicesn}/{dataType}/{queryScope}/{startTime}/{endTime}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(value = "根据设备ID，数据类型，查询范围，时间获取历史数据", httpMethod = "GET", response = ResponseVo.class, notes = "根据设备ID，数据类型，查询范围，时间获取历史数据")
+	@ResponseBody
+	public ResponseVo<Object> getListByTime(
+			@ApiParam(required = true, name = "devicesn", value = "设备ID") @PathVariable("devicesn") String devicesn,
+			@ApiParam(required = true, name = "dataType", value = "数据类型，枚举：Temperature, PH, Salinity, TDS, Light") @PathVariable("dataType") String dataType,
+			@ApiParam(required = true, name = "queryScope", value = "查询范围，枚举：Day,Week,Month") @PathVariable("queryScope") String queryScope,
+			@ApiParam(required = true, name = "startTime", value = "开始时间，yyyy-MM-dd hh:mm:ss") @PathVariable("startTime") String startTime,
+			@ApiParam(required = true, name = "endTime", value = "结束时间，yyyy-MM-dd hh:mm:ss") @PathVariable("endTime") String endTime) {
+
+		System.out.println(devicesn);
+		System.out.println(dataType);
+		System.out.println(queryScope);
+		System.out.println(startTime);
+		System.out.println(endTime);
+		if (StringUtils.isEmpty(devicesn) || StringUtils.isEmpty(dataType)
+				|| StringUtils.isEmpty(queryScope)
+				|| StringUtils.isEmpty(startTime)
+				|| StringUtils.isEmpty(endTime)) {
+			response.setStatus(ResponseEnum.PARAMNULL.getStatus());
+			response.setMessage(ResponseEnum.PARAMNULL.getMessage());
+			return response;
+		}
+		DataQueryVo vo = new DataQueryVo();
+		DataTypeEnum typeEnum = DataTypeEnum.fromString(dataType);
+		QueryScopeEnum scopeEnum = QueryScopeEnum.fromString(queryScope);
+		if (null == typeEnum || null == scopeEnum) {
+			response.setStatus(ResponseEnum.PARAMCONVERTERROR.getStatus());
+			response.setMessage(ResponseEnum.PARAMCONVERTERROR.getMessage());
+			return response;
+		}
+		Date dtStart, dtEnd = null;
+		try {
+			dtStart = DateUtils.parseDate(startTime,
+					new String[] { "yyyy-MM-dd hh:mm:ss" });
+			dtEnd = DateUtils.parseDate(endTime,
+					new String[] { "yyyy-MM-dd hh:mm:ss" });
+		} catch (ParseException e) {
+			response.setStatus(ResponseEnum.PARAMDATEFORMATERROR.getStatus());
+			response.setMessage(ResponseEnum.PARAMDATEFORMATERROR.getMessage());
+			return response;
+		}
+		try {
+			vo.setDataType(typeEnum.getKey());
+			vo.setDataTypeText(typeEnum.getVal());
+			vo.setQueryScope(scopeEnum.getKey());
+			vo.setQueryScopeText(scopeEnum.getVal());
+			vo.setDeviceSn(devicesn);
+			vo.setStartTime(dtStart);
+			vo.setEndTime(dtEnd);
 			List<DataPointsStatisticsInfo> datas = queryService
 					.queryHistoryData(vo);
 
