@@ -17,6 +17,10 @@
 		<result property="country" column="country" />
 		<result property="province" column="province" />
 		<result property="city" column="city" />
+		<result property="openID" column="openID" />
+		<result property="unionID" column="unionID" />
+		<result property="groupID" column="groupID" />
+		<result property="subscribe" column="subscribe" />
 	</resultMap>
 
 	<select id="getUserByAccount" parameterType="String" resultMap="UserInfoMap">
@@ -28,9 +32,9 @@
 	<insert id="createUser" parameterType="UserInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO user
-		(account,nickName,password,phone,sex,age,province,city,country)
+		(account,nickName,password,phone,sex,age,province,city,country,openID,unionID,groupID,subscribe)
 		VALUES
-		(#{account},#{nickName},#{password},#{phone},#{sex},#{age},#{province},#{city},#{country})
+		(#{account},#{nickName},#{password},#{phone},#{sex},#{age},#{province},#{city},#{country},#{openID},#{unionID},#{groupID},#{subscribe})
 	</insert>
 
 	<update id="updateUser" parameterType="UserInfo">
@@ -47,7 +51,11 @@
 		#{province},
 		city = #{city},
 		country =
-		#{country}
+		#{country},
+		openID = #{openID},
+		unionID = #{unionID},
+		groupID = #{groupID},
+		subscribe = #{subscribe}
 		WHERE
 		account = #{account}
 	</update>

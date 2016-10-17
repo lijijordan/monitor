@@ -22,6 +22,10 @@ public class UserInfo implements Serializable {
 	private String country;
 	private String province;
 	private String city;
+	private String openID;
+	private String unionID;
+	private String groupID;
+	private String subscribe;
 
 	public int getId() {
 		return id;
@@ -101,6 +105,38 @@ public class UserInfo implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getOpenID() {
+		return openID;
+	}
+
+	public void setOpenID(String openID) {
+		this.openID = openID;
+	}
+
+	public String getUnionID() {
+		return unionID;
+	}
+
+	public void setUnionID(String unionID) {
+		this.unionID = unionID;
+	}
+
+	public String getGroupID() {
+		return groupID;
+	}
+
+	public void setGroupID(String groupID) {
+		this.groupID = groupID;
+	}
+
+	public String getSubscribe() {
+		return subscribe;
+	}
+
+	public void setSubscribe(String subscribe) {
+		this.subscribe = subscribe;
 	}
 
 }
