@@ -26,7 +26,7 @@ import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.monitor.server.EncryptType;
+import com.monitor.server.comm.EncryptType;
 import com.monitor.server.comm.PropertiesUtil;
 import com.monitor.server.entity.UserInfo;
 

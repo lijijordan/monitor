@@ -6,7 +6,7 @@
  * @date: 2016年11月29日 下午5:07:43
  * @version: V1.0  
  */
-package com.monitor.server;
+package com.monitor.server.comm;
 
 /**
  * @Description: 加密算法类型
