@@ -1,43 +1,36 @@
-/**
- * 用户与设备关联关系信息实体
- */
 package com.monitor.server.entity;
 
-import java.io.Serializable;
-
 /**
- * @author yinhong
- *
+ * @Description: 用户设备关系对象
  */
-public class UserDevInfo implements Serializable {
+public class UserDevInfo {
+  private Integer id;
 
-	private static final long serialVersionUID = 8993968681015316236L;
-	private int id;
-	private String userAccount;
-	private String devSN;
+  private String userAccount;
 
-	public int getId() {
-		return id;
-	}
+  private String devSn;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public String getUserAccount() {
-		return userAccount;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setUserAccount(String userAccount) {
-		this.userAccount = userAccount;
-	}
+  public String getUserAccount() {
+    return userAccount;
+  }
 
-	public String getDevSN() {
-		return devSN;
-	}
+  public void setUserAccount(String userAccount) {
+    this.userAccount = userAccount == null ? null : userAccount.trim();
+  }
 
-	public void setDevSN(String devSN) {
-		this.devSN = devSN;
-	}
+  public String getDevSn() {
+    return devSn;
+  }
 
+  public void setDevSn(String devSn) {
+    this.devSn = devSn == null ? null : devSn.trim();
+  }
 }

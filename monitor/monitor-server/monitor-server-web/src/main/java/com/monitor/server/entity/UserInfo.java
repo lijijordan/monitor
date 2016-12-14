@@ -1,142 +1,149 @@
 /**
- * 用户信息实体
+ * Copyright © 2016 Seven Color. All rights reserved.
+ *
+ * @Description: 微信用户信息
+ * @author: yinhong
+ * @date: 2016年11月26日 上午11:16:17
+ * @version: V1.0
  */
 package com.monitor.server.entity;
 
-import java.io.Serializable;
+import com.monitor.server.entity.wx.BaseEntity;
 
 /**
- * @author yinhong
- *
+ * @Description: 用户信息
  */
-public class UserInfo implements Serializable {
+public class UserInfo extends BaseEntity {
 
-	private static final long serialVersionUID = -2277018491304480258L;
-	private int id;
-	private String account;
-	private String nickName;
-	private String password;
-	private int phone;
-	private String sex;
-	private int age;
-	private String country;
-	private String province;
-	private String city;
-	private String openID;
-	private String unionID;
-	private String groupID;
-	private String subscribe;
+  private static final long serialVersionUID = 8524050338159777232L;
 
-	public int getId() {
-		return id;
-	}
+  private String nickName;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  private String sex;
 
-	public String getAccount() {
-		return account;
-	}
+  private String city;
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+  private String province;
 
-	public String getNickName() {
-		return nickName;
-	}
+  private String country;
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+  private String account;
 
-	public String getPassword() {
-		return password;
-	}
+  private String headimgurl;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  private String subscribe;
 
-	public int getPhone() {
-		return phone;
-	}
+  private String language;
 
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
+  private String subscribeTime;
 
-	public String getSex() {
-		return sex;
-	}
+  private String remark;
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+  private String groupid;
 
-	public int getAge() {
-		return age;
-	}
+  private String password;
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public String getCountry() {
-		return country;
-	}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+  public String getNickName() {
+    return nickName;
+  }
 
-	public String getProvince() {
-		return province;
-	}
+  public void setNickName(String nickname) {
+    this.nickName = nickname == null ? null : nickname.trim();
+  }
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+  public String getSex() {
+    return sex;
+  }
 
-	public String getCity() {
-		return city;
-	}
+  public void setSex(String sex) {
+    this.sex = sex == null ? null : sex.trim();
+  }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+  public String getCity() {
+    return city;
+  }
 
-	public String getOpenID() {
-		return openID;
-	}
+  public void setCity(String city) {
+    this.city = city == null ? null : city.trim();
+  }
 
-	public void setOpenID(String openID) {
-		this.openID = openID;
-	}
+  public String getProvince() {
+    return province;
+  }
 
-	public String getUnionID() {
-		return unionID;
-	}
+  public void setProvince(String province) {
+    this.province = province == null ? null : province.trim();
+  }
 
-	public void setUnionID(String unionID) {
-		this.unionID = unionID;
-	}
+  public String getCountry() {
+    return country;
+  }
 
-	public String getGroupID() {
-		return groupID;
-	}
+  public void setCountry(String country) {
+    this.country = country == null ? null : country.trim();
+  }
 
-	public void setGroupID(String groupID) {
-		this.groupID = groupID;
-	}
+  public String getAccount() {
+    return account;
+  }
 
-	public String getSubscribe() {
-		return subscribe;
-	}
+  public void setAccount(String account) {
+    this.account = account == null ? null : account.trim();
+  }
 
-	public void setSubscribe(String subscribe) {
-		this.subscribe = subscribe;
-	}
+  public String getHeadimgurl() {
+    return headimgurl;
+  }
 
+  public void setHeadimgurl(String headimgurl) {
+    this.headimgurl = headimgurl == null ? null : headimgurl.trim();
+  }
+
+  public String getSubscribe() {
+    return subscribe;
+  }
+
+  public void setSubscribe(String subscribe) {
+    this.subscribe = subscribe == null ? null : subscribe.trim();
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language == null ? null : language.trim();
+  }
+
+  public String getSubscribeTime() {
+    return subscribeTime;
+  }
+
+  public void setSubscribeTime(String subscribeTime) {
+    this.subscribeTime = subscribeTime == null ? null : subscribeTime.trim();
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark == null ? null : remark.trim();
+  }
+
+  public String getGroupid() {
+    return groupid;
+  }
+
+  public void setGroupid(String groupid) {
+    this.groupid = groupid == null ? null : groupid.trim();
+  }
 }
