@@ -21,7 +21,7 @@
 	<context:annotation-config />
 	<aop:aspectj-autoproxy />
 
-	<context:property-placeholder location="classpath:app.properties" />
+	<context:property-placeholder location="classpath:db.properties" />
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${database.driverClassName}" />
@@ -40,9 +40,14 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" />
+	<!-- 查找类路径下的映射器并自动创建成MapperFactoryBean,它将创建的代理类实现口,并且注入Spring -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.sevencolor.domain" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
+
+	<!-- <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> 
+		<constructor-arg index="0" ref="sqlSessionFactory" /> </bean> -->
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -77,6 +82,61 @@
 				</bean>
 			</list>
 		</property>
+	</bean>
+
+	<!-- 定时运行的任务 -->
+	<bean id="wxQuartzJob" class="com.monitor.server.service.task.WxQuartzJob"></bean>
+
+	<!-- 定时获取Access_Token -->
+	<bean id="jobtaskForToken"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="wxQuartzJob" />
+		</property>
+		<!-- 定时获取微信Access_Token -->
+		<property name="targetMethod">
+			<value>getAccessToken_JsApiTicket</value>
+		</property>
+
+	</bean>
+
+	<!-- 定义获取Access_Token的定时触发时间 -->
+	<bean id="doTimeForToken"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="jobtaskForToken" />
+		</property>
+		<property name="repeatInterval">
+			<value>6600000</value>
+		</property>
+		<property name="startDelay">
+			<value>2000</value>
+		</property>
+	</bean>
+
+	<!-- 任务总管理类 -->
+	<bean id="startQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="doTimeForToken" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 国际化信息资源工具类 ,静态变量不能autowired -->
+	<bean id="messageSourceHelper" class="com.monitor.server.comm.MessageUtil">
+		<property name="messageSource" ref="messageSource" />
+	</bean>
+
+	<!-- 绑定国际化信息资源 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<!-- 国际化信息所在的文件名 -->
+		<property name="basename" value="messages" />
+		<!-- 如果在国际化资源文件中找不到对应代码的信息，就用代码作为名称 -->
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
 </beans>

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author yinhong
  *
  */
-public class UserInfo implements Serializable {
+public class UserInfo_D implements Serializable {
 
 	private static final long serialVersionUID = -2277018491304480258L;
 	private int id;

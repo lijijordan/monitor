@@ -1,7 +1,7 @@
 /**
  * 传感器逻辑层
  */
-package com.monitor.server.web.service;
+package com.monitor.server.service;
 
 import java.util.List;
 

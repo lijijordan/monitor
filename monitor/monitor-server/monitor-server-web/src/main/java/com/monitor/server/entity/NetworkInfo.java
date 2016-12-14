@@ -1,52 +1,43 @@
-/**
- * 网络配置信息实体
- */
 package com.monitor.server.entity;
 
-import java.io.Serializable;
+public class NetworkInfo {
+    private Long id;
 
-/**
- * @author yinhong
- *
- */
-public class NetworkInfo implements Serializable {
+    private String ssid;
 
-	private static final long serialVersionUID = -5688369055275887970L;
-	private int id;
-	private String ssid;
-	private String password;
-	private String userAccount;
+    private String password;
 
-	public int getId() {
-		return id;
-	}
+    private String userAccount;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getUserAccount() {
-		return userAccount;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setUserAccount(String userAccount) {
-		this.userAccount = userAccount;
-	}
+    public String getSsid() {
+        return ssid;
+    }
 
-	public String getSsid() {
-		return ssid;
-	}
+    public void setSsid(String ssid) {
+        this.ssid = ssid == null ? null : ssid.trim();
+    }
 
-	public void setSsid(String ssid) {
-		this.ssid = ssid;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getUserAccount() {
+        return userAccount;
+    }
 
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount == null ? null : userAccount.trim();
+    }
 }

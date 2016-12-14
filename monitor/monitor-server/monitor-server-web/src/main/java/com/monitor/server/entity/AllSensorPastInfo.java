@@ -11,52 +11,70 @@ import java.util.List;
  */
 public class AllSensorPastInfo implements Serializable {
 
-	private static final long serialVersionUID = 1262332799116848133L;
+  private static final long serialVersionUID = 1262332799116848133L;
 
-	private List<DataPointsDevStatisticsInfo> phValueList;
-	private List<DataPointsDevStatisticsInfo> salinityValueList;
-	private List<DataPointsDevStatisticsInfo> tempValueList;
-	private List<DataPointsDevStatisticsInfo> lightValueList;
-	private List<DataPointsDevStatisticsInfo> dtsValueList;
+  private List<DataPointsDevStatisticsInfo> phValueList;
+  private List<DataPointsDevStatisticsInfo> salinityValueList;
+  private List<DataPointsDevStatisticsInfo> tempValueList;
+  private List<DataPointsDevStatisticsInfo> lightValueList;
+  private List<DataPointsDevStatisticsInfo> dtsValueList;
+  private List<DataPointsDevStatisticsInfo> pm25ValueList;
+  private List<DataPointsDevStatisticsInfo> pm10ValueList;
 
-	public List<DataPointsDevStatisticsInfo> getPhValueList() {
-		return phValueList;
-	}
+  public List<DataPointsDevStatisticsInfo> getPm25ValueList() {
+    return pm25ValueList;
+  }
 
-	public void setPhValueList(List<DataPointsDevStatisticsInfo> phValueList) {
-		this.phValueList = phValueList;
-	}
+  public void setPm25ValueList(List<DataPointsDevStatisticsInfo> pm25ValueList) {
+    this.pm25ValueList = pm25ValueList;
+  }
 
-	public List<DataPointsDevStatisticsInfo> getSalinityValueList() {
-		return salinityValueList;
-	}
+  public List<DataPointsDevStatisticsInfo> getPm10ValueList() {
+    return pm10ValueList;
+  }
 
-	public void setSalinityValueList(List<DataPointsDevStatisticsInfo> salinityValueList) {
-		this.salinityValueList = salinityValueList;
-	}
+  public void setPm10ValueList(List<DataPointsDevStatisticsInfo> pm10ValueList) {
+    this.pm10ValueList = pm10ValueList;
+  }
 
-	public List<DataPointsDevStatisticsInfo> getTempValueList() {
-		return tempValueList;
-	}
+  public List<DataPointsDevStatisticsInfo> getPhValueList() {
+    return phValueList;
+  }
 
-	public void setTempValueList(List<DataPointsDevStatisticsInfo> tempValueList) {
-		this.tempValueList = tempValueList;
-	}
+  public void setPhValueList(List<DataPointsDevStatisticsInfo> phValueList) {
+    this.phValueList = phValueList;
+  }
 
-	public List<DataPointsDevStatisticsInfo> getLightValueList() {
-		return lightValueList;
-	}
+  public List<DataPointsDevStatisticsInfo> getSalinityValueList() {
+    return salinityValueList;
+  }
 
-	public void setLightValueList(List<DataPointsDevStatisticsInfo> lightValueList) {
-		this.lightValueList = lightValueList;
-	}
+  public void setSalinityValueList(List<DataPointsDevStatisticsInfo> salinityValueList) {
+    this.salinityValueList = salinityValueList;
+  }
 
-	public List<DataPointsDevStatisticsInfo> getDtsValueList() {
-		return dtsValueList;
-	}
+  public List<DataPointsDevStatisticsInfo> getTempValueList() {
+    return tempValueList;
+  }
 
-	public void setDtsValueList(List<DataPointsDevStatisticsInfo> dtsValueList) {
-		this.dtsValueList = dtsValueList;
-	}
+  public void setTempValueList(List<DataPointsDevStatisticsInfo> tempValueList) {
+    this.tempValueList = tempValueList;
+  }
+
+  public List<DataPointsDevStatisticsInfo> getLightValueList() {
+    return lightValueList;
+  }
+
+  public void setLightValueList(List<DataPointsDevStatisticsInfo> lightValueList) {
+    this.lightValueList = lightValueList;
+  }
+
+  public List<DataPointsDevStatisticsInfo> getDtsValueList() {
+    return dtsValueList;
+  }
+
+  public void setDtsValueList(List<DataPointsDevStatisticsInfo> dtsValueList) {
+    this.dtsValueList = dtsValueList;
+  }
 
 }

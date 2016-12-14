@@ -19,7 +19,7 @@ public class OptInfo implements Serializable {
 	private int result;
 	private Date createTime;
 
-	private UserInfo userInfo;
+	private UserInfo_D userInfo;
 
 	public int getId() {
 		return id;
@@ -61,11 +61,11 @@ public class OptInfo implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public UserInfo getUserInfo() {
+	public UserInfo_D getUserInfo() {
 		return userInfo;
 	}
 
-	public void setUserInfo(UserInfo userInfo) {
+	public void setUserInfo(UserInfo_D userInfo) {
 		this.userInfo = userInfo;
 	}
 

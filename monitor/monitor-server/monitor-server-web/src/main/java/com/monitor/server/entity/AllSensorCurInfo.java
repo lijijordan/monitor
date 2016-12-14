@@ -10,51 +10,69 @@ import java.io.Serializable;
  */
 public class AllSensorCurInfo implements Serializable {
 
-	private static final long serialVersionUID = 6834622589607657812L;
-	private String ph;
-	private String temperature;
-	private String light;
-	private String salinity;
-	private String tds;
+  private static final long serialVersionUID = 6834622589607657812L;
+  private String ph;
+  private String temperature;
+  private String light;
+  private String salinity;
+  private String tds;
+  private String pm25;
+  private String pm10;
 
-	public String getPh() {
-		return ph;
-	}
+  public String getPm25() {
+    return pm25;
+  }
 
-	public void setPh(String ph) {
-		this.ph = ph;
-	}
+  public void setPm25(String pm25) {
+    this.pm25 = pm25;
+  }
 
-	public String getTemperature() {
-		return temperature;
-	}
+  public String getPm10() {
+    return pm10;
+  }
 
-	public void setTemperature(String temperature) {
-		this.temperature = temperature;
-	}
+  public void setPm10(String pm10) {
+    this.pm10 = pm10;
+  }
 
-	public String getLight() {
-		return light;
-	}
+  public String getPh() {
+    return ph;
+  }
 
-	public void setLight(String light) {
-		this.light = light;
-	}
+  public void setPh(String ph) {
+    this.ph = ph;
+  }
 
-	public String getSalinity() {
-		return salinity;
-	}
+  public String getTemperature() {
+    return temperature;
+  }
 
-	public void setSalinity(String salinity) {
-		this.salinity = salinity;
-	}
+  public void setTemperature(String temperature) {
+    this.temperature = temperature;
+  }
 
-	public String getTds() {
-		return tds;
-	}
+  public String getLight() {
+    return light;
+  }
 
-	public void setTds(String tds) {
-		this.tds = tds;
-	}
+  public void setLight(String light) {
+    this.light = light;
+  }
+
+  public String getSalinity() {
+    return salinity;
+  }
+
+  public void setSalinity(String salinity) {
+    this.salinity = salinity;
+  }
+
+  public String getTds() {
+    return tds;
+  }
+
+  public void setTds(String tds) {
+    this.tds = tds;
+  }
 
 }
