@@ -1,7 +1,9 @@
-package com.monitor.server.entity;
+package com.monitor.server.entity.biz;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 
 /**
  * 传感器所有时间段数据汇总

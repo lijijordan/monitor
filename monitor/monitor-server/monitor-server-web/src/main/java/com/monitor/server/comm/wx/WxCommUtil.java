@@ -15,6 +15,7 @@ import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.monitor.server.EncryptType;
 import com.monitor.server.comm.PropertiesUtil;
 import com.monitor.server.entity.UserInfo;
 
@@ -88,7 +90,7 @@ public class WxCommUtil {
       throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
     String nonce_str = create_nonce_str();
-    String timestamp = CommUtil.createTimeStamp();
+    String timestamp = createTimeStamp();
     String jsapi_ticket = PropertiesUtil.getProperty("jsapi_ticket");
 
     // 注意这里参数名必须全部小写，且必须有序
@@ -98,7 +100,7 @@ public class WxCommUtil {
     MessageDigest crypt = MessageDigest.getInstance(EncryptType.SHA_1);
     crypt.reset();
     crypt.update(params.getBytes(HTTP.UTF_8));
-    String signature = CommUtil.byteToHex(crypt.digest());
+    String signature = byteToHex(crypt.digest());
     HashMap<String, String> returnParams = new HashMap<String, String>();
     returnParams.put("appId", PropertiesUtil.getProperty("webchat.appid"));
     returnParams.put("timestamp", timestamp);
@@ -106,6 +108,28 @@ public class WxCommUtil {
     returnParams.put("signature", signature);
 
     return returnParams;
+  }
+
+  /**
+   * @Description: hash数组补齐为16进制后以字符串形式输出
+   * @return: String
+   */
+  public static String byteToHex(final byte[] hash) {
+    Formatter formatter = new Formatter();
+    for (byte b : hash) {
+      formatter.format("%02x", b);
+    }
+    String result = formatter.toString();
+    formatter.close();
+    return result;
+  }
+
+  /**
+   * @Description: 创建当前时间时间戳
+   * @return: String
+   */
+  public static String createTimeStamp() {
+    return Long.toString(System.currentTimeMillis() / 1000);
   }
 
   /**

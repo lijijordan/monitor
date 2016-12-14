@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.comm.ConstantObject;
-import com.monitor.server.comm.ErrorCodeMessEnum;
-import com.monitor.server.entity.AllSensorAllPastInfo;
-import com.monitor.server.entity.AllSensorCurInfo;
-import com.monitor.server.entity.AllSensorPastInfo;
-import com.monitor.server.entity.DataPointInfo;
-import com.monitor.server.entity.DataPointsDevInfo;
-import com.monitor.server.entity.DataPointsDevStatisticsInfo;
-import com.monitor.server.entity.HomePageInfo;
-import com.monitor.server.entity.SensorAllPastInfo;
-import com.monitor.server.entity.SensorDetailPageInfo;
+import com.monitor.server.comm.ErrorCodeMsgEnum;
+import com.monitor.server.entity.biz.AllSensorAllPastInfo;
+import com.monitor.server.entity.biz.AllSensorCurInfo;
+import com.monitor.server.entity.biz.AllSensorPastInfo;
+import com.monitor.server.entity.biz.DataPointInfo;
+import com.monitor.server.entity.biz.HomePageInfo;
+import com.monitor.server.entity.biz.SensorAllPastInfo;
+import com.monitor.server.entity.biz.SensorDetailPageInfo;
+import com.monitor.server.entity.dev.DataPointsDevInfo;
+import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 import com.monitor.server.service.SensorService;
 import com.monitor.server.service.UserDevService;
 import com.wordnik.swagger.annotations.Api;
@@ -59,14 +59,14 @@ public class WaterQualityController {
 
     // 设置返回默认值
     ResponseVo<HomePageInfo> responseVo = new ResponseVo<HomePageInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -81,9 +81,9 @@ public class WaterQualityController {
     // ResponseVo<HealthInfo> healthInfo = getEntiretySensorHealth(userID,
     // equID);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(curSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(allPastSensorInfo.getStatus())) {
 
       HomePageInfo homePageInfo = new HomePageInfo();
@@ -536,14 +536,14 @@ public class WaterQualityController {
       homePageInfo.setTempMaxValueByMonth(maxTempDataPointInfoListByMonth);
       homePageInfo.setTempMinValueByMonth(minTempDataPointInfoListByMonth);
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(homePageInfo);
       return responseVo;
 
     } else {
 
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(curSensorInfo.getStatus())) {
         responseVo.setStatus(curSensorInfo.getStatus());
         responseVo.setMessage(curSensorInfo.getMessage());
@@ -573,14 +573,14 @@ public class WaterQualityController {
 
     // 设置默认值
     ResponseVo<SensorDetailPageInfo> responseVo = new ResponseVo<SensorDetailPageInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -595,9 +595,9 @@ public class WaterQualityController {
     ResponseVo<SensorAllPastInfo> allPastSensorVal =
         getAllPastSensorValByType(userAccount, devSN, sensorType);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(curSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(allPastSensorVal.getStatus())) {
 
       SensorDetailPageInfo sensorDetailPageInfo = new SensorDetailPageInfo();
@@ -692,14 +692,14 @@ public class WaterQualityController {
       sensorDetailPageInfo.setMaxValueByMonth(minTempDataPointInfoListByMonth);
       sensorDetailPageInfo.setMinValueByMonth(maxTempDataPointInfoListByMonth);
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(sensorDetailPageInfo);
       return responseVo;
 
     } else {
 
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(curSensorInfo.getStatus())) {
         responseVo.setStatus(curSensorInfo.getStatus());
         responseVo.setMessage(curSensorInfo.getMessage());
@@ -726,14 +726,14 @@ public class WaterQualityController {
 
     // 设置返回默认值
     ResponseVo<AllSensorCurInfo> responseVo = new ResponseVo<AllSensorCurInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -754,15 +754,15 @@ public class WaterQualityController {
     ResponseVo<DataPointsDevInfo> tdsCurrentValue =
         getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_TDS);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(phCurrentValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(tempCurrentValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(salinityCurrentValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(lightCurrentValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(tdsCurrentValue.getStatus())) {
 
       // 将各个传感器的值都封装到一个对象
@@ -774,29 +774,29 @@ public class WaterQualityController {
       curSensorInfo.setSalinity(salinityCurrentValue.getContent().getValue());
       curSensorInfo.setTemperature(tempCurrentValue.getContent().getValue());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(curSensorInfo);
       return responseVo;
 
     } else {
 
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(phCurrentValue.getStatus())) {
         responseVo.setStatus(phCurrentValue.getStatus());
         responseVo.setMessage(phCurrentValue.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(tempCurrentValue.getStatus())) {
         responseVo.setStatus(tempCurrentValue.getStatus());
         responseVo.setMessage(tempCurrentValue.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(salinityCurrentValue.getStatus())) {
         responseVo.setStatus(salinityCurrentValue.getStatus());
         responseVo.setMessage(salinityCurrentValue.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(lightCurrentValue.getStatus())) {
         responseVo.setStatus(lightCurrentValue.getStatus());
         responseVo.setMessage(lightCurrentValue.getMessage());
@@ -824,14 +824,14 @@ public class WaterQualityController {
 
     // 设置默认返回值
     ResponseVo<AllSensorAllPastInfo> responseVo = new ResponseVo<AllSensorAllPastInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -848,11 +848,11 @@ public class WaterQualityController {
     ResponseVo<AllSensorPastInfo> monthPastSensorInfo =
         getAllPastSensorValByPeriod(userAccount, devSN, ConstantObject.TIMEPERIOD_MONTH);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(dayPastSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(weekPastSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(monthPastSensorInfo.getStatus())) {
 
       AllSensorAllPastInfo allPastSensorInfo = new AllSensorAllPastInfo();
@@ -860,19 +860,19 @@ public class WaterQualityController {
       allPastSensorInfo.setMonthPastSensorInfo(monthPastSensorInfo.getContent());
       allPastSensorInfo.setWeekPastSensorInfo(weekPastSensorInfo.getContent());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(allPastSensorInfo);
       return responseVo;
 
     } else {
 
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(dayPastSensorInfo.getStatus())) {
         responseVo.setStatus(dayPastSensorInfo.getStatus());
         responseVo.setMessage(dayPastSensorInfo.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(weekPastSensorInfo.getStatus())) {
         responseVo.setStatus(weekPastSensorInfo.getStatus());
         responseVo.setMessage(weekPastSensorInfo.getMessage());
@@ -930,14 +930,14 @@ public class WaterQualityController {
 
     // 设置返回默认值
     ResponseVo<DataPointsDevInfo> responseVo = new ResponseVo<DataPointsDevInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -973,14 +973,14 @@ public class WaterQualityController {
 
     // 设置返回默认值
     ResponseVo<SensorAllPastInfo> responseVo = new ResponseVo<SensorAllPastInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -998,11 +998,11 @@ public class WaterQualityController {
         getPastSensorValByTypePeriod(userAccount, devSN, sensorType,
             ConstantObject.TIMEPERIOD_MONTH);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(dayPastSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(weekPastSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(monthPastSensorInfo.getStatus())) {
 
       SensorAllPastInfo sensorAllPastInfo = new SensorAllPastInfo();
@@ -1010,18 +1010,18 @@ public class WaterQualityController {
       sensorAllPastInfo.setMonthPastSensorInfo(monthPastSensorInfo.getContent());
       sensorAllPastInfo.setWeekPastSensorInfo(weekPastSensorInfo.getContent());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(sensorAllPastInfo);
       return responseVo;
 
     } else {
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(dayPastSensorInfo.getStatus())) {
         responseVo.setStatus(dayPastSensorInfo.getStatus());
         responseVo.setMessage(dayPastSensorInfo.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(weekPastSensorInfo.getStatus())) {
         responseVo.setStatus(weekPastSensorInfo.getStatus());
         responseVo.setMessage(weekPastSensorInfo.getMessage());
@@ -1056,14 +1056,14 @@ public class WaterQualityController {
     // 从设备获取传感器的值
     ResponseVo<List<DataPointsDevStatisticsInfo>> responseVo =
         new ResponseVo<List<DataPointsDevStatisticsInfo>>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -1099,14 +1099,14 @@ public class WaterQualityController {
 
     // 设置默认返回值
     ResponseVo<AllSensorPastInfo> responseVo = new ResponseVo<AllSensorPastInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -1128,14 +1128,14 @@ public class WaterQualityController {
     ResponseVo<List<DataPointsDevStatisticsInfo>> dtsValue = getPastSensorValByTypePeriod(
         userAccount, devSN, ConstantObject.SENSOR_TYPE_TDS, timePeriod);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(phValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(phValue.getStatus())
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(tempValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(salinityValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(lightValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(dtsValue.getStatus())) {
 
       // 遍历获取值
@@ -1146,28 +1146,28 @@ public class WaterQualityController {
       pastSensorInfo.setTempValueList(tempValue.getContent());
       pastSensorInfo.setDtsValueList(dtsValue.getContent());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(pastSensorInfo);
       return responseVo;
 
     } else {
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(phValue.getStatus())) {
         responseVo.setStatus(phValue.getStatus());
         responseVo.setMessage(phValue.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(tempValue.getStatus())) {
         responseVo.setStatus(tempValue.getStatus());
         responseVo.setMessage(tempValue.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(salinityValue.getStatus())) {
         responseVo.setStatus(salinityValue.getStatus());
         responseVo.setMessage(salinityValue.getMessage());
         return responseVo;
-      } else if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      } else if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(lightValue.getStatus())) {
         responseVo.setStatus(lightValue.getStatus());
         responseVo.setMessage(lightValue.getMessage());

@@ -1,6 +1,6 @@
 package com.monitor.server.comm;
 
-public enum ErrorCodeMessEnum {
+public enum ErrorCodeMsgEnum {
 
   SUCCESS(0, "Success"), 
   FAILURE(1, "Failure"), 
@@ -19,13 +19,13 @@ public enum ErrorCodeMessEnum {
   private Integer errorCode;
   private String errorMessage;
 
-  private ErrorCodeMessEnum(Integer errorCode, String errorMessage) {
+  private ErrorCodeMsgEnum(Integer errorCode, String errorMessage) {
     this.errorCode = errorCode;
     this.errorMessage = errorMessage;
   }
 
   public static String getErrorMessage(String errorCode) {
-    for (ErrorCodeMessEnum g : ErrorCodeMessEnum.values()) {
+    for (ErrorCodeMsgEnum g : ErrorCodeMsgEnum.values()) {
       if (g.getErrorCode().toString().equalsIgnoreCase(errorCode)) {
         return g.errorMessage;
       }

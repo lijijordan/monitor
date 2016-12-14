@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.comm.ErrorCodeMessEnum;
+import com.monitor.server.comm.ErrorCodeMsgEnum;
 import com.monitor.server.domain.dao.NetworkInfoMapper;
 import com.monitor.server.domain.dao.UserDevInfoMapper;
 import com.monitor.server.domain.dao.UserInfoMapper;
@@ -48,8 +48,8 @@ public class UserServiceImp implements UserService {
   public UserInfo addUser(UserInfo userInfo) throws BusinessException {
 
     if (userInfo == null) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     int saveResult = 0;
@@ -59,13 +59,13 @@ public class UserServiceImp implements UserService {
     boolean isCompleted = checkCreateUserInfoIsCompleted(userInfo);
 
     if (isExisted) {
-      throw new BusinessException(ErrorCodeMessEnum.AccountExisted.getErrorCode(),
-          ErrorCodeMessEnum.AccountExisted.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountExisted.getErrorCode(),
+          ErrorCodeMsgEnum.AccountExisted.getErrorMessage());
     }
 
     if (!isCompleted) {
-      throw new BusinessException(ErrorCodeMessEnum.AccountInfoError.getErrorCode(),
-          ErrorCodeMessEnum.AccountInfoError.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountInfoError.getErrorCode(),
+          ErrorCodeMsgEnum.AccountInfoError.getErrorMessage());
     }
 
     // 保存
@@ -73,13 +73,13 @@ public class UserServiceImp implements UserService {
       saveResult = userInfoMapper.insert(userInfo);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     if (saveResult != 1) {
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage());
     }
 
     return userInfo;
@@ -94,8 +94,8 @@ public class UserServiceImp implements UserService {
   public NetworkInfo addNetwork(NetworkInfo networkInfo) throws BusinessException {
 
     if (networkInfo == null) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     int saveResult = 0;
@@ -106,13 +106,13 @@ public class UserServiceImp implements UserService {
     boolean userIsExisted = checkUserIsExisted(networkInfo.getUserAccount());
 
     if (!userIsExisted) {
-      throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
-          ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountNotExisted.getErrorCode(),
+          ErrorCodeMsgEnum.AccountNotExisted.getErrorMessage());
     }
 
     if (!isCorrect) {
-      throw new BusinessException(ErrorCodeMessEnum.NetworkInfoError.getErrorCode(),
-          ErrorCodeMessEnum.NetworkInfoError.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.NetworkInfoError.getErrorCode(),
+          ErrorCodeMsgEnum.NetworkInfoError.getErrorMessage());
     }
 
     try {
@@ -125,13 +125,13 @@ public class UserServiceImp implements UserService {
       }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     if (saveResult != 1) {
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage());
     }
 
     return networkInfo;
@@ -144,16 +144,16 @@ public class UserServiceImp implements UserService {
   private void deleteNetwork(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     try {
       networkInfoMapper.deleteByAccout(account);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
   }
@@ -164,16 +164,16 @@ public class UserServiceImp implements UserService {
   private void deleteUserDevBind(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     try {
       userDevInfoMapper.deleteByAccount(account);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
   }
@@ -185,8 +185,8 @@ public class UserServiceImp implements UserService {
   public String login(String account, String password) throws BusinessException {
 
     if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     UserDevInfo userDevInfo = null;
@@ -197,13 +197,13 @@ public class UserServiceImp implements UserService {
     try {
       userInfo = userInfoMapper.selectByAccount(account);
     } catch (Exception e) {
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     if (userInfo == null) {
-      throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
-          ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountNotExisted.getErrorCode(),
+          ErrorCodeMsgEnum.AccountNotExisted.getErrorMessage());
     }
 
     String userPass = userInfo.getPassword();
@@ -217,12 +217,12 @@ public class UserServiceImp implements UserService {
         }
       } catch (Exception e) {
         logger.error(e.getMessage(), e);
-        throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-            ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+        throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+            ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
       }
     } else {
-      throw new BusinessException(ErrorCodeMessEnum.AccountPasswordError.getErrorCode(),
-          ErrorCodeMessEnum.AccountPasswordError.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountPasswordError.getErrorCode(),
+          ErrorCodeMsgEnum.AccountPasswordError.getErrorMessage());
     }
 
     return devSN;
@@ -237,8 +237,8 @@ public class UserServiceImp implements UserService {
   private boolean checkUserIsExisted(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     boolean isExisted = true;
@@ -250,8 +250,8 @@ public class UserServiceImp implements UserService {
       }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     return isExisted;
@@ -266,8 +266,8 @@ public class UserServiceImp implements UserService {
   private boolean checkCreateUserInfoIsCompleted(UserInfo userInfo) throws BusinessException {
 
     if (userInfo == null) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     boolean isCompleted = false;
@@ -303,8 +303,8 @@ public class UserServiceImp implements UserService {
   private boolean checkNetworkIsExisted(NetworkInfo networkInfo) throws BusinessException {
 
     if (networkInfo == null) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     boolean isExisted = true;
@@ -319,8 +319,8 @@ public class UserServiceImp implements UserService {
       }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     return isExisted;
@@ -339,15 +339,15 @@ public class UserServiceImp implements UserService {
   public void deleteUser(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     boolean isExisted = checkUserIsExisted(account);
 
     if (isExisted) {
-      throw new BusinessException(ErrorCodeMessEnum.AccountExisted.getErrorCode(),
-          ErrorCodeMessEnum.AccountExisted.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountExisted.getErrorCode(),
+          ErrorCodeMsgEnum.AccountExisted.getErrorMessage());
     }
 
     // 删除用户信息
@@ -355,8 +355,8 @@ public class UserServiceImp implements UserService {
       userInfoMapper.deleteByAccout(account);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     // 删除用户配置网络信息
@@ -380,8 +380,8 @@ public class UserServiceImp implements UserService {
   public UserInfo getUserByAccount(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     UserInfo userInfo = null;
@@ -390,8 +390,8 @@ public class UserServiceImp implements UserService {
       userInfo = userInfoMapper.selectByAccount(account);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     return userInfo;

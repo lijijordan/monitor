@@ -6,7 +6,7 @@
  * @date: 2016年11月29日 下午5:07:43
  * @version: V1.0  
  */
-package com.monitor.server.comm.wx;
+package com.monitor.server;
 
 /**
  * @Description: 加密算法类型

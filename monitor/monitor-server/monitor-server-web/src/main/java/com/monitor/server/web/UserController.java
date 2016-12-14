@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.comm.ErrorCodeMessEnum;
+import com.monitor.server.comm.ErrorCodeMsgEnum;
 import com.monitor.server.entity.NetworkInfo;
 import com.monitor.server.entity.UserDevInfo;
 import com.monitor.server.entity.UserInfo;
@@ -39,14 +39,14 @@ public class UserController {
       value = "用户信息实体") @RequestBody UserInfo userInfo) {
 
     ResponseVo<UserInfo> responseVo = new ResponseVo<UserInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     try {
       UserInfo returnUserInfo = userService.addUser(userInfo);
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(returnUserInfo);
     } catch (BusinessException e) {
       responseVo.setStatus(e.getErrorCode().toString());
@@ -64,14 +64,14 @@ public class UserController {
       value = "网络信息实体") @RequestBody NetworkInfo networkInfo) {
 
     ResponseVo<NetworkInfo> responseVo = new ResponseVo<NetworkInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     try {
       NetworkInfo returnNetworkInfo = userService.addNetwork(networkInfo);
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(returnNetworkInfo);
     } catch (BusinessException e) {
       responseVo.setStatus(e.getErrorCode().toString());
@@ -96,14 +96,14 @@ public class UserController {
     userDevInfo.setDevSn(devSN);
 
     ResponseVo<UserDevInfo> responseVo = new ResponseVo<UserDevInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     try {
       UserDevInfo returnUserDevInfo = userDevService.bindUserDev(userDevInfo);
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(returnUserDevInfo);
     } catch (BusinessException e) {
       responseVo.setStatus(e.getErrorCode().toString());
@@ -124,16 +124,16 @@ public class UserController {
           value = "用户密码") @PathVariable("password") String password) {
 
     ResponseVo<String> responseVo = new ResponseVo<String>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     String devSN = null;
 
     try {
       devSN = userService.login(userAccount, password);
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(devSN);
     } catch (BusinessException e) {
       responseVo.setStatus(e.getErrorCode().toString());

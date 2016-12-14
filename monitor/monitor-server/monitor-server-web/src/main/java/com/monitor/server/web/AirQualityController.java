@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.comm.ConstantObject;
-import com.monitor.server.comm.ErrorCodeMessEnum;
-import com.monitor.server.entity.AllSensorAllPastInfo;
-import com.monitor.server.entity.AllSensorCurInfo;
-import com.monitor.server.entity.AllSensorPastInfo;
-import com.monitor.server.entity.DataPointInfo;
-import com.monitor.server.entity.DataPointsDevInfo;
-import com.monitor.server.entity.DataPointsDevStatisticsInfo;
-import com.monitor.server.entity.HomePageInfo;
+import com.monitor.server.comm.ErrorCodeMsgEnum;
+import com.monitor.server.entity.biz.AllSensorAllPastInfo;
+import com.monitor.server.entity.biz.AllSensorCurInfo;
+import com.monitor.server.entity.biz.AllSensorPastInfo;
+import com.monitor.server.entity.biz.DataPointInfo;
+import com.monitor.server.entity.biz.HomePageInfo;
+import com.monitor.server.entity.dev.DataPointsDevInfo;
+import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 import com.monitor.server.service.SensorService;
 import com.monitor.server.service.UserDevService;
 import com.wordnik.swagger.annotations.Api;
@@ -57,14 +57,14 @@ public class AirQualityController {
 
     // 设置默认值
     ResponseVo<HomePageInfo> responseVo = new ResponseVo<HomePageInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -77,9 +77,9 @@ public class AirQualityController {
     ResponseVo<AllSensorCurInfo> curSensorInfo = getAllSensorCurVal(userAccount, devSN);
     ResponseVo<AllSensorAllPastInfo> allPastSensorInfo = getAllSensorAllPastVal(userAccount, devSN);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(curSensorInfo.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(allPastSensorInfo.getStatus())) {
 
       HomePageInfo homePageInfo = new HomePageInfo();
@@ -113,13 +113,13 @@ public class AirQualityController {
       homePageInfo.setPm10AverageValueByDay(averagePm10DataPointInfoListByDay);
 
       // 设置最终返回数据
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(homePageInfo);
       return responseVo;
     } else {
 
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(curSensorInfo.getStatus())) {
         responseVo.setStatus(curSensorInfo.getStatus());
         responseVo.setMessage(curSensorInfo.getMessage());
@@ -145,14 +145,14 @@ public class AirQualityController {
 
     // 设置返回默认值
     ResponseVo<AllSensorCurInfo> responseVo = new ResponseVo<AllSensorCurInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -168,9 +168,9 @@ public class AirQualityController {
         getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_PM10);
 
     // 如果查询成功，则返回数据；如果查询失败，则返回失败信息
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(pm25CurrentValue.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(pm10CurrentValue.getStatus())) {
 
       // 将各个传感器的值都封装到一个对象返回
@@ -178,13 +178,13 @@ public class AirQualityController {
       curSensorInfo.setPm25(pm25CurrentValue.getContent().getValue());
       curSensorInfo.setPm10(pm10CurrentValue.getContent().getValue());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(curSensorInfo);
 
       return responseVo;
     } else {
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(pm25CurrentValue.getStatus())) {
         responseVo.setStatus(pm25CurrentValue.getStatus());
         responseVo.setMessage(pm25CurrentValue.getMessage());
@@ -213,14 +213,14 @@ public class AirQualityController {
 
     // 设置返回默认值
     ResponseVo<DataPointsDevInfo> responseVo = new ResponseVo<DataPointsDevInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -253,14 +253,14 @@ public class AirQualityController {
 
     // 设置默认返回值
     ResponseVo<AllSensorAllPastInfo> responseVo = new ResponseVo<AllSensorAllPastInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -273,14 +273,14 @@ public class AirQualityController {
     ResponseVo<AllSensorPastInfo> dayPastSensorInfo =
         getAllPastSensorValByPeriod(userAccount, devSN, ConstantObject.TIMEPERIOD_DAY);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(dayPastSensorInfo.getStatus())) {
 
       AllSensorAllPastInfo allPastSensorInfo = new AllSensorAllPastInfo();
       allPastSensorInfo.setDayPastSensorInfo(dayPastSensorInfo.getContent());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(allPastSensorInfo);
       return responseVo;
 
@@ -308,14 +308,14 @@ public class AirQualityController {
 
     // 设置默认值
     ResponseVo<AllSensorPastInfo> responseVo = new ResponseVo<AllSensorPastInfo>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {
@@ -330,21 +330,21 @@ public class AirQualityController {
     ResponseVo<List<DataPointsDevStatisticsInfo>> pm10Value = getPastSensorValByTypePeriod(
         userAccount, devSN, ConstantObject.SENSOR_TYPE_PM10, timePeriod);
 
-    if (ErrorCodeMessEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(pm25Value.getStatus())
-        && ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(pm25Value.getStatus())
+        && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
             .equalsIgnoreCase(pm10Value.getStatus())) {
       // 遍历获取值
       AllSensorPastInfo pastSensorInfo = new AllSensorPastInfo();
       pastSensorInfo.setPm10ValueList(pm25Value.getContent());
       pastSensorInfo.setPm10ValueList(pm10Value.getContent());
 
-      responseVo.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-      responseVo.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+      responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+      responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
       responseVo.setContent(pastSensorInfo);
       return responseVo;
 
     } else {
-      if (!ErrorCodeMessEnum.SUCCESS.getErrorCode().toString()
+      if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
           .equalsIgnoreCase(pm25Value.getStatus())) {
         responseVo.setStatus(pm25Value.getStatus());
         responseVo.setMessage(pm25Value.getMessage());
@@ -379,14 +379,14 @@ public class AirQualityController {
     // 设置返回默认值
     ResponseVo<List<DataPointsDevStatisticsInfo>> responseVo =
         new ResponseVo<List<DataPointsDevStatisticsInfo>>();
-    responseVo.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    responseVo.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    responseVo.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    responseVo.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
       if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
-        responseVo.setStatus(ErrorCodeMessEnum.DevNotExisted.getErrorCode().toString());
-        responseVo.setMessage(ErrorCodeMessEnum.DevNotExisted.getErrorMessage());
+        responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
+        responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
       }
     } catch (BusinessException e) {

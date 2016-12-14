@@ -6,10 +6,12 @@
  * @date: 2016年11月26日 上午11:16:17
  * @version: V1.0
  */
-package com.monitor.server.comm.wx;
+package com.monitor.server.comm;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import com.monitor.server.EncryptType;
 
 /**
  * @Description: 加密工具类

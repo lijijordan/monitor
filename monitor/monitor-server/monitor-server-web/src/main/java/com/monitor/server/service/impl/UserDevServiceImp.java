@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.comm.ErrorCodeMessEnum;
+import com.monitor.server.comm.ErrorCodeMsgEnum;
 import com.monitor.server.domain.dao.UserDevInfoMapper;
 import com.monitor.server.domain.dao.UserInfoMapper;
 import com.monitor.server.entity.UserDevInfo;
@@ -41,8 +41,8 @@ public class UserDevServiceImp implements UserDevService {
   public UserDevInfo bindUserDev(UserDevInfo userDevInfo) throws BusinessException {
 
     if (userDevInfo == null) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     int saveResult = 0;
@@ -52,13 +52,13 @@ public class UserDevServiceImp implements UserDevService {
     boolean isBinded = checkUserDevIsBinded(userDevInfo.getUserAccount(), userDevInfo.getDevSn());
 
     if (!userIsExisted) {
-      throw new BusinessException(ErrorCodeMessEnum.AccountNotExisted.getErrorCode(),
-          ErrorCodeMessEnum.AccountNotExisted.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.AccountNotExisted.getErrorCode(),
+          ErrorCodeMsgEnum.AccountNotExisted.getErrorMessage());
     }
 
     if (isBinded) {
-      throw new BusinessException(ErrorCodeMessEnum.DevBinded.getErrorCode(),
-          ErrorCodeMessEnum.DevBinded.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.DevBinded.getErrorCode(),
+          ErrorCodeMsgEnum.DevBinded.getErrorMessage());
     }
 
     // 保存
@@ -66,13 +66,13 @@ public class UserDevServiceImp implements UserDevService {
       saveResult = userDevInfoMapper.insert(userDevInfo);
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     if (saveResult != 1) {
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage());
     }
 
     return userDevInfo;
@@ -87,8 +87,8 @@ public class UserDevServiceImp implements UserDevService {
   private boolean checkUserIsExisted(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     boolean isExisted = true;
@@ -100,8 +100,8 @@ public class UserDevServiceImp implements UserDevService {
       }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     return isExisted;
@@ -116,8 +116,8 @@ public class UserDevServiceImp implements UserDevService {
   public boolean checkUserDevIsBinded(String userAccount, String devSN) throws BusinessException {
 
     if (StringUtils.isBlank(userAccount) || StringUtils.isBlank(devSN)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     boolean isExisted = true;
@@ -131,8 +131,8 @@ public class UserDevServiceImp implements UserDevService {
       }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     return isExisted;
@@ -153,8 +153,8 @@ public class UserDevServiceImp implements UserDevService {
   public UserDevInfo selectByUserAccount(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {
-      throw new BusinessException(ErrorCodeMessEnum.ParamsIsBlank.getErrorCode(),
-          ErrorCodeMessEnum.ParamsIsBlank.getErrorMessage());
+      throw new BusinessException(ErrorCodeMsgEnum.ParamsIsBlank.getErrorCode(),
+          ErrorCodeMsgEnum.ParamsIsBlank.getErrorMessage());
     }
 
     UserDevInfo userDevInfo = null;
@@ -162,13 +162,13 @@ public class UserDevServiceImp implements UserDevService {
     try {
       userDevInfo = userDevInfoMapper.selectByUserAccount(account);
       if (userDevInfo == null) {
-        throw new BusinessException(ErrorCodeMessEnum.UserDevNoBinded.getErrorCode(),
-            ErrorCodeMessEnum.UserDevNoBinded.getErrorMessage());
+        throw new BusinessException(ErrorCodeMsgEnum.UserDevNoBinded.getErrorCode(),
+            ErrorCodeMsgEnum.UserDevNoBinded.getErrorMessage());
       }
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMessEnum.DatabaseError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
     }
 
     return userDevInfo;

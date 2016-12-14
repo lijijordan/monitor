@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
 import com.monitor.server.comm.ConstantObject;
-import com.monitor.server.comm.ErrorCodeMessEnum;
-import com.monitor.server.entity.DataPointsDevInfo;
-import com.monitor.server.entity.DataPointsDevStatisticsInfo;
+import com.monitor.server.comm.ErrorCodeMsgEnum;
+import com.monitor.server.entity.dev.DataPointsDevInfo;
+import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 import com.monitor.server.service.SensorService;
 
 import net.sf.json.JSONArray;
@@ -48,8 +48,8 @@ public class SensorServiceImpl implements SensorService {
 
     // 设置返回默认值
     ResponseVo<DataPointsDevInfo> result = new ResponseVo<DataPointsDevInfo>();
-    result.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    result.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    result.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    result.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 返回值为空，值设置为"0"
     DataPointsDevInfo dataPointsActiveInfo = new DataPointsDevInfo();
@@ -64,8 +64,8 @@ public class SensorServiceImpl implements SensorService {
 
       if (responseVo.getStatus().equalsIgnoreCase("200")) {
 
-        result.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-        result.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+        result.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+        result.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
 
         if (responseVo.getContent() != null) {
           JSONObject obj = new JSONObject().fromObject(responseVo.getContent());
@@ -75,8 +75,8 @@ public class SensorServiceImpl implements SensorService {
 
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DevAppError.getErrorCode(),
-          ErrorCodeMessEnum.DevAppError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DevAppError.getErrorCode(),
+          ErrorCodeMsgEnum.DevAppError.getErrorMessage(), e);
     }
 
     return result;
@@ -102,8 +102,8 @@ public class SensorServiceImpl implements SensorService {
     // 设置返回默认值
     ResponseVo<List<DataPointsDevStatisticsInfo>> result =
         new ResponseVo<List<DataPointsDevStatisticsInfo>>();
-    result.setStatus(ErrorCodeMessEnum.FAILURE.getErrorCode().toString());
-    result.setMessage(ErrorCodeMessEnum.FAILURE.getErrorMessage());
+    result.setStatus(ErrorCodeMsgEnum.FAILURE.getErrorCode().toString());
+    result.setMessage(ErrorCodeMsgEnum.FAILURE.getErrorMessage());
 
     // 返回值为空，设置为"0"
     List<DataPointsDevStatisticsInfo> plist = new ArrayList<DataPointsDevStatisticsInfo>();
@@ -122,8 +122,8 @@ public class SensorServiceImpl implements SensorService {
 
       if (responseVo.getStatus().equalsIgnoreCase("200")) {
 
-        result.setStatus(ErrorCodeMessEnum.SUCCESS.getErrorCode().toString());
-        result.setMessage(ErrorCodeMessEnum.SUCCESS.getErrorMessage());
+        result.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
+        result.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
 
         if (responseVo.getContent() != null) {
           JSONArray jsonArray = JSONArray.fromObject(responseVo.getContent().toString());
@@ -135,8 +135,8 @@ public class SensorServiceImpl implements SensorService {
 
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMessEnum.DevAppError.getErrorCode(),
-          ErrorCodeMessEnum.DevAppError.getErrorMessage(), e);
+      throw new BusinessException(ErrorCodeMsgEnum.DevAppError.getErrorCode(),
+          ErrorCodeMsgEnum.DevAppError.getErrorMessage(), e);
     }
 
     return result;

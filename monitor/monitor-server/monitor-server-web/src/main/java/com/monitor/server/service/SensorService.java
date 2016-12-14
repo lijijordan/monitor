@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.entity.DataPointsDevInfo;
-import com.monitor.server.entity.DataPointsDevStatisticsInfo;
+import com.monitor.server.entity.dev.DataPointsDevInfo;
+import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 
 /**
  * @author yinhong
