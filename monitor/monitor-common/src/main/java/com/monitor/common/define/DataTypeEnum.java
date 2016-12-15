@@ -4,43 +4,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum DataTypeEnum {
-	Temperature(1, "Temperature"), PH(2, "PH"), Salinity(3, "Salinity"), TDS(4,
-			"TDS"), Light(5, "Light");
-	private int key;
-	private String val;
+    Temperature(1, "Temperature"), PH(2, "PH"), Salinity(3, "Salinity"), TDS(4,
+            "TDS"), Light(5, "Light"), HCHO(6, "HCHO"), PM2_5(7, "PM2_5"), PM10(8, "PM10");
+    // Implementing a fromString method on an enum type
+    private static final Map<String, DataTypeEnum> stringToEnum = new HashMap<String, DataTypeEnum>();
 
-	public int getKey() {
-		return key;
-	}
+    static {
+        // Initialize map from constant name to enum constant
+        for (DataTypeEnum DataTypeEnum : values()) {
+            stringToEnum.put(DataTypeEnum.toString(), DataTypeEnum);
+        }
+    }
 
-	public void setKey(int key) {
-		this.key = key;
-	}
+    private int key;
+    private String val;
 
-	public String getVal() {
-		return val;
-	}
+    DataTypeEnum(int key, String val) {
+        this.key = key;
+        this.val = val;
+    }
 
-	public void setVal(String val) {
-		this.val = val;
-	}
+    // Returns DataTypeEnum for string, or null if string is invalid
+    public static DataTypeEnum fromString(String symbol) {
+        return stringToEnum.get(symbol);
+    }
 
-	DataTypeEnum(int key, String val) {
-		this.key = key;
-		this.val = val;
-	}
+    public int getKey() {
+        return key;
+    }
 
-	// Implementing a fromString method on an enum type
-	private static final Map<String, DataTypeEnum> stringToEnum = new HashMap<String, DataTypeEnum>();
-	static {
-		// Initialize map from constant name to enum constant
-		for (DataTypeEnum DataTypeEnum : values()) {
-			stringToEnum.put(DataTypeEnum.toString(), DataTypeEnum);
-		}
-	}
+    public void setKey(int key) {
+        this.key = key;
+    }
 
-	// Returns DataTypeEnum for string, or null if string is invalid
-	public static DataTypeEnum fromString(String symbol) {
-		return stringToEnum.get(symbol);
-	}
+    public String getVal() {
+        return val;
+    }
+
+    public void setVal(String val) {
+        this.val = val;
+    }
 }

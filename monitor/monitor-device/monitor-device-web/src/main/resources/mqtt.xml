@@ -22,7 +22,7 @@
 	</bean>  
       
 	<bean id="mqtt" class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler">  
-		<constructor-arg name="clientId" value="DeviceServer"></constructor-arg>
+		<constructor-arg name="clientId" value="DeviceServerLocal"></constructor-arg>
 		<constructor-arg name="clientFactory" ref="serverFactory"></constructor-arg>  
 	</bean> 
 	
@@ -121,5 +121,60 @@
 	<int:service-activator id="lightChannelService"  
 		input-channel="lightChannel" ref="mqttLightService" method="process" />
 	<bean id="mqttLightService" class="com.monitor.device.web.service.mqtt.LightMessageReceiverService" />  
-	<!-- 光照消息适配器结束 --> 
+	<!-- 光照消息适配器结束 -->
+
+
+	<!-- HCHO消息适配器 -->  <!-- qos must be zero-->
+	<int-mqtt:message-driven-channel-adapter
+			id="mqttInboundHCHO" client-id="clientfisherHCHO" url="tcp://106.185.35.79:1883"
+			topics="HCHO"
+			qos="0"
+			client-factory="clientFactory"
+			auto-startup="true"
+			send-timeout="12"
+			converter="mqttConverter"
+			channel="hchoChannel" />
+
+	<int:channel id="hchoChannel" />
+	<!-- 消息处理类-->
+	<int:service-activator id="hchoChannelService"
+						   input-channel="hchoChannel" ref="mqttHCHOService" method="process" />
+	<bean id="mqttHCHOService" class="com.monitor.device.web.service.mqtt.HCHOMessageReceiverService" />
+	<!-- HCHO消息适配器结束 -->
+
+	<!-- PM10消息适配器 -->
+	<int-mqtt:message-driven-channel-adapter
+			id="mqttInboundPM10" client-id="clientfisherPM10" url="tcp://106.185.35.79:1883"
+			topics="PM10"
+			qos="0"
+			client-factory="clientFactory"
+			auto-startup="true"
+			send-timeout="12"
+			converter="mqttConverter"
+			channel="PM10Channel" />
+
+	<int:channel id="PM10Channel" />
+	<!-- 消息处理类-->
+	<int:service-activator id="PM10ChannelService"
+						   input-channel="PM10Channel" ref="mqttPM10Service" method="process" />
+	<bean id="mqttPM10Service" class="com.monitor.device.web.service.mqtt.PM10MessageReceiverService" />
+	<!-- PM10消息适配器结束 -->
+
+	<!-- PM2_5消息适配器 -->
+	<int-mqtt:message-driven-channel-adapter
+			id="mqttInboundPM2_5" client-id="clientfisherPM2_5" url="tcp://106.185.35.79:1883"
+			topics="PM2_5"
+			qos="0"
+			client-factory="clientFactory"
+			auto-startup="true"
+			send-timeout="12"
+			converter="mqttConverter"
+			channel="PM2_5Channel" />
+
+	<int:channel id="PM2_5Channel" />
+	<!-- 消息处理类-->
+	<int:service-activator id="PM2_5ChannelService"
+						   input-channel="PM2_5Channel" ref="mqttPM2_5Service" method="process" />
+	<bean id="mqttPM2_5Service" class="com.monitor.device.web.service.mqtt.PM2_5MessageReceiverService" />
+	<!-- HCHO消息适配器结束 -->
 </beans>  
