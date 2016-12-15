@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum DataTypeEnum {
     Temperature(1, "Temperature"), PH(2, "PH"), Salinity(3, "Salinity"), TDS(4,
-            "TDS"), Light(5, "Light"), HCHO(6, "HCHO"), PM2_5(7, "PM2_5"), PM10(8, "PM10");
+            "TDS"), Light(5, "Light"), HCHO(6, "HCHO"), PM2_5(7, "PM2_5"), PM10(8, "PM10"), TVOC(9, "TVOC");
     // Implementing a fromString method on an enum type
     private static final Map<String, DataTypeEnum> stringToEnum = new HashMap<String, DataTypeEnum>();
 

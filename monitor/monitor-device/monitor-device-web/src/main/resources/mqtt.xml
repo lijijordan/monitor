@@ -176,5 +176,24 @@
 	<int:service-activator id="PM2_5ChannelService"
 						   input-channel="PM2_5Channel" ref="mqttPM2_5Service" method="process" />
 	<bean id="mqttPM2_5Service" class="com.monitor.device.web.service.mqtt.PM2_5MessageReceiverService" />
-	<!-- HCHO消息适配器结束 -->
-</beans>  
+
+
+
+	<!-- TVOC消息适配器 -->
+	<int-mqtt:message-driven-channel-adapter
+			id="mqttInboundTVOC" client-id="clientfisherTVOC" url="tcp://106.185.35.79:1883"
+			topics="TVOC"
+			qos="0"
+			client-factory="clientFactory"
+			auto-startup="true"
+			send-timeout="12"
+			converter="mqttConverter"
+			channel="TVOCChannel" />
+
+	<int:channel id="TVOCChannel" />
+	<!-- 消息处理类-->
+	<int:service-activator id="TVOCChannelService"
+						   input-channel="TVOCChannel" ref="mqttTVOCService" method="process" />
+	<bean id="mqttTVOCService" class="com.monitor.device.web.service.mqtt.TVOCMessageReceiverService" />
+	<!-- TVOC消息适配器结束 -->
+</beans>
