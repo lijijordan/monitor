@@ -22,7 +22,7 @@
 	</bean>  
       
 	<bean id="mqtt" class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler">  
-		<constructor-arg name="clientId" value="fisherserver"></constructor-arg>  
+		<constructor-arg name="clientId" value="fisherServerLocal"></constructor-arg>
 		<constructor-arg name="clientFactory" ref="serverFactory"></constructor-arg>  
 	</bean> 
 	
@@ -38,7 +38,7 @@
 	<int-mqtt:message-driven-channel-adapter  
 		id="mqttInboundPH" client-id="clientfisherPH" url="tcp://106.185.35.79:1883"  
 		topics="PH"  
-		qos="1"  
+		qos="0"  
 		client-factory="clientFactory"   
 		auto-startup="true"  
 		send-timeout="12"
@@ -55,7 +55,7 @@
 	<int-mqtt:message-driven-channel-adapter  
 		id="mqttInboundTemperature" client-id="clientfisherTemperature" url="tcp://106.185.35.79:1883"  
 		topics="Temperature"  
-		qos="1"  
+		qos="0"  
 		client-factory="clientFactory"   
 		auto-startup="true"  
 		send-timeout="12"
@@ -69,29 +69,29 @@
 	<bean id="mqttTemperatureService" class="com.monitor.device.web.service.mqtt.TemperatureMessageReceiverService" />  
 	<!-- 温度消息适配器结束 -->  
 	
-	<!-- 盐度消息适配器 -->  
-	<int-mqtt:message-driven-channel-adapter  
+	<!-- 盐度消息适配器 -->  <!-- qos must be zero-->
+	<int-mqtt:message-driven-channel-adapter
 		id="mqttInboundSalinity" client-id="clientfisherSalinity" url="tcp://106.185.35.79:1883"  
 		topics="Salinity"  
-		qos="1"  
+		qos="0"
 		client-factory="clientFactory"   
-		auto-startup="true"  
+		auto-startup="true"
 		send-timeout="12"
 		converter="mqttConverter"
 		channel="salinityChannel" />  
 
-	<int:channel id="salinityChannel" />     
+	<int:channel id="salinityChannel" />
 	<!-- 消息处理类-->   
-	<int:service-activator id="salinityChannelService"  
+	<int:service-activator id="salinityChannelService"
 		input-channel="salinityChannel" ref="mqttSalinityService" method="process" />
-	<bean id="mqttSalinityService" class="com.monitor.device.web.service.mqtt.SalinityMessageReceiverService" />  
+	<bean id="mqttSalinityService" class="com.monitor.device.web.service.mqtt.SalinityMessageReceiverService" />
 	<!-- 盐度消息适配器结束 -->  
 	
 	<!-- TDS消息适配器 -->  
 	<int-mqtt:message-driven-channel-adapter  
 		id="mqttInboundTDS" client-id="clientfisherTDS" url="tcp://106.185.35.79:1883"  
 		topics="TDS"  
-		qos="1"  
+		qos="0"  
 		client-factory="clientFactory"   
 		auto-startup="true"  
 		send-timeout="12"
@@ -109,7 +109,7 @@
 	<int-mqtt:message-driven-channel-adapter  
 		id="mqttInboundLight" client-id="clientfisherLight" url="tcp://106.185.35.79:1883"  
 		topics="Light"  
-		qos="1"  
+		qos="0"  
 		client-factory="clientFactory"   
 		auto-startup="true"  
 		send-timeout="12"
