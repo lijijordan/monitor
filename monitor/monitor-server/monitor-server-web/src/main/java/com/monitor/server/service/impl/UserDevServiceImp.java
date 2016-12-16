@@ -124,9 +124,7 @@ public class UserDevServiceImp implements UserDevService {
 
     try {
       UserDevInfo returnValue = userDevInfoMapper.selectByUserAccount(userAccount);
-      if (returnValue == null) {
-        isExisted = false;
-      } else if (!returnValue.getDevSn().equalsIgnoreCase(devSN)) {
+      if (returnValue == null || !devSN.equalsIgnoreCase(returnValue.getDevSn())) {
         isExisted = false;
       }
     } catch (Exception e) {

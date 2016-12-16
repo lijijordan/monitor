@@ -336,6 +336,7 @@ public class UserServiceImp implements UserService {
    * @see com.monitor.server.service.UserService#deleteUser(java.lang.String)
    */
   @Override
+  @Transactional
   public void deleteUser(String account) throws BusinessException {
 
     if (StringUtils.isBlank(account)) {

@@ -22,6 +22,24 @@ public class AllSensorPastInfo implements Serializable {
   private List<DataPointsDevStatisticsInfo> dtsValueList;
   private List<DataPointsDevStatisticsInfo> pm25ValueList;
   private List<DataPointsDevStatisticsInfo> pm10ValueList;
+  private List<DataPointsDevStatisticsInfo> hchoValueList;
+  private List<DataPointsDevStatisticsInfo> tvocValueList;
+
+  public List<DataPointsDevStatisticsInfo> getHchoValueList() {
+    return hchoValueList;
+  }
+
+  public void setHchoValueList(List<DataPointsDevStatisticsInfo> hchoValueList) {
+    this.hchoValueList = hchoValueList;
+  }
+
+  public List<DataPointsDevStatisticsInfo> getTvocValueList() {
+    return tvocValueList;
+  }
+
+  public void setTvocValueList(List<DataPointsDevStatisticsInfo> tvocValueList) {
+    this.tvocValueList = tvocValueList;
+  }
 
   public List<DataPointsDevStatisticsInfo> getPm25ValueList() {
     return pm25ValueList;

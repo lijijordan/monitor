@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.monitor.server.comm.BusinessException;
+import com.monitor.server.comm.MessageUtil;
 import com.monitor.server.comm.wx.WxCommUtil;
 import com.monitor.server.comm.wx.WxMsgType;
 import com.monitor.server.comm.wx.WxMsgUtil;
@@ -111,7 +112,7 @@ public class WxEventDispatcher {
         try {
           webchatEventDispatcher.userService.deleteUser(openid);
         } catch (BusinessException e) {
-          logger.error("unsubscribe error", e);
+          logger.error("unsubscribe failed.", e);
         }
 
         break;
@@ -119,6 +120,13 @@ public class WxEventDispatcher {
 
       // 扫描二维码推送事件
       case WxMsgType.EVENT_TYPE_SCAN_WAITMSG: {
+
+        // 提示信息
+        WxRespTextMsg txtmsg = new WxRespTextMsg();
+        txtmsg.setToUserName(openid);
+        txtmsg.setFromUserName(mpid);
+        txtmsg.setCreateTime(new Date().getTime());
+        txtmsg.setMsgType(WxMsgType.RESP_MESSAGE_TYPE_TEXT);
 
         // 设置用户与设备关系对象
         UserDevInfo userDevInfo = new UserDevInfo();
@@ -128,17 +136,11 @@ public class WxEventDispatcher {
         // 保存数据库
         try {
           webchatEventDispatcher.userDevService.bindUserDev(userDevInfo);
+          txtmsg.setContent(MessageUtil.getMessage("message.wx.devuserbind.success"));
         } catch (BusinessException e) {
           logger.error("scan error.", e);
+          txtmsg.setContent(MessageUtil.getMessage("message.wx.devuserbind.faild"));
         }
-
-        // 提示信息
-        WxRespTextMsg txtmsg = new WxRespTextMsg();
-        txtmsg.setToUserName(openid);
-        txtmsg.setFromUserName(mpid);
-        txtmsg.setCreateTime(new Date().getTime());
-        txtmsg.setMsgType(WxMsgType.RESP_MESSAGE_TYPE_TEXT);
-        txtmsg.setContent("用户绑定设备成功。");
         resultStr = WxMsgUtil.textMessageToXml(txtmsg);
 
         break;

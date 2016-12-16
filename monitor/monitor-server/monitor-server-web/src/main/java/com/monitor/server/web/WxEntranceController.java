@@ -45,14 +45,13 @@ import com.monitor.server.entity.UserInfo;
 import com.monitor.server.service.UserDevService;
 import com.monitor.server.service.UserService;
 import com.monitor.server.service.dispatcher.WxEventDispatcher;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * @Description: 微信服务端入口
  */
-@Api(value = "WxEntrance")
+@Api(value = "WxEntrance", description = "WxEntrance Controller")
 @Controller
 @RequestMapping("/wxentrance")
 public class WxEntranceController {

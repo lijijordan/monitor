@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.monitor.common.define.DataTypeEnum;
+import com.monitor.common.define.QueryScopeEnum;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.comm.ErrorCodeMsgEnum;
 import com.monitor.server.entity.biz.AllSensorAllPastInfo;
 import com.monitor.server.entity.biz.AllSensorCurInfo;
 import com.monitor.server.entity.biz.AllSensorPastInfo;
-import com.monitor.server.entity.biz.DataPointInfo;
 import com.monitor.server.entity.biz.HomePageInfo;
 import com.monitor.server.entity.biz.SensorAllPastInfo;
 import com.monitor.server.entity.biz.SensorDetailPageInfo;
+import com.monitor.server.entity.dev.DataPointInfo;
 import com.monitor.server.entity.dev.DataPointsDevInfo;
 import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 import com.monitor.server.service.SensorService;
@@ -64,7 +65,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -578,7 +579,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -731,7 +732,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -744,15 +745,15 @@ public class WaterQualityController {
 
     // 分别从设备获取各个传感器的值
     ResponseVo<DataPointsDevInfo> phCurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_PH);
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.PH.getVal());
     ResponseVo<DataPointsDevInfo> tempCurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_TEMPERATURE);
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.Temperature.getVal());
     ResponseVo<DataPointsDevInfo> salinityCurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_SALINITY);
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.Salinity.getVal());
     ResponseVo<DataPointsDevInfo> lightCurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_LIGHT);
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.Light.getVal());
     ResponseVo<DataPointsDevInfo> tdsCurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_TDS);
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.TDS.getVal());
 
     if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(phCurrentValue.getStatus())
@@ -829,7 +830,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -842,11 +843,11 @@ public class WaterQualityController {
 
     // 分别从设备获取所有传感器历史值（天、周、月）
     ResponseVo<AllSensorPastInfo> dayPastSensorInfo =
-        getAllPastSensorValByPeriod(userAccount, devSN, ConstantObject.TIMEPERIOD_DAY);
+        getAllPastSensorValByPeriod(userAccount, devSN, QueryScopeEnum.Day.getVal());
     ResponseVo<AllSensorPastInfo> weekPastSensorInfo =
-        getAllPastSensorValByPeriod(userAccount, devSN, ConstantObject.TIMEPERIOD_WEEK);
+        getAllPastSensorValByPeriod(userAccount, devSN, QueryScopeEnum.Week.getVal());
     ResponseVo<AllSensorPastInfo> monthPastSensorInfo =
-        getAllPastSensorValByPeriod(userAccount, devSN, ConstantObject.TIMEPERIOD_MONTH);
+        getAllPastSensorValByPeriod(userAccount, devSN, QueryScopeEnum.Month.getVal());
 
     if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(dayPastSensorInfo.getStatus())
@@ -935,7 +936,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -978,7 +979,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -991,12 +992,11 @@ public class WaterQualityController {
 
     // 分别从设备获取所有传感器历史值（天、周、月）
     ResponseVo<List<DataPointsDevStatisticsInfo>> dayPastSensorInfo =
-        getPastSensorValByTypePeriod(userAccount, devSN, sensorType, ConstantObject.TIMEPERIOD_DAY);
-    ResponseVo<List<DataPointsDevStatisticsInfo>> weekPastSensorInfo = getPastSensorValByTypePeriod(
-        userAccount, devSN, sensorType, ConstantObject.TIMEPERIOD_WEEK);
+        getPastSensorValByTypePeriod(userAccount, devSN, sensorType, QueryScopeEnum.Day.getVal());
+    ResponseVo<List<DataPointsDevStatisticsInfo>> weekPastSensorInfo =
+        getPastSensorValByTypePeriod(userAccount, devSN, sensorType, QueryScopeEnum.Week.getVal());
     ResponseVo<List<DataPointsDevStatisticsInfo>> monthPastSensorInfo =
-        getPastSensorValByTypePeriod(userAccount, devSN, sensorType,
-            ConstantObject.TIMEPERIOD_MONTH);
+        getPastSensorValByTypePeriod(userAccount, devSN, sensorType, QueryScopeEnum.Month.getVal());
 
     if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(dayPastSensorInfo.getStatus())
@@ -1061,7 +1061,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -1104,7 +1104,7 @@ public class WaterQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -1118,15 +1118,15 @@ public class WaterQualityController {
 
     // 分别从设备获取各个传感器某个周期的值
     ResponseVo<List<DataPointsDevStatisticsInfo>> phValue =
-        getPastSensorValByTypePeriod(userAccount, devSN, ConstantObject.SENSOR_TYPE_PH, timePeriod);
+        getPastSensorValByTypePeriod(userAccount, devSN, DataTypeEnum.PH.getVal(), timePeriod);
     ResponseVo<List<DataPointsDevStatisticsInfo>> tempValue = getPastSensorValByTypePeriod(
-        userAccount, devSN, ConstantObject.SENSOR_TYPE_TEMPERATURE, timePeriod);
+        userAccount, devSN, DataTypeEnum.Temperature.getVal(), timePeriod);
     ResponseVo<List<DataPointsDevStatisticsInfo>> salinityValue = getPastSensorValByTypePeriod(
-        userAccount, devSN, ConstantObject.SENSOR_TYPE_SALINITY, timePeriod);
-    ResponseVo<List<DataPointsDevStatisticsInfo>> lightValue = getPastSensorValByTypePeriod(
-        userAccount, devSN, ConstantObject.SENSOR_TYPE_LIGHT, timePeriod);
-    ResponseVo<List<DataPointsDevStatisticsInfo>> dtsValue = getPastSensorValByTypePeriod(
-        userAccount, devSN, ConstantObject.SENSOR_TYPE_TDS, timePeriod);
+        userAccount, devSN, DataTypeEnum.Salinity.getVal(), timePeriod);
+    ResponseVo<List<DataPointsDevStatisticsInfo>> lightValue =
+        getPastSensorValByTypePeriod(userAccount, devSN, DataTypeEnum.Light.getVal(), timePeriod);
+    ResponseVo<List<DataPointsDevStatisticsInfo>> dtsValue =
+        getPastSensorValByTypePeriod(userAccount, devSN, DataTypeEnum.TDS.getVal(), timePeriod);
 
     if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(phValue.getStatus())
         && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()

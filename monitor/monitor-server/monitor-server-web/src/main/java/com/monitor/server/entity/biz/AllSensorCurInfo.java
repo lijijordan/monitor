@@ -18,6 +18,24 @@ public class AllSensorCurInfo implements Serializable {
   private String tds;
   private String pm25;
   private String pm10;
+  private String hcho;
+  private String tvoc;
+
+  public String getHcho() {
+    return hcho;
+  }
+
+  public void setHcho(String hcho) {
+    this.hcho = hcho;
+  }
+
+  public String getTvoc() {
+    return tvoc;
+  }
+
+  public void setTvoc(String tvoc) {
+    this.tvoc = tvoc;
+  }
 
   public String getPm25() {
     return pm25;

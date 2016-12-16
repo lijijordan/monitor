@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.comm.ErrorCodeMsgEnum;
+import com.monitor.server.comm.PropertiesUtil;
 import com.monitor.server.entity.dev.DataPointsDevInfo;
 import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 import com.monitor.server.service.SensorService;
@@ -40,7 +40,7 @@ public class SensorServiceImpl implements SensorService {
 
     // 拼接设备服务端URL
     StringBuffer url = new StringBuffer();
-    url.append(ConstantObject.DEVICER_REST_URL);
+    url.append(PropertiesUtil.getProperty("device.url"));
     url.append("getCurrent/");
     url.append(equID);
     url.append("/");
@@ -91,7 +91,7 @@ public class SensorServiceImpl implements SensorService {
 
     // 拼接设备服务端URL
     StringBuffer url = new StringBuffer();
-    url.append(ConstantObject.DEVICER_REST_URL);
+    url.append(PropertiesUtil.getProperty("device.url"));
     url.append("getList/");
     url.append(equID);
     url.append("/");

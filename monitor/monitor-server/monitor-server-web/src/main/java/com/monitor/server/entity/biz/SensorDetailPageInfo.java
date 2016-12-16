@@ -3,6 +3,8 @@ package com.monitor.server.entity.biz;
 import java.io.Serializable;
 import java.util.List;
 
+import com.monitor.server.entity.dev.DataPointInfo;
+
 /**
  * 传感器详情页各种数据
  * 

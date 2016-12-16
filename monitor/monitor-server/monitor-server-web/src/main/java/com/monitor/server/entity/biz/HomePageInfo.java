@@ -3,6 +3,8 @@ package com.monitor.server.entity.biz;
 import java.io.Serializable;
 import java.util.List;
 
+import com.monitor.server.entity.dev.DataPointInfo;
+
 /**
  * 首页各种数据
  * 
@@ -20,6 +22,8 @@ public class HomePageInfo implements Serializable {
   private String lightCurValue;
   private String pm25CurValue;
   private String pm10CurValue;
+  private String hchoCurValue;
+  private String tvocCurValue;
 
   private String averageHealth;
   private String phHealth;
@@ -35,6 +39,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightAverageValueByDay;
   private List<DataPointInfo> pm25AverageValueByDay;
   private List<DataPointInfo> pm10AverageValueByDay;
+  private List<DataPointInfo> hchoAverageValueByDay;
+  private List<DataPointInfo> tvocAverageValueByDay;
 
   private List<DataPointInfo> phAverageValueByWeek;
   private List<DataPointInfo> salinityAverageValueByWeek;
@@ -43,6 +49,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightAverageValueByWeek;
   private List<DataPointInfo> pm25AverageValueByWeek;
   private List<DataPointInfo> pm10AverageValueByWeek;
+  private List<DataPointInfo> hchoAverageValueByWeek;
+  private List<DataPointInfo> tvocAverageValueByWeek;
 
   private List<DataPointInfo> phAverageValueByMonth;
   private List<DataPointInfo> salinityAverageValueByMonth;
@@ -51,6 +59,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightAverageValueByMonth;
   private List<DataPointInfo> pm25AverageValueByMonth;
   private List<DataPointInfo> pm10AverageValueByMonth;
+  private List<DataPointInfo> hchoAverageValueByMonth;
+  private List<DataPointInfo> tvocAverageValueByMonth;
 
   private List<DataPointInfo> phMaxValueByDay;
   private List<DataPointInfo> salinityMaxValueByDay;
@@ -59,6 +69,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightMaxValueByDay;
   private List<DataPointInfo> pm25MaxValueByDay;
   private List<DataPointInfo> pm10MaxValueByDay;
+  private List<DataPointInfo> hchoMaxValueByDay;
+  private List<DataPointInfo> tvocMaxValueByDay;
 
   private List<DataPointInfo> phMaxValueByWeek;
   private List<DataPointInfo> salinityMaxValueByWeek;
@@ -67,6 +79,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightMaxValueByWeek;
   private List<DataPointInfo> pm25MaxValueByWeek;
   private List<DataPointInfo> pm10MaxValueByWeek;
+  private List<DataPointInfo> hchoMaxValueByWeek;
+  private List<DataPointInfo> tvocMaxValueByWeek;
 
   private List<DataPointInfo> phMaxValueByMonth;
   private List<DataPointInfo> salinityMaxValueByMonth;
@@ -75,6 +89,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightMaxValueByMonth;
   private List<DataPointInfo> pm25MaxValueByMonth;
   private List<DataPointInfo> pm10MaxValueByMonth;
+  private List<DataPointInfo> hchoMaxValueByMonth;
+  private List<DataPointInfo> tvocMaxValueByMonth;
 
   private List<DataPointInfo> phMinValueByDay;
   private List<DataPointInfo> salinityMinValueByDay;
@@ -83,6 +99,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightMinValueByDay;
   private List<DataPointInfo> pm25MinValueByDay;
   private List<DataPointInfo> pm10MinValueByDay;
+  private List<DataPointInfo> hchoMinValueByDay;
+  private List<DataPointInfo> tvocMinValueByDay;
 
   private List<DataPointInfo> phMinValueByWeek;
   private List<DataPointInfo> salinityMinValueByWeek;
@@ -91,6 +109,8 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightMinValueByWeek;
   private List<DataPointInfo> pm25MinValueByWeek;
   private List<DataPointInfo> pm10MinValueByWeek;
+  private List<DataPointInfo> hchoMinValueByWeek;
+  private List<DataPointInfo> tvocMinValueByWeek;
 
   private List<DataPointInfo> phMinValueByMonth;
   private List<DataPointInfo> salinityMinValueByMonth;
@@ -99,6 +119,168 @@ public class HomePageInfo implements Serializable {
   private List<DataPointInfo> lightMinValueByMonth;
   private List<DataPointInfo> pm25MinValueByMonth;
   private List<DataPointInfo> pm10MinValueByMonth;
+  private List<DataPointInfo> hchoMinValueByMonth;
+  private List<DataPointInfo> tvocMinValueByMonth;
+
+  public String getHchoCurValue() {
+    return hchoCurValue;
+  }
+
+  public void setHchoCurValue(String hchoCurValue) {
+    this.hchoCurValue = hchoCurValue;
+  }
+
+  public String getTvocCurValue() {
+    return tvocCurValue;
+  }
+
+  public void setTvocCurValue(String tvocCurValue) {
+    this.tvocCurValue = tvocCurValue;
+  }
+
+  public List<DataPointInfo> getHchoAverageValueByDay() {
+    return hchoAverageValueByDay;
+  }
+
+  public void setHchoAverageValueByDay(List<DataPointInfo> hchoAverageValueByDay) {
+    this.hchoAverageValueByDay = hchoAverageValueByDay;
+  }
+
+  public List<DataPointInfo> getTvocAverageValueByDay() {
+    return tvocAverageValueByDay;
+  }
+
+  public void setTvocAverageValueByDay(List<DataPointInfo> tvocAverageValueByDay) {
+    this.tvocAverageValueByDay = tvocAverageValueByDay;
+  }
+
+  public List<DataPointInfo> getHchoAverageValueByWeek() {
+    return hchoAverageValueByWeek;
+  }
+
+  public void setHchoAverageValueByWeek(List<DataPointInfo> hchoAverageValueByWeek) {
+    this.hchoAverageValueByWeek = hchoAverageValueByWeek;
+  }
+
+  public List<DataPointInfo> getTvocAverageValueByWeek() {
+    return tvocAverageValueByWeek;
+  }
+
+  public void setTvocAverageValueByWeek(List<DataPointInfo> tvocAverageValueByWeek) {
+    this.tvocAverageValueByWeek = tvocAverageValueByWeek;
+  }
+
+  public List<DataPointInfo> getHchoAverageValueByMonth() {
+    return hchoAverageValueByMonth;
+  }
+
+  public void setHchoAverageValueByMonth(List<DataPointInfo> hchoAverageValueByMonth) {
+    this.hchoAverageValueByMonth = hchoAverageValueByMonth;
+  }
+
+  public List<DataPointInfo> getTvocAverageValueByMonth() {
+    return tvocAverageValueByMonth;
+  }
+
+  public void setTvocAverageValueByMonth(List<DataPointInfo> tvocAverageValueByMonth) {
+    this.tvocAverageValueByMonth = tvocAverageValueByMonth;
+  }
+
+  public List<DataPointInfo> getHchoMaxValueByDay() {
+    return hchoMaxValueByDay;
+  }
+
+  public void setHchoMaxValueByDay(List<DataPointInfo> hchoMaxValueByDay) {
+    this.hchoMaxValueByDay = hchoMaxValueByDay;
+  }
+
+  public List<DataPointInfo> getTvocMaxValueByDay() {
+    return tvocMaxValueByDay;
+  }
+
+  public void setTvocMaxValueByDay(List<DataPointInfo> tvocMaxValueByDay) {
+    this.tvocMaxValueByDay = tvocMaxValueByDay;
+  }
+
+  public List<DataPointInfo> getHchoMaxValueByWeek() {
+    return hchoMaxValueByWeek;
+  }
+
+  public void setHchoMaxValueByWeek(List<DataPointInfo> hchoMaxValueByWeek) {
+    this.hchoMaxValueByWeek = hchoMaxValueByWeek;
+  }
+
+  public List<DataPointInfo> getTvocMaxValueByWeek() {
+    return tvocMaxValueByWeek;
+  }
+
+  public void setTvocMaxValueByWeek(List<DataPointInfo> tvocMaxValueByWeek) {
+    this.tvocMaxValueByWeek = tvocMaxValueByWeek;
+  }
+
+  public List<DataPointInfo> getHchoMaxValueByMonth() {
+    return hchoMaxValueByMonth;
+  }
+
+  public void setHchoMaxValueByMonth(List<DataPointInfo> hchoMaxValueByMonth) {
+    this.hchoMaxValueByMonth = hchoMaxValueByMonth;
+  }
+
+  public List<DataPointInfo> getTvocMaxValueByMonth() {
+    return tvocMaxValueByMonth;
+  }
+
+  public void setTvocMaxValueByMonth(List<DataPointInfo> tvocMaxValueByMonth) {
+    this.tvocMaxValueByMonth = tvocMaxValueByMonth;
+  }
+
+  public List<DataPointInfo> getHchoMinValueByDay() {
+    return hchoMinValueByDay;
+  }
+
+  public void setHchoMinValueByDay(List<DataPointInfo> hchoMinValueByDay) {
+    this.hchoMinValueByDay = hchoMinValueByDay;
+  }
+
+  public List<DataPointInfo> getTvocMinValueByDay() {
+    return tvocMinValueByDay;
+  }
+
+  public void setTvocMinValueByDay(List<DataPointInfo> tvocMinValueByDay) {
+    this.tvocMinValueByDay = tvocMinValueByDay;
+  }
+
+  public List<DataPointInfo> getHchoMinValueByWeek() {
+    return hchoMinValueByWeek;
+  }
+
+  public void setHchoMinValueByWeek(List<DataPointInfo> hchoMinValueByWeek) {
+    this.hchoMinValueByWeek = hchoMinValueByWeek;
+  }
+
+  public List<DataPointInfo> getTvocMinValueByWeek() {
+    return tvocMinValueByWeek;
+  }
+
+  public void setTvocMinValueByWeek(List<DataPointInfo> tvocMinValueByWeek) {
+    this.tvocMinValueByWeek = tvocMinValueByWeek;
+  }
+
+  public List<DataPointInfo> getHchoMinValueByMonth() {
+    return hchoMinValueByMonth;
+  }
+
+  public void setHchoMinValueByMonth(List<DataPointInfo> hchoMinValueByMonth) {
+    this.hchoMinValueByMonth = hchoMinValueByMonth;
+  }
+
+  public List<DataPointInfo> getTvocMinValueByMonth() {
+    return tvocMinValueByMonth;
+  }
+
+  public void setTvocMinValueByMonth(List<DataPointInfo> tvocMinValueByMonth) {
+    this.tvocMinValueByMonth = tvocMinValueByMonth;
+  }
 
   public String getPhCurValue() {
     return phCurValue;

@@ -1,4 +1,4 @@
-package com.monitor.server.entity.biz;
+package com.monitor.server.entity.dev;
 
 import java.io.Serializable;
 

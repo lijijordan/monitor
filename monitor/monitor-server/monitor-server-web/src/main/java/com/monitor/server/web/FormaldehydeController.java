@@ -11,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.monitor.common.define.DataTypeEnum;
+import com.monitor.common.define.QueryScopeEnum;
 import com.monitor.common.vo.ResponseVo;
 import com.monitor.server.comm.BusinessException;
-import com.monitor.server.comm.ConstantObject;
 import com.monitor.server.comm.ErrorCodeMsgEnum;
 import com.monitor.server.entity.biz.AllSensorAllPastInfo;
 import com.monitor.server.entity.biz.AllSensorCurInfo;
 import com.monitor.server.entity.biz.AllSensorPastInfo;
-import com.monitor.server.entity.biz.DataPointInfo;
 import com.monitor.server.entity.biz.HomePageInfo;
+import com.monitor.server.entity.dev.DataPointInfo;
 import com.monitor.server.entity.dev.DataPointsDevInfo;
 import com.monitor.server.entity.dev.DataPointsDevStatisticsInfo;
 import com.monitor.server.service.SensorService;
@@ -29,15 +30,15 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
- * PM2.5、PM10传感器Controller
+ * 甲醛传感器Controller
  *
  * @author yinhong
  *
  */
-@Api(value = "AirQuality", description = "AirQuality Controller")
+@Api(value = "Formaldehyde", description = "Formaldehyde Controller")
 @Controller
-@RequestMapping(value = "/airquality")
-public class AirQualityController {
+@RequestMapping(value = "/formaldehyde")
+public class FormaldehydeController {
 
   @Autowired
   private SensorService sensorService;
@@ -62,7 +63,7 @@ public class AirQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -85,32 +86,36 @@ public class AirQualityController {
       HomePageInfo homePageInfo = new HomePageInfo();
 
       // 获取当前传感器值
-      homePageInfo.setPm25CurValue(curSensorInfo.getContent().getPm25());
-      homePageInfo.setPm10CurValue(curSensorInfo.getContent().getPm10());
+      homePageInfo.setHchoCurValue(curSensorInfo.getContent().getHcho());
+      homePageInfo.setTvocCurValue(curSensorInfo.getContent().getTvoc());
 
       // PM2.5历史值（天）,只取平均值
-      List<DataPointsDevStatisticsInfo> pm25DataPointsListByDay =
-          allPastSensorInfo.getContent().getDayPastSensorInfo().getPm25ValueList();
-      List<DataPointInfo> averagePm25DataPointInfoListByDay = new ArrayList<DataPointInfo>();
-      for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : pm25DataPointsListByDay) {
-        DataPointInfo averageDataPointInfo = new DataPointInfo();
-        averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
-        averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
-        averagePm25DataPointInfoListByDay.add(averageDataPointInfo);
+      List<DataPointsDevStatisticsInfo> hchoDataPointsListByDay =
+          allPastSensorInfo.getContent().getDayPastSensorInfo().getHchoValueList();
+      List<DataPointInfo> averageHchoDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+      if (hchoDataPointsListByDay != null) {
+        for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : hchoDataPointsListByDay) {
+          DataPointInfo averageDataPointInfo = new DataPointInfo();
+          averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+          averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+          averageHchoDataPointInfoListByDay.add(averageDataPointInfo);
+        }
+        homePageInfo.setHchoAverageValueByDay(averageHchoDataPointInfoListByDay);
       }
-      homePageInfo.setPm25AverageValueByDay(averagePm25DataPointInfoListByDay);
 
       // PM10历史值（天）,只取平均值
-      List<DataPointsDevStatisticsInfo> pm10DataPointsListByDay =
-          allPastSensorInfo.getContent().getDayPastSensorInfo().getPm10ValueList();
-      List<DataPointInfo> averagePm10DataPointInfoListByDay = new ArrayList<DataPointInfo>();
-      for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : pm10DataPointsListByDay) {
-        DataPointInfo averageDataPointInfo = new DataPointInfo();
-        averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
-        averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
-        averagePm10DataPointInfoListByDay.add(averageDataPointInfo);
+      List<DataPointsDevStatisticsInfo> tvocDataPointsListByDay =
+          allPastSensorInfo.getContent().getDayPastSensorInfo().getTvocValueList();
+      List<DataPointInfo> averageTvocDataPointInfoListByDay = new ArrayList<DataPointInfo>();
+      if (tvocDataPointsListByDay != null) {
+        for (DataPointsDevStatisticsInfo dataPointsStatisticsInfo : tvocDataPointsListByDay) {
+          DataPointInfo averageDataPointInfo = new DataPointInfo();
+          averageDataPointInfo.setCollecttime(dataPointsStatisticsInfo.getCollecttime());
+          averageDataPointInfo.setValue(dataPointsStatisticsInfo.getValue());
+          averageTvocDataPointInfoListByDay.add(averageDataPointInfo);
+        }
+        homePageInfo.setTvocAverageValueByDay(averageTvocDataPointInfoListByDay);
       }
-      homePageInfo.setPm10AverageValueByDay(averagePm10DataPointInfoListByDay);
 
       // 设置最终返回数据
       responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
@@ -150,7 +155,7 @@ public class AirQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -162,21 +167,21 @@ public class AirQualityController {
     }
 
     // 分别从设备获取各个传感器的值
-    ResponseVo<DataPointsDevInfo> pm25CurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_PM25);
-    ResponseVo<DataPointsDevInfo> pm10CurrentValue =
-        getCurSensorValByType(userAccount, devSN, ConstantObject.SENSOR_TYPE_PM10);
+    ResponseVo<DataPointsDevInfo> hchoCurrentValue =
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.HCHO.getVal());
+    ResponseVo<DataPointsDevInfo> tvocCurrentValue =
+        getCurSensorValByType(userAccount, devSN, DataTypeEnum.TVOC.getVal());
 
     // 如果查询成功，则返回数据；如果查询失败，则返回失败信息
     if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
-        .equalsIgnoreCase(pm25CurrentValue.getStatus())
+        .equalsIgnoreCase(hchoCurrentValue.getStatus())
         && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
-            .equalsIgnoreCase(pm10CurrentValue.getStatus())) {
+            .equalsIgnoreCase(tvocCurrentValue.getStatus())) {
 
       // 将各个传感器的值都封装到一个对象返回
       AllSensorCurInfo curSensorInfo = new AllSensorCurInfo();
-      curSensorInfo.setPm25(pm25CurrentValue.getContent().getValue());
-      curSensorInfo.setPm10(pm10CurrentValue.getContent().getValue());
+      curSensorInfo.setHcho(hchoCurrentValue.getContent().getValue());
+      curSensorInfo.setTvoc(tvocCurrentValue.getContent().getValue());
 
       responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
       responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
@@ -185,13 +190,13 @@ public class AirQualityController {
       return responseVo;
     } else {
       if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
-          .equalsIgnoreCase(pm25CurrentValue.getStatus())) {
-        responseVo.setStatus(pm25CurrentValue.getStatus());
-        responseVo.setMessage(pm25CurrentValue.getMessage());
+          .equalsIgnoreCase(hchoCurrentValue.getStatus())) {
+        responseVo.setStatus(hchoCurrentValue.getStatus());
+        responseVo.setMessage(hchoCurrentValue.getMessage());
         return responseVo;
       } else {
-        responseVo.setStatus(pm10CurrentValue.getStatus());
-        responseVo.setMessage(pm10CurrentValue.getMessage());
+        responseVo.setStatus(tvocCurrentValue.getStatus());
+        responseVo.setMessage(tvocCurrentValue.getMessage());
         return responseVo;
       }
     }
@@ -209,7 +214,7 @@ public class AirQualityController {
       @ApiParam(required = true, name = "devSN",
           value = "设备SN") @PathVariable("devSN") String devSN,
       @ApiParam(required = true, name = "sensorType",
-          value = "传感器类型（PM25,PM10）") @PathVariable("sensorType") String sensorType) {
+          value = "传感器类型（HCHO,TVOC）") @PathVariable("sensorType") String sensorType) {
 
     // 设置返回默认值
     ResponseVo<DataPointsDevInfo> responseVo = new ResponseVo<DataPointsDevInfo>();
@@ -218,7 +223,7 @@ public class AirQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -258,7 +263,7 @@ public class AirQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -271,7 +276,7 @@ public class AirQualityController {
 
     // 分别从设备获取所有传感器以天单位历史值
     ResponseVo<AllSensorPastInfo> dayPastSensorInfo =
-        getAllPastSensorValByPeriod(userAccount, devSN, ConstantObject.TIMEPERIOD_DAY);
+        getAllPastSensorValByPeriod(userAccount, devSN, QueryScopeEnum.Day.getVal());
 
     if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
         .equalsIgnoreCase(dayPastSensorInfo.getStatus())) {
@@ -313,7 +318,7 @@ public class AirQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -325,18 +330,18 @@ public class AirQualityController {
     }
 
     // 分别从设备获取各个传感器某个周期的值
-    ResponseVo<List<DataPointsDevStatisticsInfo>> pm25Value = getPastSensorValByTypePeriod(
-        userAccount, devSN, ConstantObject.SENSOR_TYPE_PM25, timePeriod);
-    ResponseVo<List<DataPointsDevStatisticsInfo>> pm10Value = getPastSensorValByTypePeriod(
-        userAccount, devSN, ConstantObject.SENSOR_TYPE_PM10, timePeriod);
+    ResponseVo<List<DataPointsDevStatisticsInfo>> hchoValue =
+        getPastSensorValByTypePeriod(userAccount, devSN, DataTypeEnum.HCHO.getVal(), timePeriod);
+    ResponseVo<List<DataPointsDevStatisticsInfo>> tvocValue =
+        getPastSensorValByTypePeriod(userAccount, devSN, DataTypeEnum.TVOC.getVal(), timePeriod);
 
-    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(pm25Value.getStatus())
+    if (ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString().equalsIgnoreCase(hchoValue.getStatus())
         && ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
-            .equalsIgnoreCase(pm10Value.getStatus())) {
+            .equalsIgnoreCase(tvocValue.getStatus())) {
       // 遍历获取值
       AllSensorPastInfo pastSensorInfo = new AllSensorPastInfo();
-      pastSensorInfo.setPm10ValueList(pm25Value.getContent());
-      pastSensorInfo.setPm10ValueList(pm10Value.getContent());
+      pastSensorInfo.setHchoValueList(hchoValue.getContent());
+      pastSensorInfo.setTvocValueList(tvocValue.getContent());
 
       responseVo.setStatus(ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString());
       responseVo.setMessage(ErrorCodeMsgEnum.SUCCESS.getErrorMessage());
@@ -345,13 +350,13 @@ public class AirQualityController {
 
     } else {
       if (!ErrorCodeMsgEnum.SUCCESS.getErrorCode().toString()
-          .equalsIgnoreCase(pm25Value.getStatus())) {
-        responseVo.setStatus(pm25Value.getStatus());
-        responseVo.setMessage(pm25Value.getMessage());
+          .equalsIgnoreCase(hchoValue.getStatus())) {
+        responseVo.setStatus(hchoValue.getStatus());
+        responseVo.setMessage(hchoValue.getMessage());
         return responseVo;
       } else {
-        responseVo.setStatus(pm10Value.getStatus());
-        responseVo.setMessage(pm10Value.getMessage());
+        responseVo.setStatus(tvocValue.getStatus());
+        responseVo.setMessage(tvocValue.getMessage());
         return responseVo;
       }
     }
@@ -371,7 +376,7 @@ public class AirQualityController {
       @ApiParam(required = true, name = "devSN",
           value = "设备SN") @PathVariable("devSN") String devSN,
       @ApiParam(required = true, name = "sensorType",
-          value = "传感器类型（PM25,PM10）") @PathVariable("sensorType") String sensorType,
+          value = "传感器类型（HCHO,TVOC）") @PathVariable("sensorType") String sensorType,
       @ApiParam(required = true, name = "timePeriod",
           value = "时间周期（Day,Week,Month）") @PathVariable("timePeriod") String timePeriod) {
 
@@ -384,7 +389,7 @@ public class AirQualityController {
 
     // 根据用户ID检查输入设备ID是否正确,不正确直接返回设备不存在
     try {
-      if (userDevService.checkUserDevIsBinded(userAccount, devSN)) {
+      if (!userDevService.checkUserDevIsBinded(userAccount, devSN)) {
         responseVo.setStatus(ErrorCodeMsgEnum.DevNotExisted.getErrorCode().toString());
         responseVo.setMessage(ErrorCodeMsgEnum.DevNotExisted.getErrorMessage());
         return responseVo;
@@ -394,7 +399,7 @@ public class AirQualityController {
       responseVo.setMessage(e.getMessage());
       return responseVo;
     }
-    
+
     // 从设备获取传感器的值
     try {
       responseVo = sensorService.getSensorValsByPeriod(devSN, sensorType, timePeriod);
