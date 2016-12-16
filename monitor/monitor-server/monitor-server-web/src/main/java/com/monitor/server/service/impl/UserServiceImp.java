@@ -63,10 +63,10 @@ public class UserServiceImp implements UserService {
           ErrorCodeMsgEnum.AccountExisted.getErrorMessage());
     }
 
-    if (!isCompleted) {
-      throw new BusinessException(ErrorCodeMsgEnum.AccountInfoError.getErrorCode(),
-          ErrorCodeMsgEnum.AccountInfoError.getErrorMessage());
-    }
+    // if (!isCompleted) {
+    // throw new BusinessException(ErrorCodeMsgEnum.AccountInfoError.getErrorCode(),
+    // ErrorCodeMsgEnum.AccountInfoError.getErrorMessage());
+    // }
 
     // 保存
     try {
@@ -347,24 +347,25 @@ public class UserServiceImp implements UserService {
     boolean isExisted = checkUserIsExisted(account);
 
     if (isExisted) {
-      throw new BusinessException(ErrorCodeMsgEnum.AccountExisted.getErrorCode(),
-          ErrorCodeMsgEnum.AccountExisted.getErrorMessage());
+
+      try {
+        
+        // 删除用户信息
+        userInfoMapper.deleteByAccout(account);
+
+        // 删除用户配置网络信息
+        deleteNetwork(account);
+
+        // 删除用户和设备的关联信息
+        deleteUserDevBind(account);
+
+      } catch (Exception e) {
+        logger.error(e.getMessage(), e);
+        throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
+            ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
+      }
+
     }
-
-    // 删除用户信息
-    try {
-      userInfoMapper.deleteByAccout(account);
-    } catch (Exception e) {
-      logger.error(e.getMessage(), e);
-      throw new BusinessException(ErrorCodeMsgEnum.DatabaseError.getErrorCode(),
-          ErrorCodeMsgEnum.DatabaseError.getErrorMessage(), e);
-    }
-
-    // 删除用户配置网络信息
-    deleteNetwork(account);
-
-    // 删除用户和设备的关联信息
-    deleteUserDevBind(account);
 
   }
 

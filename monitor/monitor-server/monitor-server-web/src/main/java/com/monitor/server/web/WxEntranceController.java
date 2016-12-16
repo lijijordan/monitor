@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.protocol.HTTP;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,14 +96,10 @@ public class WxEntranceController {
 
   }
 
-  @SuppressWarnings("deprecation")
   @ApiOperation(value = "执行微信公众号事件以及消息处理")
   @RequestMapping(value = "getin", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
   public void wxProcedure(HttpServletRequest request, HttpServletResponse response)
       throws UnsupportedEncodingException {
-
-    request.setCharacterEncoding(HTTP.UTF_8);
-    response.setCharacterEncoding(HTTP.UTF_8);
 
     PrintWriter out = null;
     String result = "";
@@ -128,15 +123,11 @@ public class WxEntranceController {
 
   }
 
-  @SuppressWarnings("deprecation")
   @ApiOperation(value = "页面鉴权以及获取用户openid,通过openid从数据库获取用户基本及信息")
   @RequestMapping(value = "oauth", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
   public void oAuth2(HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "code", required = true) String code)
       throws ServletException, IOException {
-
-    request.setCharacterEncoding(HTTP.UTF_8);
-    response.setCharacterEncoding(HTTP.UTF_8);
 
     String appId = PropertiesUtil.getProperty("webchat.appid");
     String appSecret = PropertiesUtil.getProperty("webchat.appsecret");

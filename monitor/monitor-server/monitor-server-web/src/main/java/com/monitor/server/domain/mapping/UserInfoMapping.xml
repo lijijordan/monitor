@@ -39,16 +39,17 @@
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from wx_userinfo
+		from user
 		where account = #{account,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from user
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<delete id="deleteByAccout" parameterType="java.lang.Long">
+	<delete id="deleteByAccout" parameterType="java.lang.String">
 		delete from user
-		where account = #{account,jdbcType=VARCHAR}
+		where
+		account = #{account,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.monitor.server.entity.UserInfo"
 		useGeneratedKeys="true" keyProperty="id">
