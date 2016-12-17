@@ -17,9 +17,10 @@ import com.monitor.server.entity.UserDevInfo;
 import com.monitor.server.entity.UserInfo;
 import com.monitor.server.service.UserDevService;
 import com.monitor.server.service.UserService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Api(value = "User", description = "User Controller")
 @Controller

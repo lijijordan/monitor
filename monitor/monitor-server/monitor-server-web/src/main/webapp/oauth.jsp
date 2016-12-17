@@ -3,7 +3,7 @@
   String path = request.getContextPath();
 			String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ path + "/";
-			String urlString = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e770f6278bdf8f5&redirect_uri=http://6b114076.ngrok.io/monitor-server-web/wxentrance/oauth&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+			String urlString = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e770f6278bdf8f5&redirect_uri=http://910722a1.ngrok.io/monitor-server-web/wxentrance/oauth2&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
 			response.sendRedirect(urlString);
 %>
 

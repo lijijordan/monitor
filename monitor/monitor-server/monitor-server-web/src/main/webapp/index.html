@@ -1,98 +1,251 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-  <title>Swagger UI</title>
-  <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='css/reset.css' media='print' rel='stylesheet' type='text/css'/>
-  <link href='css/screen.css' media='print' rel='stylesheet' type='text/css'/>
-  <script type="text/javascript" src="lib/shred.bundle.js"></script>
-  <script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
-  <script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
-  <script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
-  <script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
-  <script src='lib/handlebars-2.0.0.js' type='text/javascript'></script>
-  <script src='lib/underscore-min.js' type='text/javascript'></script>
-  <script src='lib/backbone-min.js' type='text/javascript'></script>
-  <script src='lib/swagger-client.js' type='text/javascript'></script>
-  <script src='swagger-ui.js' type='text/javascript'></script>
-  <script src='lib/highlight.7.3.pack.js' type='text/javascript'></script>
-  <script src='lib/marked.js' type='text/javascript'></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=GB2312">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <title>Hi Fish</title>
 
-  <!-- enabling this will enable oauth2 implicit scope support -->
-  <script src='lib/swagger-oauth.js' type='text/javascript'></script>
-  <script type="text/javascript">
-    $(function () {
-      var url = window.location.search.match(/url=([^&]+)/);
-      if (url && url.length > 1) {
-        url = decodeURIComponent(url[1]);
-      } else {
-        url = "http://120.24.66.12:9008/monitor-server-web/api-docs";
-      }
-      window.swaggerUi = new SwaggerUi({
-        url: url,
-        dom_id: "swagger-ui-container",
-        supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
-        onComplete: function(swaggerApi, swaggerUi){
-          if(typeof initOAuth == "function") {
-            /*
-            initOAuth({
-              clientId: "your-client-id",
-              realm: "your-realms",
-              appName: "your-app-name"
-            });
-            */
-          }
-          $('pre code').each(function(i, e) {
-            hljs.highlightBlock(e)
-          });
-        },
-        onFailure: function(data) {
-          log("Unable to Load SwaggerUI");
-        },
-        docExpansion: "none",
-        sorter : "alpha"
-      });
+    <!-- CSS Plugins -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.min.css">
 
-      function addApiKeyAuthorization() {
-        var key = $('#input_apiKey')[0].value;
-        log("key: " + key);
-        if(key && key.trim() != "") {
-            log("added key " + key);
-            window.authorizations.add("api_key", new ApiKeyAuthorization("api_key", key, "query"));
-        }
-      }
+    <!-- CSS Global -->
+    <link href="assets/css/styles.css" rel="stylesheet">
 
-      $('#input_apiKey').change(function() {
-        addApiKeyAuthorization();
-      });
+    <!-- Google Fonts -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300,500' rel='stylesheet' type='text/css'> -->
 
-      // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
-      /*
-        var apiKey = "myApiKeyXXXX123456789";
-        $('#input_apiKey').val(apiKey);
-        addApiKeyAuthorization();
-      */
-
-      window.swaggerUi.load();
-  });
-  </script>
 </head>
 
-<body class="swagger-section">
-<div id='header'>
-  <div class="swagger-ui-wrap">
-    <a id="logo" href="http://swagger.io">swagger</a>
-    <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-      <div class='input'><a id="explore" href="#">Explore</a></div>
-    </form>
-  </div>
-</div>
+<body>
 
-<div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
-<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+<div class="wrapper">
+
+    <!-- SIDEBAR
+    ================================================== -->
+    <div class="sidebar">
+
+        <!-- Close button (mobile devices) -->
+        <div class="sidebar__close">
+            <img src="assets/img/close.svg" alt="Close sidebar">
+        </div>
+
+        <!-- Sidebar user -->
+        <div class="sidebar__user">
+
+            <!-- Sidebar user avatar -->
+            <div class="sidebar-user__avatar">
+                <img src="assets/img/hifish_96.png" alt="...">
+            </div>
+
+            <!-- Sidebar user info -->
+            <a class="sidebar-user__info">
+                <h4>Richard Roe</h4>
+                <p>Administrator <i class="fa fa-caret-down"></i></p>
+            </a>
+
+        </div>
+
+        <!-- Sidebar user nav -->
+        <nav class="sidebar-user__nav">
+            <ul class="sidebar__nav">
+                <li>
+                    <a href="profile.html"><i class="fa fa-user"></i> Profile</a>
+                </li>
+                <li>
+                    <a href="edit-profile.html"><i class="fa fa-edit"></i> Edit profile</a>
+                </li>
+                <li>
+                    <a href="inbox.html"><i class="fa fa-envelope-o"></i> Inbox</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sign-out"></i> Sign out</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sidebar nav -->
+        <nav>
+            <ul class="sidebar__nav">
+                <li class="sidebar-nav__heading">Dashboard</li>
+                <li>
+                    <a href="index.html"><i class="fa fa-th-large"></i> Dashboard</a>
+                </li>
+                <li class="sidebar-nav__heading">Pages</li>
+                <li class="sidebar-nav__dropdown">
+                    <a href="#"><i class="fa fa-user"></i> Account <i class="fa fa-angle-down"></i></a>
+                    <ul class="sidebar-nav__submenu">
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="edit-profile.html">Edit profile</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="ui_forms.html"><i class="fa fa-shopping-cart"></i> Settings</a>
+                </li>
+                <li>
+                    <a href="faq.html"><i class="fa fa-support"></i> FAQ</a>
+                </li>
+                <li>
+                    <a href="contact.html"><i class="fa fa-envelope-o"></i> Contact</a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+
+    <!-- MAIN CONTENT
+    ================================================== -->
+    <div class="container-fluid">
+
+        <!-- Navbar -->
+        <div class="row">
+            <div class="col-xs-12">
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbar_main">
+
+                            <a href="#" class="btn btn-default navbar-btn navbar-left" id="sidebar__toggle">
+                                <i class="fa fa-bars"></i>
+                            </a>
+
+                            <form class="navbar-form navbar-left hidden-xs" role="search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <a href="#" class="btn btn-primary navbar-btn navbar-right">
+                                Sign Out
+                            </a>
+
+
+
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+
+            </div>
+        </div> <!-- / .row -->
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h3 class="page-header">
+                    Dashboard
+                    <small>Dashboard for your fish tank</small>
+                </h3>
+
+            </div>
+        </div> <!-- / .row -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-info">
+                    提示:绿色代表状态健康,红色表示预警,你需要特别关注。
+                </div>
+
+            </div>
+        </div> <!-- / .row -->
+        <!-- Dashboard: Stats -->
+        <div class="row">
+            <a href="item.html?type=Temperature">
+                <div class="col-xs-12 col-sm-3">
+                    <div class="dashboard-stats__item bg-orange">
+                        <i class="fa fa-comments"></i>
+                        <h3 class="dashboard-stats__title">
+                            <span class="count-to-temperature" data-from="0" data-to="23.11">0</span> ℃
+                            <small>Temperature</small>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            <a href="item.html?type=PH">
+                <div class="col-xs-12 col-sm-3">
+                    <div class="dashboard-stats__item bg-pink">
+                        <i class="fa fa-globe"></i>
+                        <h3 class="dashboard-stats__title">
+                            <span class="count-to-ph" data-from="0" data-to="7.42">0</span>
+                            <small>PH</small>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            <a href="item.html?type=Light">
+                <div class="col-xs-12 col-sm-3">
+
+                    <div class="dashboard-stats__item bg-accent">
+                        <i class="fa fa-pie-chart"></i>
+                        <h3 class="dashboard-stats__title">
+                            <span class="count-to-light" data-from="0" data-to="101">0</span>
+                            <small>Light</small>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            <a href="item.html?type=Salinity">
+                <div class="col-xs-12 col-sm-3">
+
+                    <div class="dashboard-stats__item bg-teal">
+                        <i class="fa fa-eur"></i>
+                        <h3 class="dashboard-stats__title">
+                            <span class="count-to-salinity" data-from="0" data-to="1.12">0</span>
+                            <small>Salinity</small>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+        </div> <!-- / .row -->
+
+
+        
+        <!--
+
+         -->
+         <!-- / .row -->
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    &copy; Company 2016. All rights reserved.
+                    </p>
+                    <a href="#">Powered by Hi Fish.</a>
+                </div>
+            </div>
+        </footer>
+
+    </div> <!-- / .container-fluid -->
+
+</div> <!-- / .wrapper -->
+
+
+<!-- JavaScript
+================================================== -->
+
+<!-- JS Global -->
+<script src="assets/plugins/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- JS Plugins -->
+<script src="assets/plugins/chart-js/Chart.min.js"></script>
+<script src="assets/plugins/count-to/jquery.countTo.js"></script>
+<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+
+<!-- JS Custom -->
+<script src="assets/js/custom.js"></script>
+
 </body>
 </html>

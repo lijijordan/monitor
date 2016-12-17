@@ -18,6 +18,7 @@ import java.security.NoSuchProviderException;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +45,9 @@ import com.monitor.server.entity.UserInfo;
 import com.monitor.server.service.UserDevService;
 import com.monitor.server.service.UserService;
 import com.monitor.server.service.dispatcher.WxEventDispatcher;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @Description: 微信服务端入口
@@ -123,8 +125,8 @@ public class WxEntranceController {
 
   }
 
-  @ApiOperation(value = "页面鉴权以及获取用户openid,通过openid从数据库获取用户基本及信息")
-  @RequestMapping(value = "oauth", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
+  @ApiOperation(value = "正式鉴权，页面鉴权以及获取用户openid,通过openid从数据库获取用户基本及信息")
+  @RequestMapping(value = "oauth2", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
   public void oAuth2(HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "code", required = true) String code)
       throws ServletException, IOException {
@@ -142,10 +144,16 @@ public class WxEntranceController {
         // 根据用户OpenID，从数据库获取用户和设备信息
         UserInfo userInfo = userService.getUserByAccount(openId);
         UserDevInfo userDevInfo = userDevService.selectByUserAccount(openId);
-        paramsUrl = "?openid=" + userInfo.getAccount() + "&nickname=" + userInfo.getNickName()
+        paramsUrl = "?account=" + userInfo.getAccount() + "&nickname=" + userInfo.getNickName()
             + "&devsn=" + userDevInfo.getDevSn();
         // 鉴权完成，页面跳转到首页
-        response.sendRedirect(PropertiesUtil.getProperty("ui.index.url") + paramsUrl);
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":"
+            + request.getServerPort() + path;
+        response.sendRedirect(basePath + PropertiesUtil.getProperty("ui.index.url") + paramsUrl);
+        // RequestDispatcher dispatcher =
+        // request.getRequestDispatcher(PropertiesUtil.getProperty("ui.index.url") + paramsUrl);
+        // dispatcher.forward(request, response);
         return;
       } catch (IOException | KeyManagementException | NoSuchAlgorithmException
           | NoSuchProviderException | BusinessException e) {
@@ -154,7 +162,9 @@ public class WxEntranceController {
     }
 
     // 如果发生错误，跳转到错误界面
-    response.sendRedirect(PropertiesUtil.getProperty("ui.error.url"));
+    RequestDispatcher dispatcher =
+        request.getRequestDispatcher(PropertiesUtil.getProperty("ui.error.url"));
+    dispatcher.forward(request, response);
   }
 
 }
