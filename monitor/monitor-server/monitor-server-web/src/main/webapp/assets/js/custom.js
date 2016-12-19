@@ -23,14 +23,14 @@ var rootPath = getRootPath();
 
 $(document).ready(function () {
     // 特效
-    $('.count-to-ph').countTo({from: 0, to: 7.89});
-    $('.count-to-temperature').countTo({from: 0, to: 23.42});
-    $('.count-to-salinity').countTo({from: 0, to: 50.12});
-    $('.count-to-light').countTo({from: 0, to: 142});
+    //$('.count-to-ph').countTo({from: 0, to: 7.89});
+    //$('.count-to-temperature').countTo({from: 0, to: 23.42});
+    //$('.count-to-salinity').countTo({from: 0, to: 50.12});
+    //$('.count-to-light').countTo({from: 0, to: 142});
     
-    /**
     $.ajax({
-        url: rootPath + "/waterquality/getHomePageVal/" + account + "/" + devsn,
+        //url: rootPath + "/waterquality/getHomePageVal/" + account + "/" + devsn,
+    	url: rootPath + "/waterquality/getHomePageVal/oldiLv8xTt6nNUOdq51K8WbfR8yg/fisher01",
         xhrFields: {
             withCredentials: true
         }
@@ -40,7 +40,7 @@ $(document).ready(function () {
         $('.count-to-temperature').countTo({from: 0, to: data.content.tempCurValue});
         $('.count-to-salinity').countTo({from: 0, to: data.content.salinityCurValue});
         $('.count-to-light').countTo({from: 0, to: data.content.lightCurValue});
-    });**/
+    });
 
 });
 
